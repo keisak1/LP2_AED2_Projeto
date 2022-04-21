@@ -1,4 +1,4 @@
-package com.company;
+package com.projeto;
 
 public class Grafo extends PoI {
 

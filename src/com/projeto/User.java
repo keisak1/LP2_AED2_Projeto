@@ -1,7 +1,7 @@
-package com.company;
+package com.projeto;
 
-import Integer;
-import String;
+
+import java.util.ArrayList;
 
 public class User {
 

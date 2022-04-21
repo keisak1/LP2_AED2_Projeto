@@ -1,6 +1,5 @@
-package com.company;
+package com.projeto;
 
-import Integer;
 
 public class Date {
 

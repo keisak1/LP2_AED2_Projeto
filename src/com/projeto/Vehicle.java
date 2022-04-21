@@ -1,6 +1,6 @@
-package com.company;
+package com.projeto;
 
-import String;
+
 
 public class Vehicle {
 

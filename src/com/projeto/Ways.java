@@ -1,8 +1,8 @@
-package com.company;
+package com.projeto;
 
-import Integer;
+
 import java.util.List;
-import String;
+
 
 public class Ways {
 
