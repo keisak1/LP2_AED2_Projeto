@@ -13,8 +13,6 @@ public class User {
 
   public Vehicle vehicle;
 
-    public Date date;
-    public Vehicle vehicle;
 
   public ArrayList visitedPoI(Date d) {
   return null;
