@@ -3,9 +3,12 @@ package com.projeto;
 import edu.princeton.cs.algs4.*;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 public class DataBase {
-    public BinarySearchST<Integer, Nodes> st = new BinarySearchST<Integer, Nodes>();
+    public BinarySearchST<Integer, Nodes> bst = new BinarySearchST<>();
+    public Hashtable<Integer, Ways> ht = new Hashtable<>();
 
     public DataBase() {
     }
@@ -16,7 +19,7 @@ public class DataBase {
      * @param node - node class
      */
     public void addNode(int key, Nodes node) {
-        st.put(key, node);
+        bst.put(key, node);
     }
 
     /**
@@ -25,8 +28,8 @@ public class DataBase {
      * @param node - node class
      **/
     public void editNode(int key, Nodes node) {
-        if (st.get(key) != null) {
-            st.put(key, node);
+        if (bst.get(key) != null) {
+            bst.put(key, node);
         }
     }
 
@@ -35,7 +38,7 @@ public class DataBase {
      * @param key - the key
      */
     public void deleteNode(int key){
-        st.delete(key);
+        bst.delete(key);
     }
 
     /**
@@ -43,13 +46,57 @@ public class DataBase {
      * @param key - the key
      */
     public Nodes searchNode(int key){
-        return st.get(key);
+        return bst.get(key);
     }
 
-    public void printBST(){
-        s
+    public void printBST() {
+        for (Integer i : bst.keys()) {
+            StdOut.println(i + " " + bst.get(i));
+        }
     }
 
+    /**
+     *  Inserts the specified key-value into the symbol table
+     * @param key - the key
+     * @param way - way class
+     */
+    public void addWay(int key, Ways way) {
+        ht.put(key, way);
+    }
+
+    /**
+     * Edits HT through key
+     * @param key - the key
+     * @param way - way class
+     **/
+    public void editWay(int key, Ways way) {
+        if (ht.get(key) != null) {
+            ht.put(key, way);
+        }
+    }
+
+    /**
+     * Deletes key's node
+     * @param key - the key
+     */
+    public void deleteWay(int key){
+        ht.remove(key);
+    }
+
+    /**
+     * Searches for the specified key's value
+     * @param key - the key
+     */
+    public Ways searchWay(int key){
+        return ht.get(key);
+    }
+
+    public void printHT(){
+        Enumeration<Integer> keys = ht.keys();
+        while(keys.hasMoreElements()){
+            System.out.println(keys.nextElement());
+        }
+    }
 
     public ArrayList whoVisited(Date d, PoI p) {
         return null;
