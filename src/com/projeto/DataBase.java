@@ -11,8 +11,83 @@ public class DataBase {
     public BinarySearchST<Integer, Nodes> bst = new BinarySearchST<>();
     public Hashtable<Integer, Ways> ht = new Hashtable<>();
     public ArrayList<User> users = new ArrayList<>();
+    ArrayList<Nodes> vertices = new ArrayList<>();
+    ArrayList<Ways> edges = new ArrayList<>();
 
     public DataBase() {
+    }
+
+    /**
+     * Inserts the specified vertice into the vertice ArrayList
+     *
+     * @param newVertice - node class
+     */
+    public void addVertice(Nodes newVertice) {
+        vertices.add(newVertice);
+    }
+
+    /**
+     * Deletes vertice's node
+     *
+     * @param verticeToDelete - the vertice
+     */
+    public void deleteVertice(Nodes verticeToDelete) {
+        vertices.remove(verticeToDelete);
+    }
+
+
+    /**
+     * Searchs for vertice. If it exists or not
+     *
+     * @param verticeToBeSearched
+     */
+    public boolean searchVertice(Nodes verticeToBeSearched) {
+        return vertices.contains(verticeToBeSearched);
+    }
+
+    /**
+     * Prints the whole vertice ArrayList
+     */
+    public void printVertices(){
+        for(Nodes vertice : vertices){
+            StdOut.print(vertice + "\n");
+        }
+    }
+
+    /**
+     * Inserts the specified edge into the ways ArrayList
+     *
+     * @param newEdge - node class
+     */
+    public void addEdge(Ways newEdge) {
+        edges.add(newEdge);
+    }
+
+    /**
+     * Deletes edge's node
+     *
+     * @param edgeToDelete - the edge
+     */
+    public void deleteEdge(Ways edgeToDelete) {
+        edges.remove(edgeToDelete);
+    }
+
+    /**
+     * Searchs for edge. If it exists or not
+     *
+     * @param edgeToBeSearched
+     */
+    public boolean searchEdge(Ways edgeToBeSearched) {
+        return edges.contains(edgeToBeSearched);
+    }
+
+    /**
+     * Prints the whole edge ArrayList
+     */
+    public void printEdges(){
+        for(Ways edge : edges){
+            StdOut.print(edge + "\n");
+        }
     }
 
     /**
@@ -65,54 +140,50 @@ public class DataBase {
     }
 
     /**
-     * Inserts the specified key-value into the symbol table
-     *
+     *  Inserts the specified key-value into the symbol table
      * @param key - the key
      * @param way - way class
      */
-    public void addWay(int key, Ways way) {
+    /*public void addWay(int key, Ways way) {
         ht.put(key, way);
-    }
+    }*/
 
     /**
      * Edits HT through key
-     *
      * @param key - the key
      * @param way - way class
-     **/
-    public void editWay(int key, Ways way) {
+     */
+    /*public void editWay(int key, Ways way) {
         if (ht.get(key) != null) {
             ht.put(key, way);
         }
-    }
+    }*/
 
     /**
      * Deletes key's way
-     *
      * @param key - the key
      */
-    public void deleteWay(int key) {
+    /*public void deleteWay(int key){
         ht.remove(key);
-    }
+    }*/
 
     /**
      * Searches for the specified key's value
-     *
      * @param key - the key
      */
-    public Ways searchWay(int key) {
+    /*public Ways searchWay(int key){
         return ht.get(key);
-    }
+    }*/
 
     /**
      * Prints the whole HT
      */
-    public void printHT() {
+    /*public void printHT(){
         Enumeration<Integer> keys = ht.keys();
-        while (keys.hasMoreElements()) {
+        while(keys.hasMoreElements()){
             System.out.println(keys.nextElement());
         }
-    }
+    }*/
 
     /**
      * Inserts user into Arraylist
