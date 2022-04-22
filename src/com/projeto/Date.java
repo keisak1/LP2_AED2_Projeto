@@ -3,40 +3,52 @@ package com.projeto;
 
 public class Date {
 
-  public Integer day;
+    public Integer day;
 
-  public Integer month;
+    public Integer month;
 
-  public Integer year;
+    public Integer year;
 
-    
-  public void beforeDate(Date d) {
-  }
 
-  public void afterDate(Date d) {
-  }
+    public boolean beforeDate(Date d) {
+        if (this.year < d.year) return true;
+        else if (this.year.equals(d.year)) {
+            if (this.month < d.month)
+                return true;
+            if (this.month.equals(d.month)) {
+                return this.day < d.day;
+            }
+        }
+        return false;
+    }
 
-  public Integer getDay() {
-    return day;
-  }
+    public boolean afterDate(Date d) {
+        if (this.day.equals(d.day) && this.month.equals(d.month) && this.year.equals(d.year))
+            return false;
+        return !beforeDate(d);
+    }
 
-  public void setDay(Integer day) {
-    this.day = day;
-  }
+    public Integer getDay() {
+        return day;
+    }
 
-  public Integer getMonth() {
-    return month;
-  }
+    public void setDay(Integer day) {
+        this.day = day;
+    }
 
-  public void setMonth(Integer month) {
-    this.month = month;
-  }
+    public Integer getMonth() {
+        return month;
+    }
 
-  public Integer getYear() {
-    return year;
-  }
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
 
-  public void setYear(Integer year) {
-    this.year = year;
-  }
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
 }

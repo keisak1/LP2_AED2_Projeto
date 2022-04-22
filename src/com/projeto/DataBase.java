@@ -7,9 +7,12 @@ import java.util.ArrayList;
 public class DataBase {
 
 
+    public BST<Integer, Nodes> addNode(int key, Nodes node) {
 
-
-
+        BST<Integer, Nodes> st = new BST<Integer, Nodes>();
+        st.put(key, node);
+        return st;
+    }
 
 
 
