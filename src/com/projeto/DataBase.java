@@ -49,6 +49,9 @@ public class DataBase {
         return bst.get(key);
     }
 
+    /**
+     * Prints the whole BST
+     */
     public void printBST() {
         for (Integer i : bst.keys()) {
             StdOut.println(i + " " + bst.get(i));
@@ -76,7 +79,7 @@ public class DataBase {
     }
 
     /**
-     * Deletes key's node
+     * Deletes key's way
      * @param key - the key
      */
     public void deleteWay(int key){
@@ -91,6 +94,9 @@ public class DataBase {
         return ht.get(key);
     }
 
+    /**
+     * Prints the whole HT
+     */
     public void printHT(){
         Enumeration<Integer> keys = ht.keys();
         while(keys.hasMoreElements()){
