@@ -13,22 +13,36 @@ public class PoI {
 
   public Integer id;
 
-    public Date date;
 
-  public ArrayList whoVisited(Date d, PoI p) {
-  return null;
+  public Vehicle getType() {
+    return type;
   }
 
-  public ArrayList whoNotVisited(Date d, PoI p) {
-  return null;
+  public void setType(Vehicle type) {
+    this.type = type;
   }
 
-  public ArrayList topUsers(Date d, ArrayList userList) {
-  return null;
+  public String getName() {
+    return name;
   }
 
-  public ArrayList topPoI(Date d, ArrayList poiList) {
-  return null;
+  public void setName(String name) {
+    this.name = name;
   }
 
+  public Coordenate getLocation() {
+    return location;
+  }
+
+  public void setLocation(Coordenate location) {
+    this.location = location;
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
 }

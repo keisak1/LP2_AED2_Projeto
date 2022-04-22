@@ -14,12 +14,35 @@ public class User {
   public Vehicle vehicle;
 
 
-  public ArrayList visitedPoI(Date d) {
-  return null;
+  public String getName() {
+    return name;
   }
 
-  public ArrayList notVisitedPoI(Date d) {
-  return null;
+  public void setName(String name) {
+    this.name = name;
   }
 
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public Date getBirthday() {
+    return birthday;
+  }
+
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
+
+  public Vehicle getVehicle() {
+    return vehicle;
+  }
+
+  public void setVehicle(Vehicle vehicle) {
+    this.vehicle = vehicle;
+  }
 }
