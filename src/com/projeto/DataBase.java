@@ -139,14 +139,26 @@ public class DataBase {
         }
     }
 
+    /**
+     * Deletes given user
+     * @param user - user object
+     */
     public void deleteUser(User user) {
         users.remove(user);
     }
 
+    /**
+     * Searches for user
+     * @param user - user object
+     * @return true or false depending wether there's an user or not
+     */
     public boolean searchUser(User user) {
         return users.contains(user);
     }
 
+    /**
+     * Prints arrayList of users
+     */
     public void printUserList() {
         for (User user : users) {
             System.out.println(user);
