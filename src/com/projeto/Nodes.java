@@ -1,6 +1,7 @@
 package com.projeto;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Nodes {
@@ -9,7 +10,7 @@ public class Nodes {
 
     public Coordenate point;
 
-    public List<Ways> ways;
+    public ArrayList<Ways> ways;
 
     public Integer getId() {
         return id;
@@ -31,7 +32,7 @@ public class Nodes {
         return ways;
     }
 
-    public void setWays(List<Ways> ways) {
+    public void setWays(ArrayList<Ways> ways) {
         this.ways = ways;
     }
 }

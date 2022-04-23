@@ -1,6 +1,7 @@
 package com.projeto;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -10,7 +11,7 @@ public class Ways {
 
   public Integer weight;
 
-  public List<Nodes> nodes;
+  public ArrayList<Nodes> nodes;
 
   public String getName() {
     return name;
@@ -32,7 +33,7 @@ public class Ways {
     return nodes;
   }
 
-  public void setNodes(List<Nodes> nodes) {
+  public void setNodes(ArrayList<Nodes> nodes) {
     this.nodes = nodes;
   }
 }
