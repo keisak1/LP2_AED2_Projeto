@@ -296,9 +296,10 @@ public class DataBase {
 
     public ArrayList<PoI> notVisitedPoI(Date d) {
         ArrayList<PoI> notVisited = new ArrayList<>();
-        for (User user:users) {
-            for (Integer i:bst.keys()) {
-                if(!user.getNodesVisited().contains(bst.get(i).id) && user.getNodesVisited().contains(d.beforeDate(d))){
+        for (User user : users) {
+            for (Integer i : bst.keys()) {
+                if (!user.getNodesVisited().contains(bst.get(i).id) || (user.getNodesVisited().contains(d.afterDate(d)) &&
+                user.getNodesVisited().contains(bst.get(i).id))){
                     notVisited.add(bst.get(i).poI);
                 }
             }
@@ -313,7 +314,6 @@ public class DataBase {
     public ArrayList topPoI(Date d, ArrayList poiList) {
         return null;
     }
-
 
 
 }
