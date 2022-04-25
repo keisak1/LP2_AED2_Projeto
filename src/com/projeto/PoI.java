@@ -9,8 +9,6 @@ public class PoI {
 
   public String name;
 
-  public Coordenate location;
-
   public Integer id;
 
 
@@ -30,13 +28,6 @@ public class PoI {
     this.name = name;
   }
 
-  public Coordenate getLocation() {
-    return location;
-  }
-
-  public void setLocation(Coordenate location) {
-    this.location = location;
-  }
 
   public Integer getId() {
     return id;

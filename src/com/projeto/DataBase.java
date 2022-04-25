@@ -245,11 +245,11 @@ public class DataBase {
         ArrayList<PoI> visitedPoI = new ArrayList<>();
         for (User user1 : users) {
             if (user1.id.equals(user.id)) {
-                for (NodeVisited nodeVisited1:user.getNodesVisited()) {
-                    if(nodeVisited1.dateVisited.beforeDate(d)){
+                for (NodeVisited nodeVisited1 : user.getNodesVisited()) {
+                    if (nodeVisited1.dateVisited.beforeDate(d)) {
                         for (Integer i : bst.keys()) {
                             boolean b = bst.get(i).id == nodeVisited1.nodeID;
-                            if(b){
+                            if (b) {
                                 visitedPoI.add(bst.get(i).poI);
                             }
                         }
@@ -261,14 +261,50 @@ public class DataBase {
     }
 
     public ArrayList<PoI> notVisitedBy(Date d, User user) {
-        return null;
+        ArrayList<PoI> notVisitedPoI = new ArrayList<>();
+
+        for (User user1 : users) {
+            if (user1.id.equals(user.id)) {
+                for (NodeVisited nodeVisited1 : user.getNodesVisited()) {
+                    if (nodeVisited1.dateVisited.beforeDate(d)) {
+                        for (Integer i : bst.keys()) {
+                            boolean b = bst.get(i).id == nodeVisited1.nodeID;
+                            if (!b) {
+                                notVisitedPoI.add(bst.get(i).poI);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return notVisitedPoI;
     }
 
-    public ArrayList whoVisited(Date d, PoI p) {
-        return null;
+    public ArrayList<User> whoVisited(Date d, PoI p) {
+        ArrayList<User> usersWhoVisited = new ArrayList<>();
+        for (User user : users) {
+            for (NodeVisited node : user.getNodesVisited()) {
+                for (Integer i : bst.keys()) {
+                    if (bst.get(i).poI == p && node.nodeID.equals(bst.get(i).id) && node.dateVisited.beforeDate(d)) {
+                        usersWhoVisited.add(user);
+                    }
+                }
+            }
+        }
+        return usersWhoVisited;
     }
 
-
+    public ArrayList<PoI> notVisitedPoI(Date d) {
+        ArrayList<PoI> notVisited = new ArrayList<>();
+        for (User user:users) {
+            for (Integer i:bst.keys()) {
+                if(!user.getNodesVisited().contains(bst.get(i).id) && user.getNodesVisited().contains(d.beforeDate(d))){
+                    notVisited.add(bst.get(i).poI);
+                }
+            }
+        }
+        return notVisited;
+    }
 
     public ArrayList topUsers(Date d, ArrayList userList) {
         return null;
@@ -279,7 +315,5 @@ public class DataBase {
     }
 
 
-    public ArrayList notVisitedPoI(Date d) {
-        return null;
-    }
+
 }
