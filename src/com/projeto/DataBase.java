@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 public class DataBase {
     public BinarySearchST<Integer, Nodes> bst = new BinarySearchST<>();
+    public ArrayList<NodeVisited> nodeVisited = new ArrayList<>();
     public Hashtable<Integer, Ways> ht = new Hashtable<>();
     public ArrayList<User> users = new ArrayList<>();
     ArrayList<Nodes> vertices = new ArrayList<>();
@@ -16,6 +17,7 @@ public class DataBase {
 
     public DataBase() {
     }
+
 
     /**
      * Inserts the specified vertice into the vertice ArrayList
@@ -39,7 +41,7 @@ public class DataBase {
     /**
      * Searchs for vertice. If it exists or not
      *
-     * @param verticeToBeSearched
+     * @param verticeToBeSearched - vertice to be searched
      */
     public boolean searchVertice(Nodes verticeToBeSearched) {
         return vertices.contains(verticeToBeSearched);
@@ -48,8 +50,8 @@ public class DataBase {
     /**
      * Prints the whole vertice ArrayList
      */
-    public void printVertices(){
-        for(Nodes vertice : vertices){
+    public void printVertices() {
+        for (Nodes vertice : vertices) {
             StdOut.print(vertice + "\n");
         }
     }
@@ -84,8 +86,8 @@ public class DataBase {
     /**
      * Prints the whole edge ArrayList
      */
-    public void printEdges(){
-        for(Ways edge : edges){
+    public void printEdges() {
+        for (Ways edge : edges) {
             StdOut.print(edge + "\n");
         }
     }
@@ -212,6 +214,7 @@ public class DataBase {
 
     /**
      * Deletes given user
+     *
      * @param user - user object
      */
     public void deleteUser(User user) {
@@ -220,6 +223,7 @@ public class DataBase {
 
     /**
      * Searches for user
+     *
      * @param user - user object
      * @return true or false depending wether there's an user or not
      */
@@ -237,13 +241,34 @@ public class DataBase {
     }
 
 
+    public ArrayList<PoI> visitedBy(Date d, User user) {
+        ArrayList<PoI> visitedPoI = new ArrayList<>();
+        for (User user1 : users) {
+            if (user1.id.equals(user.id)) {
+                for (NodeVisited nodeVisited1:user.getNodesVisited()) {
+                    if(nodeVisited1.dateVisited.beforeDate(d)){
+                        for (Integer i : bst.keys()) {
+                            boolean b = bst.get(i).id == nodeVisited1.nodeID;
+                            if(b){
+                                visitedPoI.add(bst.get(i).poI);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return visitedPoI;
+    }
+
+    public ArrayList<PoI> notVisitedBy(Date d, User user) {
+        return null;
+    }
+
     public ArrayList whoVisited(Date d, PoI p) {
         return null;
     }
 
-    public ArrayList whoNotVisited(Date d, PoI p) {
-        return null;
-    }
+
 
     public ArrayList topUsers(Date d, ArrayList userList) {
         return null;
@@ -253,9 +278,6 @@ public class DataBase {
         return null;
     }
 
-    public ArrayList visitedPoI(Date d) {
-        return null;
-    }
 
     public ArrayList notVisitedPoI(Date d) {
         return null;

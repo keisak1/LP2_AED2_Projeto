@@ -1,47 +1,57 @@
 package com.projeto;
 
 
+import java.util.ArrayList;
 
 public class User {
 
-  public String name;
+    public String name;
 
-  public Integer id;
+    public Integer id;
 
-  public Date birthday;
+    public Date birthday;
 
-  public Vehicle vehicle;
+    public Vehicle vehicle;
 
+    public ArrayList<NodeVisited> nodesVisited;
 
-  public String getName() {
-    return name;
-  }
+    public ArrayList<NodeVisited> getNodesVisited() {
+        return nodesVisited;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setNodesVisited(ArrayList<NodeVisited> nodesVisited) {
+        this.nodesVisited = nodesVisited;
+    }
 
-  public Integer getId() {
-    return id;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public Date getBirthday() {
-    return birthday;
-  }
+    public Integer getId() {
+        return id;
+    }
 
-  public void setBirthday(Date birthday) {
-    this.birthday = birthday;
-  }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-  public Vehicle getVehicle() {
-    return vehicle;
-  }
+    public Date getBirthday() {
+        return birthday;
+    }
 
-  public void setVehicle(Vehicle vehicle) {
-    this.vehicle = vehicle;
-  }
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
 }

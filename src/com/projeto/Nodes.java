@@ -10,10 +10,20 @@ public class Nodes {
 
     public Coordenate point;
 
+    public PoI poI;
+
     public ArrayList<Ways> ways;
 
     public Integer getId() {
         return id;
+    }
+
+    public PoI getPoI() {
+        return poI;
+    }
+
+    public void setPoI(PoI poI) {
+        this.poI = poI;
     }
 
     public void setId(Integer id) {
