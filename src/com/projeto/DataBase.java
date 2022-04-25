@@ -2,18 +2,15 @@ package com.projeto;
 
 import edu.princeton.cs.algs4.*;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.*;
 
 public class DataBase {
     public BinarySearchST<Integer, Nodes> bst = new BinarySearchST<>();
-    public ArrayList<NodeVisited> nodeVisited = new ArrayList<>();
     public Hashtable<Integer, Ways> ht = new Hashtable<>();
+    public ArrayList<NodeVisited> nodeVisited = new ArrayList<>();
     public ArrayList<User> users = new ArrayList<>();
-    ArrayList<Nodes> vertices = new ArrayList<>();
-    ArrayList<Ways> edges = new ArrayList<>();
+    public ArrayList<Nodes> vertices = new ArrayList<>();
+    public ArrayList<Ways> edges = new ArrayList<>();
 
     public DataBase() {
     }
@@ -248,7 +245,7 @@ public class DataBase {
                 for (NodeVisited nodeVisited1 : user.getNodesVisited()) {
                     if (nodeVisited1.dateVisited.beforeDate(d)) {
                         for (Integer i : bst.keys()) {
-                            boolean b = bst.get(i).id == nodeVisited1.nodeID;
+                            boolean b = Objects.equals(bst.get(i).id, nodeVisited1.nodeID);
                             if (b) {
                                 visitedPoI.add(bst.get(i).poI);
                             }
@@ -299,7 +296,7 @@ public class DataBase {
         for (User user : users) {
             for (Integer i : bst.keys()) {
                 if (!user.getNodesVisited().contains(bst.get(i).id) || (user.getNodesVisited().contains(d.afterDate(d)) &&
-                user.getNodesVisited().contains(bst.get(i).id))){
+                        user.getNodesVisited().contains(bst.get(i).id))) {
                     notVisited.add(bst.get(i).poI);
                 }
             }
@@ -307,13 +304,44 @@ public class DataBase {
         return notVisited;
     }
 
-    public ArrayList topUsers(Date d, ArrayList userList) {
-        return null;
+    public ArrayList<User> top5Users(Date d) {
+        ArrayList<User> top5usersWhoVisitedMostPoI = new ArrayList<>(5);
+        for (User user : users) {
+            int counter = user.getNodesVisited().size();
+            for (NodeVisited node : user.getNodesVisited()) {
+                if (node.dateVisited.beforeDate(d)) {
+                    if (top5usersWhoVisitedMostPoI.isEmpty()) {
+                        top5usersWhoVisitedMostPoI.add(user);
+                    }
+                    for (int i = 0; i < 5; i++) {
+                        if (counter > top5usersWhoVisitedMostPoI.get(i).nodesVisited.size()) {
+                            top5usersWhoVisitedMostPoI.add(i, user);
+                            break;
+                        }else if(top5usersWhoVisitedMostPoI.get(i) == null){
+                            top5usersWhoVisitedMostPoI.add(user);
+                        }
+                    }
+                }
+            }
+        }
+        return top5usersWhoVisitedMostPoI;
     }
 
-    public ArrayList topPoI(Date d, ArrayList poiList) {
-        return null;
+    public ArrayList<PoI> top5PoIs(Date d) {
+        ArrayList<PoI> top5PoIsWhoWereVisited = new ArrayList<>(5);
+        for(User user : users){
+            for(NodeVisited node : user.getNodesVisited()){
+                if(node.dateVisited.beforeDate(d)){
+                    for (Integer i : bst.keys()) {
+                        boolean b = Objects.equals(bst.get(i).id, node.nodeID);
+                        if (b) {
+
+                        }
+                    }
+                }
+            }
+        }
+
+        return top5PoIsWhoWereVisited;
     }
-
-
 }
