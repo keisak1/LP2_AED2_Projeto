@@ -3,7 +3,7 @@ package com.projeto;
 
 import java.util.ArrayList;
 
-public class PoI {
+public class PoI implements Comparable<PoI> {
 
   public Vehicle type;
 

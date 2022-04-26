@@ -295,8 +295,7 @@ public class DataBase {
         ArrayList<PoI> notVisited = new ArrayList<>();
         for (User user : users) {
             for (Integer i : bst.keys()) {
-                if (!user.getNodesVisited().contains(bst.get(i).id) || (user.getNodesVisited().contains(d.afterDate(d)) &&
-                        user.getNodesVisited().contains(bst.get(i).id))) {
+                if (!user.getNodesVisited().contains(bst.get(i).id) || (user.getNodesVisited().contains(d.afterDate(d)) && user.getNodesVisited().contains(bst.get(i).id))) {
                     notVisited.add(bst.get(i).poI);
                 }
             }
@@ -317,7 +316,7 @@ public class DataBase {
                         if (counter > top5usersWhoVisitedMostPoI.get(i).nodesVisited.size()) {
                             top5usersWhoVisitedMostPoI.add(i, user);
                             break;
-                        }else if(top5usersWhoVisitedMostPoI.get(i) == null){
+                        } else if (top5usersWhoVisitedMostPoI.get(i) == null) {
                             top5usersWhoVisitedMostPoI.add(user);
                         }
                     }
@@ -329,19 +328,37 @@ public class DataBase {
 
     public ArrayList<PoI> top5PoIs(Date d) {
         ArrayList<PoI> top5PoIsWhoWereVisited = new ArrayList<>(5);
-        for(User user : users){
-            for(NodeVisited node : user.getNodesVisited()){
-                if(node.dateVisited.beforeDate(d)){
-                    for (Integer i : bst.keys()) {
-                        boolean b = Objects.equals(bst.get(i).id, node.nodeID);
-                        if (b) {
-
+        BinarySearchST<PoI, Integer> funcBst = new BinarySearchST<>();
+        for (Integer i : bst.keys()) {
+            for (User user : users) {
+                for (NodeVisited node : user.getNodesVisited()) {
+                    if (node.dateVisited.beforeDate(d)) {
+                        if (bst.get(i).poI == node.poI) {
+                            if (funcBst.contains(node.poI)) {
+                                int aux = funcBst.get(node.poI);
+                                funcBst.put(node.poI, aux + 1);
+                            } else {
+                                funcBst.put(node.poI, 1);
+                            }
                         }
                     }
                 }
             }
         }
-
+        for(int i = 0; i < 5; i++){
+            Integer max = 0;
+            for(PoI poi : funcBst.keys()) {
+                if (max < funcBst.get(poi)) {
+                    max = funcBst.get(poi);
+                }
+            }
+            for(PoI pois : funcBst.keys()){
+                if(Objects.equals(max, funcBst.get(pois))){
+                    top5PoIsWhoWereVisited.add(pois);
+                    funcBst.delete(pois);
+                }
+            }
+        }
         return top5PoIsWhoWereVisited;
     }
 }
