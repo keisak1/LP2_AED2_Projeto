@@ -1,12 +1,14 @@
 package com.projeto;
 
+import java.util.ArrayList;
+
 public class NodeVisited {
 
     public Integer nodeID;
     public Integer userID;
     public Date dateVisited;
     public Coordenate point;
-    public PoI poI;
+    public ArrayList<PoI> poI;
 
     public Integer getNodeID() {
         return nodeID;
@@ -40,11 +42,11 @@ public class NodeVisited {
         this.point = point;
     }
 
-    public PoI getPoI() {
+    public ArrayList<PoI> getPoI() {
         return poI;
     }
 
-    public void setPoI(PoI poI) {
+    public void setPoI(ArrayList<PoI> poI) {
         this.poI = poI;
     }
 }

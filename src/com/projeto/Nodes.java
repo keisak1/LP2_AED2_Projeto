@@ -10,7 +10,7 @@ public class Nodes {
 
     public Coordenate point;
 
-    public PoI poI;
+    public ArrayList<PoI> poI;
 
     public ArrayList<Ways> ways;
 
@@ -18,11 +18,11 @@ public class Nodes {
         return id;
     }
 
-    public PoI getPoI() {
+    public ArrayList<PoI> getPoI() {
         return poI;
     }
 
-    public void setPoI(PoI poI) {
+    public void setPoI(ArrayList<PoI> poI) {
         this.poI = poI;
     }
 

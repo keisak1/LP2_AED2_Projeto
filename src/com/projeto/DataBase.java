@@ -247,7 +247,7 @@ public class DataBase {
                         for (Integer i : bst.keys()) {
                             boolean b = Objects.equals(bst.get(i).id, nodeVisited1.nodeID);
                             if (b) {
-                                visitedPoI.add(bst.get(i).poI);
+                                visitedPoI.addAll(nodeVisited1.poI);
                             }
                         }
                     }
@@ -265,9 +265,9 @@ public class DataBase {
                 for (NodeVisited nodeVisited1 : user.getNodesVisited()) {
                     if (nodeVisited1.dateVisited.beforeDate(d)) {
                         for (Integer i : bst.keys()) {
-                            boolean b = bst.get(i).id == nodeVisited1.nodeID;
+                            boolean b = bst.get(i).id.equals(nodeVisited1.nodeID);
                             if (!b) {
-                                notVisitedPoI.add(bst.get(i).poI);
+                                notVisitedPoI.addAll(nodeVisited1.getPoI());
                             }
                         }
                     }
@@ -281,9 +281,13 @@ public class DataBase {
         ArrayList<User> usersWhoVisited = new ArrayList<>();
         for (User user : users) {
             for (NodeVisited node : user.getNodesVisited()) {
-                for (Integer i : bst.keys()) {
-                    if (bst.get(i).poI == p && node.nodeID.equals(bst.get(i).id) && node.dateVisited.beforeDate(d)) {
-                        usersWhoVisited.add(user);
+                for (PoI poi : node.getPoI()) {
+                    if (poi == p) {
+                        for (Integer i : bst.keys()) {
+                            if (node.nodeID.equals(bst.get(i).id) && node.dateVisited.beforeDate(d)) {
+                                usersWhoVisited.add(user);
+                            }
+                        }
                     }
                 }
             }
@@ -296,7 +300,7 @@ public class DataBase {
         for (User user : users) {
             for (Integer i : bst.keys()) {
                 if (!user.getNodesVisited().contains(bst.get(i).id) || (user.getNodesVisited().contains(d.afterDate(d)) && user.getNodesVisited().contains(bst.get(i).id))) {
-                    notVisited.add(bst.get(i).poI);
+                    notVisited.addAll(bst.get(i).getPoI());
                 }
             }
         }
@@ -333,27 +337,31 @@ public class DataBase {
             for (User user : users) {
                 for (NodeVisited node : user.getNodesVisited()) {
                     if (node.dateVisited.beforeDate(d)) {
-                        if (bst.get(i).poI == node.poI) {
-                            if (funcBst.contains(node.poI)) {
-                                int aux = funcBst.get(node.poI);
-                                funcBst.put(node.poI, aux + 1);
-                            } else {
-                                funcBst.put(node.poI, 1);
+                        for (PoI poi:bst.get(i).getPoI()){
+                            for (PoI poi1:node.getPoI()) {
+                                if (poi == poi1) {
+                                    if (funcBst.contains(poi)) {
+                                        int aux = funcBst.get(poi);
+                                        funcBst.put(poi, aux + 1);
+                                    } else {
+                                        funcBst.put(poi, 1);
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
-        for(int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             Integer max = 0;
-            for(PoI poi : funcBst.keys()) {
+            for (PoI poi : funcBst.keys()) {
                 if (max < funcBst.get(poi)) {
                     max = funcBst.get(poi);
                 }
             }
-            for(PoI pois : funcBst.keys()){
-                if(Objects.equals(max, funcBst.get(pois))){
+            for (PoI pois : funcBst.keys()) {
+                if (Objects.equals(max, funcBst.get(pois))) {
                     top5PoIsWhoWereVisited.add(pois);
                     funcBst.delete(pois);
                 }
