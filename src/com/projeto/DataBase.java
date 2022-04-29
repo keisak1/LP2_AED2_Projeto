@@ -6,7 +6,7 @@ import java.util.*;
 
 public class DataBase {
     public BinarySearchST<Integer, Nodes> bst = new BinarySearchST<>();
-    public Hashtable<Integer, Ways> ht = new Hashtable<>();
+    public Hashtable<String, Grafo> ht = new Hashtable<>();
     public ArrayList<NodeVisited> nodeVisited = new ArrayList<>();
     public ArrayList<User> users = new ArrayList<>();
     public ArrayList<Nodes> vertices = new ArrayList<>();
@@ -15,6 +15,41 @@ public class DataBase {
     public DataBase() {
     }
 
+    /**
+     * Adds the tag ( key ) and the respective Graph Object
+     *
+     * @param tag           - the tag
+     * @param edgeOrVertice - Graph object
+     */
+    public void addTag(String tag, Grafo edgeOrVertice) {
+        ht.put(tag, edgeOrVertice);
+    }
+
+    /**
+     * Removes the tag ( key ) and the respective Graph Object
+     *
+     * @param tag - the tag
+     */
+    public void removeTag(String tag) {
+        ht.remove(tag);
+    }
+
+    /**
+     * Searches if tag exists in the Hashtable
+     *
+     * @param tag - the tag
+     * @return true or false
+     */
+    public boolean searchTag(String tag) {
+        return ht.contains(tag);
+    }
+
+    /**
+     * Prints the whole Hashtable
+     */
+    public void printHash() {
+        StdOut.println(ht.toString());
+    }
 
     /**
      * Inserts the specified vertice into the vertice ArrayList
@@ -74,7 +109,7 @@ public class DataBase {
     /**
      * Searchs for edge. If it exists or not
      *
-     * @param edgeToBeSearched
+     * @param edgeToBeSearched - the edge
      */
     public boolean searchEdge(Ways edgeToBeSearched) {
         return edges.contains(edgeToBeSearched);
@@ -137,52 +172,6 @@ public class DataBase {
             StdOut.println(i + " " + bst.get(i));
         }
     }
-
-    /**
-     *  Inserts the specified key-value into the symbol table
-     * @param key - the key
-     * @param way - way class
-     */
-    /*public void addWay(int key, Ways way) {
-        ht.put(key, way);
-    }*/
-
-    /**
-     * Edits HT through key
-     * @param key - the key
-     * @param way - way class
-     */
-    /*public void editWay(int key, Ways way) {
-        if (ht.get(key) != null) {
-            ht.put(key, way);
-        }
-    }*/
-
-    /**
-     * Deletes key's way
-     * @param key - the key
-     */
-    /*public void deleteWay(int key){
-        ht.remove(key);
-    }*/
-
-    /**
-     * Searches for the specified key's value
-     * @param key - the key
-     */
-    /*public Ways searchWay(int key){
-        return ht.get(key);
-    }*/
-
-    /**
-     * Prints the whole HT
-     */
-    /*public void printHT(){
-        Enumeration<Integer> keys = ht.keys();
-        while(keys.hasMoreElements()){
-            System.out.println(keys.nextElement());
-        }
-    }*/
 
     /**
      * Inserts user into Arraylist
@@ -337,8 +326,8 @@ public class DataBase {
             for (User user : users) {
                 for (NodeVisited node : user.getNodesVisited()) {
                     if (node.dateVisited.beforeDate(d)) {
-                        for (PoI poi:bst.get(i).getPoI()){
-                            for (PoI poi1:node.getPoI()) {
+                        for (PoI poi : bst.get(i).getPoI()) {
+                            for (PoI poi1 : node.getPoI()) {
                                 if (poi == poi1) {
                                     if (funcBst.contains(poi)) {
                                         int aux = funcBst.get(poi);
@@ -368,5 +357,19 @@ public class DataBase {
             }
         }
         return top5PoIsWhoWereVisited;
+    }
+
+    /**
+     * Looks for a tag in the Hashtable, if it is found, returns an ArrayList of Graph Object
+     *
+     * @param tag - the tag
+     * @return tagFound
+     */
+    public ArrayList<Grafo> tagFound(String tag) {
+        ArrayList<Grafo> tagFound = new ArrayList<>();
+        if (searchTag(tag)) {
+            tagFound.add(ht.get(tag));
+        }
+        return tagFound;
     }
 }

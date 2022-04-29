@@ -1,6 +1,6 @@
 package com.projeto;
 
-public class Grafo extends PoI {
+public class Grafo  {
 
   public Ways edges;
 
