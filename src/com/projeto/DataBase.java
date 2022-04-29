@@ -7,7 +7,6 @@ import java.util.*;
 public class DataBase {
     public BinarySearchST<Integer, Nodes> bst = new BinarySearchST<>();
     public Hashtable<String, Grafo> ht = new Hashtable<>();
-    public ArrayList<NodeVisited> nodeVisited = new ArrayList<>();
     public ArrayList<User> users = new ArrayList<>();
     public ArrayList<Nodes> vertices = new ArrayList<>();
     public ArrayList<Ways> edges = new ArrayList<>();
@@ -103,6 +102,13 @@ public class DataBase {
      * @param edgeToDelete - the edge
      */
     public void deleteEdge(Ways edgeToDelete) {
+        for (Nodes node : vertices) {
+            for (Ways way : node.ways) {
+                if (way == edgeToDelete) {
+                    node.ways.remove(edgeToDelete);
+                }
+            }
+        }
         edges.remove(edgeToDelete);
     }
 
@@ -152,6 +158,19 @@ public class DataBase {
      * @param key - the key
      */
     public void deleteNode(int key) {
+        Nodes node = new Nodes();
+        for (Integer i : bst.keys()) {
+            if (i == key) {
+                node = bst.get(i);
+            }
+        }
+        for (User user : users) {
+            for (NodeVisited nodevisited : user.nodesVisited) {
+                if (Objects.equals(node.getId(), nodevisited.getNodeID())) {
+                    user.nodesVisited.remove(nodevisited);
+                }
+            }
+        }
         bst.delete(key);
     }
 
