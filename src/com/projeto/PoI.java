@@ -36,4 +36,9 @@ public class PoI implements Comparable<PoI> {
   public void setId(Integer id) {
     this.id = id;
   }
+
+  @Override
+  public int compareTo(PoI o) {
+    return 0;
+  }
 }

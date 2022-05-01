@@ -1,7 +1,6 @@
 package com.projeto;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 public class NodeVisited {
 
