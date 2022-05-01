@@ -5,23 +5,49 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-public class Nodes {
-    public Hashtable<String, String> osmNode = new Hashtable<>();
+public class Nodes  {
 
-    public Integer id;
 
-    public Coordenate point;
+    public Hashtable<String[], String[]> osmNode = new Hashtable<>();
 
-    public String address;
+    public Nodes(Hashtable<String[], String[]> osmNode, Long id, Coordinate point, ArrayList<PoI> poI, ArrayList<Ways> ways) {
+        this.osmNode = osmNode;
+        this.id = id;
+        this.point = point;
+        this.poI = poI;
+        this.ways = ways;
+    }
 
-    public String postcode;
+    public Nodes(){
+
+    }
+    public Hashtable<String[], String[]> getOsmNode() {
+        return osmNode;
+    }
+
+    public void setOsmNode(Hashtable<String[], String[]> osmNode) {
+        this.osmNode = osmNode;
+    }
+
+    public Long id;
+
+    public Coordinate point;
+
 
     public ArrayList<PoI> poI;
 
-    public ArrayList<Ways> ways;
+    public ArrayList<Ways> ways = new ArrayList<>();
 
-    public Integer getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setWays(ArrayList<Ways> ways) {
+        this.ways = ways;
     }
 
     public ArrayList<PoI> getPoI() {
@@ -32,15 +58,12 @@ public class Nodes {
         this.poI = poI;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
-    public Coordenate getPoint() {
+    public Coordinate getPoint() {
         return point;
     }
 
-    public void setPoint(Coordenate point) {
+    public void setPoint(Coordinate point) {
         this.point = point;
     }
 
@@ -48,33 +71,8 @@ public class Nodes {
         return ways;
     }
 
-    public void setWays(ArrayList<Ways> ways) {
-        this.ways = ways;
+    public void setWays(Ways ways) {
+        this.ways.add(ways);
     }
-
-    public Hashtable<String, String> getOsmNode() {
-        return osmNode;
-    }
-
-    public void setOsmNode(Hashtable<String, String> osmNode) {
-        this.osmNode = osmNode;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPostcode() {
-        return postcode;
-    }
-
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
-    }
-
 }
 

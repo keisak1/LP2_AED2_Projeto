@@ -1,5 +1,6 @@
 package com.projeto;
 
+
 public class Grafo  {
 
   public Ways edges;

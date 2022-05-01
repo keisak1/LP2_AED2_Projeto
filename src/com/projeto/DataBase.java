@@ -5,10 +5,9 @@ import edu.princeton.cs.algs4.*;
 import java.util.*;
 
 public class DataBase {
-    public BinarySearchST<Integer, Nodes> bst = new BinarySearchST<>();
+    public BinarySearchST<Long, Nodes> bst = new BinarySearchST<>();
     public Hashtable<String, Grafo> ht = new Hashtable<>();
     public ArrayList<User> users = new ArrayList<>();
-    public ArrayList<Nodes> vertices = new ArrayList<>();
     public ArrayList<Ways> edges = new ArrayList<>();
 
     public DataBase() {
@@ -50,42 +49,7 @@ public class DataBase {
         StdOut.println(ht.toString());
     }
 
-    /**
-     * Inserts the specified vertice into the vertice ArrayList
-     *
-     * @param newVertice - node class
-     */
-    public void addVertice(Nodes newVertice) {
-        vertices.add(newVertice);
-    }
 
-    /**
-     * Deletes vertice's node
-     *
-     * @param verticeToDelete - the vertice
-     */
-    public void deleteVertice(Nodes verticeToDelete) {
-        vertices.remove(verticeToDelete);
-    }
-
-
-    /**
-     * Searchs for vertice. If it exists or not
-     *
-     * @param verticeToBeSearched - vertice to be searched
-     */
-    public boolean searchVertice(Nodes verticeToBeSearched) {
-        return vertices.contains(verticeToBeSearched);
-    }
-
-    /**
-     * Prints the whole vertice ArrayList
-     */
-    public void printVertices() {
-        for (Nodes vertice : vertices) {
-            StdOut.print(vertice + "\n");
-        }
-    }
 
     /**
      * Inserts the specified edge into the ways ArrayList
@@ -102,7 +66,8 @@ public class DataBase {
      * @param edgeToDelete - the edge
      */
     public void deleteEdge(Ways edgeToDelete) {
-        for (Nodes node : vertices) {
+        for (Long i : bst.keys()) {
+            Nodes node = bst.get(i);
             for (Ways way : node.ways) {
                 if (way == edgeToDelete) {
                     node.ways.remove(edgeToDelete);
@@ -136,7 +101,7 @@ public class DataBase {
      * @param key  - the key
      * @param node - node class
      */
-    public void addNode(int key, Nodes node) {
+    public void addNode(long key, Nodes node) {
         bst.put(key, node);
     }
 
@@ -146,7 +111,7 @@ public class DataBase {
      * @param key  - the key
      * @param node - node class
      **/
-    public void editNode(int key, Nodes node) {
+    public void editNode(long key, Nodes node) {
         if (bst.get(key) != null) {
             bst.put(key, node);
         }
@@ -157,9 +122,9 @@ public class DataBase {
      *
      * @param key - the key
      */
-    public void deleteNode(int key) {
+    public void deleteNode(long key) {
         Nodes node = new Nodes();
-        for (Integer i : bst.keys()) {
+        for (Long i : bst.keys()) {
             if (i == key) {
                 node = bst.get(i);
             }
@@ -179,7 +144,7 @@ public class DataBase {
      *
      * @param key - the key
      */
-    public Nodes searchNode(int key) {
+    public Nodes searchNode(long key) {
         return bst.get(key);
     }
 
@@ -187,7 +152,7 @@ public class DataBase {
      * Prints the whole BST
      */
     public void printBST() {
-        for (Integer i : bst.keys()) {
+        for (Long i : bst.keys()) {
             StdOut.println(i + " " + bst.get(i));
         }
     }
@@ -252,7 +217,7 @@ public class DataBase {
             if (user1.id.equals(user.id)) {
                 for (NodeVisited nodeVisited1 : user.getNodesVisited()) {
                     if (nodeVisited1.dateVisited.beforeDate(d)) {
-                        for (Integer i : bst.keys()) {
+                        for (Long i : bst.keys()) {
                             boolean b = Objects.equals(bst.get(i).id, nodeVisited1.nodeID);
                             if (b) {
                                 visitedPoI.addAll(nodeVisited1.poI);
@@ -272,7 +237,7 @@ public class DataBase {
             if (user1.id.equals(user.id)) {
                 for (NodeVisited nodeVisited1 : user.getNodesVisited()) {
                     if (nodeVisited1.dateVisited.beforeDate(d)) {
-                        for (Integer i : bst.keys()) {
+                        for (Long i : bst.keys()) {
                             boolean b = bst.get(i).id.equals(nodeVisited1.nodeID);
                             if (!b) {
                                 notVisitedPoI.addAll(nodeVisited1.getPoI());
@@ -291,7 +256,7 @@ public class DataBase {
             for (NodeVisited node : user.getNodesVisited()) {
                 for (PoI poi : node.getPoI()) {
                     if (poi == p) {
-                        for (Integer i : bst.keys()) {
+                        for (Long i : bst.keys()) {
                             if (node.nodeID.equals(bst.get(i).id) && node.dateVisited.beforeDate(d)) {
                                 usersWhoVisited.add(user);
                             }
@@ -306,7 +271,7 @@ public class DataBase {
     public ArrayList<PoI> notVisitedPoI(Date d) {
         ArrayList<PoI> notVisited = new ArrayList<>();
         for (User user : users) {
-            for (Integer i : bst.keys()) {
+            for (Long i : bst.keys()) {
                 if (!user.getNodesVisited().contains(bst.get(i).id) || (user.getNodesVisited().contains(d.afterDate(d)) && user.getNodesVisited().contains(bst.get(i).id))) {
                     notVisited.addAll(bst.get(i).getPoI());
                 }
@@ -341,7 +306,7 @@ public class DataBase {
     public ArrayList<PoI> top5PoIs(Date d) {
         ArrayList<PoI> top5PoIsWhoWereVisited = new ArrayList<>(5);
         BinarySearchST<PoI, Integer> funcBst = new BinarySearchST<>();
-        for (Integer i : bst.keys()) {
+        for (Long i : bst.keys()) {
             for (User user : users) {
                 for (NodeVisited node : user.getNodesVisited()) {
                     if (node.dateVisited.beforeDate(d)) {

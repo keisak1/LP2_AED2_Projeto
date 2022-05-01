@@ -4,17 +4,16 @@ import java.util.ArrayList;
 
 public class NodeVisited {
 
-    public Integer nodeID;
+    public Long nodeID;
     public Integer userID;
     public Date dateVisited;
-    public Coordenate point;
     public ArrayList<PoI> poI;
 
-    public Integer getNodeID() {
+    public Long getNodeID() {
         return nodeID;
     }
 
-    public void setNodeID(Integer nodeID) {
+    public void setNodeID(Long nodeID) {
         this.nodeID = nodeID;
     }
 
@@ -34,13 +33,6 @@ public class NodeVisited {
         this.dateVisited = dateVisited;
     }
 
-    public Coordenate getPoint() {
-        return point;
-    }
-
-    public void setPoint(Coordenate point) {
-        this.point = point;
-    }
 
     public ArrayList<PoI> getPoI() {
         return poI;
