@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-public class Nodes  {
+public class Nodes {
 
 
     public Hashtable<String[], String[]> osmNode = new Hashtable<>();
@@ -18,9 +18,10 @@ public class Nodes  {
         this.ways = ways;
     }
 
-    public Nodes(){
+    public Nodes() {
 
     }
+
     public Hashtable<String[], String[]> getOsmNode() {
         return osmNode;
     }
@@ -74,9 +75,9 @@ public class Nodes  {
     @Override
     public String toString() {
         return "Nodes{" +
-                "osmNode=" + osmNode +
+                "osmNode=" + osmNode.toString() +
                 ", id=" + id +
-                ", point=" + point +
+                ", point=" + "(" + point.x + "," + point.y+ ")" +
                 ", poI=" + poI +
                 ", ways=" + ways +
                 '}';
