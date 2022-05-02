@@ -128,6 +128,9 @@ public class DataBase {
             if (i == key) {
                 node = bst.get(i);
             }
+            else{
+                System.out.println("There's no such Node.");
+            }
         }
         for (User user : users) {
             for (NodeVisited nodevisited : user.nodesVisited) {
