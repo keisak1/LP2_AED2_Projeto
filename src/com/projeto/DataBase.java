@@ -121,24 +121,23 @@ public class DataBase {
      *
      * @param key - the key
      */
-    public void deleteNode(long key) {
-        Nodes node = new Nodes();
+    public void deleteNode(Long key) {
+        Nodes node;
         for (Long i : bst.keys()) {
-            if (i == key) {
+            if (i.equals(key)) {
                 node = bst.get(i);
-            }
-            else{
-                System.out.println("There's no such Node.");
-            }
-        }
-        for (User user : users) {
-            for (NodeVisited nodevisited : user.nodesVisited) {
-                if (Objects.equals(node.getId(), nodevisited.getNodeID())) {
-                    user.nodesVisited.remove(nodevisited);
+                for (User user : users) {
+                    for (NodeVisited nodevisited : user.nodesVisited) {
+                        if ((node.getId().equals(nodevisited.getNodeID()))) {
+                            user.nodesVisited.remove(nodevisited);
+                            break;
+                        }
+                    }
                 }
+                bst.delete(key);
+                System.out.println("Node removed successfully.");
             }
         }
-        bst.delete(key);
     }
 
     /**
@@ -187,20 +186,20 @@ public class DataBase {
     /**
      * Deletes given user
      *
-     * @param user - user object
+     * @param userID - user ID
      */
-    public void deleteUser(User user) {
-        users.remove(user);
+    public void deleteUser(int userID) {
+        users.remove(userID);
     }
 
     /**
      * Searches for user
      *
-     * @param user - user object
+     * @param userID - user ID
      * @return true or false depending wether there's an user or not
      */
-    public boolean searchUser(User user) {
-        return users.contains(user);
+    public boolean searchUser(int userID) {
+        return users.contains(userID);
     }
 
     /**
