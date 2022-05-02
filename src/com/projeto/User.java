@@ -5,6 +5,18 @@ import java.util.ArrayList;
 
 public class User {
 
+    public User(Integer id, String name, Date birthday, Vehicle vehicle, ArrayList<NodeVisited> nodesVisited){
+        this.id = id;
+        this.name = name;
+        this.birthday = birthday;
+        this.vehicle = vehicle;
+        this.nodesVisited = nodesVisited;
+    }
+
+    public User(){
+
+    }
+
     public String name;
 
     public Integer id;

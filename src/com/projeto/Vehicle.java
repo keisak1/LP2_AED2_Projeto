@@ -1,10 +1,9 @@
 package com.projeto;
 
 
-
 public class Vehicle {
 
-  public String type;
+    public String type;
 
-  
+
 }

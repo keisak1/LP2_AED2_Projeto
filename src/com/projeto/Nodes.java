@@ -34,7 +34,6 @@ public class Nodes {
 
     public Coordinate point;
 
-
     public ArrayList<PoI> poI;
 
     public ArrayList<Ways> ways = new ArrayList<>();
@@ -58,7 +57,6 @@ public class Nodes {
     public void setPoI(ArrayList<PoI> poI) {
         this.poI = poI;
     }
-
 
     public Coordinate getPoint() {
         return point;

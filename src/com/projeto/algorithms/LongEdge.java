@@ -4,7 +4,6 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class LongEdge implements Comparable<LongEdge> {
 
-
     private final long v;
     private final long w;
     private final double weight;
@@ -13,11 +12,11 @@ public class LongEdge implements Comparable<LongEdge> {
      * Initializes an edge between vertices {@code v} and {@code w} of
      * the given {@code weight}.
      *
-     * @param  v one vertex
-     * @param  w the other vertex
-     * @param  weight the weight of this edge
+     * @param v      one vertex
+     * @param w      the other vertex
+     * @param weight the weight of this edge
      * @throws IllegalArgumentException if either {@code v} or {@code w}
-     *         is a negative integer
+     *                                  is a negative integer
      * @throws IllegalArgumentException if {@code weight} is {@code NaN}
      */
     public LongEdge(long v, long w, double weight) {
@@ -50,13 +49,13 @@ public class LongEdge implements Comparable<LongEdge> {
     /**
      * Returns the endpoint of this edge that is different from the given vertex.
      *
-     * @param  vertex one endpoint of this edge
+     * @param vertex one endpoint of this edge
      * @return the other endpoint of this edge
      * @throws IllegalArgumentException if the vertex is not one of the
-     *         endpoints of this edge
+     *                                  endpoints of this edge
      */
     public long other(long vertex) {
-        if      (vertex == v) return w;
+        if (vertex == v) return w;
         else if (vertex == w) return v;
         else throw new IllegalArgumentException("Illegal endpoint");
     }
@@ -66,10 +65,10 @@ public class LongEdge implements Comparable<LongEdge> {
      * Note that {@code compareTo()} is not consistent with {@code equals()},
      * which uses the reference equality implementation inherited from {@code Object}.
      *
-     * @param  that the other edge
+     * @param that the other edge
      * @return a negative integer, zero, or positive integer depending on whether
-     *         the weight of this is less than, equal to, or greater than the
-     *         argument edge
+     * the weight of this is less than, equal to, or greater than the
+     * argument edge
      */
     @Override
     public int compareTo(LongEdge that) {

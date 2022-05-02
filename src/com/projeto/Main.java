@@ -2,29 +2,30 @@ package com.projeto;
 
 import edu.princeton.cs.algs4.In;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class Main {
 
     static DataBase dataBase = new DataBase();
+    private static String[] value;
 
     public static void main(String[] args) {
-
         loadFromFiles();
         dataBase.printBST();
     }
 
 
     private static void loadFromFiles() {
-        String fileSource = "C:\\Users\\Nuno\\IdeaProjects\\Projeto_LP2_AED2\\data\\dataset1_nodes.txt";
-        String fileSource2 = "C:\\Users\\Nuno\\IdeaProjects\\Projeto_LP2_AED2\\data\\dataset1_ways_nodepairs.txt";
-        String fileSource3 = "";
-        String fileSource4 = "";
-        loadFromFileNodes(fileSource);
+        String fileSource1 = "data\\dataset1_nodes.txt";
+        String fileSource2 = "data\\dataset1_ways_nodepairs.txt";
+        String fileSource3 = "data\\dataset1_pois.txt";
+        String fileSource4 = "data\\dataset1_users.txt";
+        loadFromFileNodes(fileSource1);
         loadFromFileWays(fileSource2);
-        loadFromFileUser(fileSource3);
-        loadFromFilePoI(fileSource4);
+        loadFromFilePoI(fileSource3);
+        loadFromFileUser(fileSource4);
     }
 
 
@@ -114,15 +115,51 @@ public class Main {
             node = dataBase.bst.get(nodeID2);
             node.setWays(way);
         }
+    }
+
+    private static void loadFromFilePoI(String path) {
+        In in = new In(path);
+        in.readLine();
 
     }
 
     private static void loadFromFileUser(String path) {
-
+        In in = new In(path);
+        in.readLine();
+        long nodeID;
+        int tagNumb, u, poiID, userID;
+        String name, vehicle;
+        String[] bd, nodesVisited, dateNodeVisited;
+        ArrayList<PoI> poI = new ArrayList<>();
+        ArrayList<NodeVisited> visitedNodes = new ArrayList<>();
+        while (!in.isEmpty()) {
+            String[] text = in.readLine().split(",");
+            userID = Integer.parseInt(text[0]);
+            name = text[1];
+            bd = text[2].split("-");
+            vehicle = text[3];
+            tagNumb = text.length - 4;
+            u = 4;
+            while (tagNumb >= 0) {
+                nodesVisited = text[u].split(":");
+                nodeID = Long.parseLong(nodesVisited[1]);
+                poiID = Integer.parseInt(nodesVisited[2]);
+                dateNodeVisited = nodesVisited[3].split("-");
+                Date nodeVisitedDate = new Date(Integer.parseInt(dateNodeVisited[0]), Integer.parseInt(dateNodeVisited[1]), Integer.parseInt(dateNodeVisited[2]));
+                Nodes node = dataBase.bst.get(nodeID);
+                for (PoI poi1 : node.getPoI()) {
+                    if (poi1 == node.poI.get(poiID)) {
+                        poI.add(poi1);
+                    }
+                }
+                NodeVisited nodeVisited = new NodeVisited(nodeID, poiID, nodeVisitedDate, poI);
+                visitedNodes.add(nodeVisited);
+                u++;
+                tagNumb--;
+            }
+            Vehicle vehicle1 = new Vehicle();
+            Date bday = new Date(Integer.parseInt(bd[0]), Integer.parseInt(bd[1]), Integer.parseInt(bd[2]));
+            User user = new User(userID, name, bday, vehicle1, visitedNodes);
+        }
     }
-
-    private static void loadFromFilePoI(String path) {
-
-    }
-
 }
