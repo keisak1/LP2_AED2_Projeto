@@ -13,9 +13,13 @@ public class Main {
     private static String[] value;
 
     public static void main(String[] args) {
+        Nodes nodes = new Nodes();
         loadFromFiles();
         dataBase.printBST();
         dataBase.printUserList();
+        dataBase.deleteNode(2486710615L);
+        dataBase.editNode(9613090531L,nodes);
+        dataBase.printBST();
     }
 
 
