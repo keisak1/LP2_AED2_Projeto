@@ -154,8 +154,8 @@ public class Main {
                 }
                 NodeVisited nodeVisited = new NodeVisited(nodeID, poiID, nodeVisitedDate, poI);
                 visitedNodes.add(nodeVisited);
-                u++;
-                tagNumb--;
+                u+=2;
+                tagNumb-=2;
             }
             Vehicle vehicle1 = new Vehicle();
             Date bday = new Date(Integer.parseInt(bd[0]), Integer.parseInt(bd[1]), Integer.parseInt(bd[2]));
