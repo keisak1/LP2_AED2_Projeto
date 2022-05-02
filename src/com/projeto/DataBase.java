@@ -50,7 +50,6 @@ public class DataBase {
     }
 
 
-
     /**
      * Inserts the specified edge into the ways ArrayList
      *

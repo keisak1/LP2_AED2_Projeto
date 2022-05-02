@@ -3,6 +3,12 @@ package com.projeto;
 
 public class Date {
 
+    public Date(Integer day, Integer month, Integer year){
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+
     public Integer day;
 
     public Integer month;
