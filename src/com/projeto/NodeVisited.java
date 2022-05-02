@@ -20,7 +20,7 @@ public class NodeVisited {
     public Long nodeID;
     public Integer poiID;
     public Date dateVisited;
-    public ArrayList<PoI> poI;
+    public ArrayList<PoI> poI = new ArrayList<>();
 
     public Long getNodeID() {
         return nodeID;
@@ -50,7 +50,7 @@ public class NodeVisited {
         return poI;
     }
 
-    public void setPoI(ArrayList<PoI> poI) {
-        this.poI = poI;
+    public void setPoI(PoI poi) {
+        this.poI.add(poi);
     }
 }
