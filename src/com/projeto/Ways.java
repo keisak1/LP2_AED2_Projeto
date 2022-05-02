@@ -1,6 +1,5 @@
 package com.projeto;
 
-
 import com.projeto.algorithms.LongEdge;
 
 import java.util.ArrayList;
