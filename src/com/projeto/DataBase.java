@@ -153,7 +153,7 @@ public class DataBase {
      */
     public void printBST() {
         for (Long i : bst.keys()) {
-            StdOut.println(i + " " + bst.get(i));
+            StdOut.println(i + " " + bst.get(i).toString());
         }
     }
 

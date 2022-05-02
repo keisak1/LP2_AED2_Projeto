@@ -71,6 +71,17 @@ public class Nodes  {
         return ways;
     }
 
+    @Override
+    public String toString() {
+        return "Nodes{" +
+                "osmNode=" + osmNode +
+                ", id=" + id +
+                ", point=" + point +
+                ", poI=" + poI +
+                ", ways=" + ways +
+                '}';
+    }
+
     public void setWays(Ways ways) {
         this.ways.add(ways);
     }
