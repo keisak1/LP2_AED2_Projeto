@@ -14,6 +14,7 @@ public class Main {
     public static void main(String[] args) {
         loadFromFiles();
         dataBase.printBST();
+        dataBase.printUserList();
     }
 
 
@@ -160,6 +161,7 @@ public class Main {
             Vehicle vehicle1 = new Vehicle();
             Date bday = new Date(Integer.parseInt(bd[0]), Integer.parseInt(bd[1]), Integer.parseInt(bd[2]));
             User user = new User(userID, name, bday, vehicle1, visitedNodes);
+            dataBase.addUser(user);
         }
     }
 }

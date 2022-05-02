@@ -208,7 +208,7 @@ public class DataBase {
      */
     public void printUserList() {
         for (User user : users) {
-            System.out.println(user);
+            System.out.println(user.toString());
         }
     }
 

@@ -66,4 +66,15 @@ public class User {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", birthday=" + birthday +
+                ", vehicle=" + vehicle +
+                ", nodesVisited=" + nodesVisited +
+                '}';
+    }
 }
