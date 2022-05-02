@@ -54,8 +54,8 @@ public class Nodes {
         return poI;
     }
 
-    public void setPoI(ArrayList<PoI> poI) {
-        this.poI = poI;
+    public void setPoI(PoI poI) {
+        this.poI.add(poI);
     }
 
     public Coordinate getPoint() {

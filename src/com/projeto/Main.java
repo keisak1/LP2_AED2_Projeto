@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.In;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Objects;
 
 public class Main {
 
@@ -121,7 +122,24 @@ public class Main {
     private static void loadFromFilePoI(String path) {
         In in = new In(path);
         in.readLine();
-
+        int poiID;
+        long nodeID;
+        String name, Vehicle;
+        Vehicle vehicle = new Vehicle();
+        while(!in.isEmpty()){
+            String[] text = in.readLine().split(",");
+            poiID = Integer.parseInt(text[0]);
+            nodeID = Integer.parseInt(text[1]);
+            name = text[2];
+            if(!Objects.equals(text[3], "none")) {
+                Vehicle = text[3];
+            }else{
+                Vehicle = null;
+            }
+            PoI poI = new PoI(poiID, name, vehicle);
+            Nodes node = dataBase.bst.get(nodeID);
+            node.poI.add(poI);
+        }
     }
 
     private static void loadFromFileUser(String path) {
