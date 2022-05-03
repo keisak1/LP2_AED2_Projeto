@@ -129,23 +129,23 @@ public class Main {
     private static void loadFromFilePoI(String path) {
         In in = new In(path);
         in.readLine();
-        int poiID;
+        long poiID;
         long nodeID;
         String name, Vehicle;
         Vehicle vehicle = new Vehicle();
         while(!in.isEmpty()){
             String[] text = in.readLine().split(",");
-            poiID = Integer.parseInt(text[0]);
-            nodeID = Integer.parseInt(text[1]);
+            poiID = Long.parseLong(text[0]);
+            nodeID = Long.parseLong(text[1]);
             name = text[2];
             if(!Objects.equals(text[3], "none")) {
                 Vehicle = text[3];
             }else{
                 Vehicle = null;
             }
-            PoI poI = new PoI(poiID, name, vehicle);
+            PoI poi = new PoI(poiID, name, vehicle);
             Nodes node = dataBase.bst.get(nodeID);
-            node.poI.add(poI);
+            node.poI.add(poi);
         }
     }
 
