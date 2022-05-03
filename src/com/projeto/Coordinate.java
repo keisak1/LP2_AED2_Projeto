@@ -1,6 +1,7 @@
 package com.projeto;
 
 public class Coordinate {
+  //OLA DANIEL
 
   public Coordinate(double x, double y) {
     this.x = x;

@@ -54,6 +54,7 @@ public class Nodes {
     public Coordinate getPoint() {
         return point;
     }
+    //OLA DANIEL
 
     public void setPoint(Coordinate point) {
         this.point = point;

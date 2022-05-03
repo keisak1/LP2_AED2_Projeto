@@ -1,10 +1,8 @@
 package com.projeto;
 
-import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.In;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Set;
 
@@ -13,6 +11,7 @@ public class Main {
     static DataBase dataBase = new DataBase();
 
     public static void main(String[] args) {
+        //OLA DANIEL
         loadFromFiles();
         dataBase.printBST();
         dataBase.printUserList();

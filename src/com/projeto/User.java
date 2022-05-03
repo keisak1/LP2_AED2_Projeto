@@ -66,6 +66,7 @@ public class User {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
+    //OLA DANIEL
 
     @Override
     public String toString() {
