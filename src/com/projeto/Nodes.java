@@ -22,13 +22,6 @@ public class Nodes {
 
     }
 
-    public Hashtable<String[], String[]> getOsmNode() {
-        return osmNode;
-    }
-
-    public void setOsmNode(Hashtable<String[], String[]> osmNode) {
-        this.osmNode = osmNode;
-    }
 
     public Long id;
 
@@ -73,7 +66,6 @@ public class Nodes {
     @Override
     public String toString() {
         return "Nodes{" +
-                "osmNode=" + osmNode.toString() +
                 ", id=" + id +
                 ", point=" + "(" + point.x + "," + point.y+ ")" +
                 ", poI=" + poI +

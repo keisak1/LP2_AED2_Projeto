@@ -90,7 +90,7 @@ public class DataBase {
      */
     public void printEdges() {
         for (Ways edge : edges) {
-            StdOut.print(edge + "\n");
+            StdOut.print(edge.toString() + "\n");
         }
     }
 

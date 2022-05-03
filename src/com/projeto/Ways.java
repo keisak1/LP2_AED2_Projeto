@@ -20,9 +20,6 @@ public class Ways extends LongEdge {
      *                                  is a negative integer
      * @throws IllegalArgumentException if {@code weight} is {@code NaN}
      */
-    public Ways(Long v, Long w, double weight) {
-        super(v, w, weight);
-    }
 
     public Ways(Long v, Long w, double weight, Long id, Hashtable<String[], String[]> osmWay, String name, String address, String postcode) {
         super(v, w, weight);
@@ -31,6 +28,17 @@ public class Ways extends LongEdge {
         this.name = name;
         this.address = address;
         this.postcode = postcode;
+    }
+
+    @Override
+    public String toString() {
+        return "Ways{" +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                ", weight=" + super.weight() +
+                ", address='" + address + '\'' +
+                ", postcode='" + postcode + '\'' +
+                '}';
     }
 
     public Long getId() {
@@ -63,13 +71,10 @@ public class Ways extends LongEdge {
 
     public Long id;
 
-    public Integer weight;
-
 
     public String address;
 
     public String postcode;
-
 
     public Hashtable<String[], String[]> getOsmWay() {
         return osmWay;
@@ -86,14 +91,6 @@ public class Ways extends LongEdge {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Integer weight) {
-        this.weight = weight;
     }
 
 }

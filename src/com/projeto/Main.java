@@ -1,15 +1,16 @@
 package com.projeto;
 
+import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.In;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Set;
 
 public class Main {
 
     static DataBase dataBase = new DataBase();
-    private static String[] value;
 
     public static void main(String[] args) {
         Nodes nodes = new Nodes();
@@ -17,8 +18,10 @@ public class Main {
         dataBase.printBST();
         dataBase.printUserList();
         dataBase.deleteNode(2486710615L);
-        dataBase.editNode(9613090531L,nodes);
+        //dataBase.editNode(9613090531L,nodes);
         dataBase.printBST();
+        dataBase.printEdges();
+        dataBase.printHash();
     }
 
 
@@ -31,6 +34,7 @@ public class Main {
         loadFromFileWays(fileSource2);
         loadFromFilePoI(fileSource3);
         loadFromFileUser(fileSource4);
+        fillHash();
     }
 
 
@@ -93,16 +97,19 @@ public class Main {
                         address = text[u + 1];
                         u += 2;
                         tagNumb -= 2;
+                        continue;
                     }
                     case "addr:street" -> {
                         address2 = text[u + 1];
                         u += 2;
                         tagNumb -= 2;
+                        continue;
                     }
                     case "addr:postcode" -> {
                         address3 = text[u + 1];
                         u += 2;
                         tagNumb -= 2;
+                        continue;
                     }
                 }
                 tag[i] = text[u];
@@ -159,8 +166,8 @@ public class Main {
                 }
                 NodeVisited nodeVisited = new NodeVisited(nodeID, poiID, nodeVisitedDate, poI);
                 visitedNodes.add(nodeVisited);
-                u+=2;
-                tagNumb-=2;
+                u += 2;
+                tagNumb -= 2;
             }
             Vehicle vehicle1 = new Vehicle();
             Date bday = new Date(Integer.parseInt(bd[0]), Integer.parseInt(bd[1]), Integer.parseInt(bd[2]));
@@ -168,4 +175,52 @@ public class Main {
             dataBase.addUser(user);
         }
     }
+
+    private static void fillHash() {
+        for (Long i : dataBase.bst.keys()) {
+            Nodes node = dataBase.bst.get(i);
+            Set<String[]> a = node.osmNode.keySet();
+            String[] text = new String[0];
+            for (String[] key : a) text = key;
+            int x = 0;
+            ArrayList<Nodes> vertice = new ArrayList<>();
+            ArrayList<Ways> edges = new ArrayList<>();
+            Grafo grafo = new Grafo(edges, vertice);
+            grafo.setVertices(node);
+            while (text[x] != null) {
+                if (dataBase.ht.containsKey(text[x])) {
+                    grafo = dataBase.ht.get(text[x]);
+                    grafo.setVertices(node);
+                    dataBase.ht.put(text[x], grafo);
+                    x++;
+                    continue;
+                }
+                dataBase.ht.put(text[x], grafo);
+                x++;
+            }
+        }
+        for (Ways edge : dataBase.edges) {
+            Set<String[]> a = edge.osmWay.keySet();
+            String[] text = new String[0];
+            for (String[] key : a) text = key;
+            int x = 0;
+
+            ArrayList<Nodes> vertice = new ArrayList<>();
+            ArrayList<Ways> edges = new ArrayList<>();
+            Grafo newGrafo = new Grafo(edges,vertice);
+            newGrafo.setEdges(edge);
+            while (text[x] != null) {
+                if (dataBase.ht.containsKey(text[x])) {
+                    newGrafo = dataBase.ht.get(text[x]);
+                    newGrafo.setEdges(edge);
+                    dataBase.ht.put(text[x], newGrafo);
+                    x++;
+                    continue;
+                }
+                dataBase.ht.put(text[x], newGrafo);
+                x++;
+            }
+        }
+    }
 }
+
