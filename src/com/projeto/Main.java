@@ -11,7 +11,7 @@ public class Main {
     static DataBase dataBase = new DataBase();
 
     public static void main(String[] args) {
-        //OLA DANIEL
+
         loadFromFiles();
         dataBase.printBST();
         dataBase.printUserList();

@@ -3,7 +3,6 @@ package com.projeto;
 
 
 public class PoI implements Comparable<PoI> {
-  //OLA DANIEL
 
   public Vehicle type;
 

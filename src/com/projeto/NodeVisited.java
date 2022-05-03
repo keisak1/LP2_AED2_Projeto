@@ -37,7 +37,6 @@ public class NodeVisited {
     public void setPoiID(Integer poiID) {
         this.poiID = poiID;
     }
-    //OLA DANIEL
 
     public Date getDateVisited() {
         return dateVisited;

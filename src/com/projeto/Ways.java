@@ -29,7 +29,6 @@ public class Ways extends LongEdge {
         this.address = address;
         this.postcode = postcode;
     }
-    //OLA DANIEL
 
     @Override
     public String toString() {

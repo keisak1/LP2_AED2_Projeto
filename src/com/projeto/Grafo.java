@@ -8,7 +8,6 @@ public class Grafo {
         this.edges = edges;
         this.vertices = vertices;
     }
-    //OLA DANIEL
 
     public ArrayList<Ways> edges;
 
