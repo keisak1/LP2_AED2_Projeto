@@ -21,7 +21,6 @@ public class Main {
         dataBase.printHash();
     }
 
-
     private static void loadFromFiles() {
         String fileSource1 = "data\\dataset1_nodes.txt";
         String fileSource2 = "data\\dataset1_ways_nodepairs.txt";

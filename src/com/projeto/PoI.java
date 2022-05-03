@@ -7,7 +7,7 @@ public class PoI implements Comparable<PoI> {
     this.name = name;
     this.type = type;
   }
-  //comentario a toa
+
   public PoI(){
 
   }
