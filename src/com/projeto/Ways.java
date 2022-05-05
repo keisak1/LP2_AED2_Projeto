@@ -33,6 +33,17 @@ public class Ways extends LongEdge {
         this.postcode = postcode;
     }
 
+    @Override
+    public String toString() {
+        return "Ways{" +
+                "name=" + name + '\'' +
+                ", id=" + id +
+                ", weight=" + weight +
+                ", address='" + address + '\'' +
+                ", postcode='" + postcode + '\'' +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }

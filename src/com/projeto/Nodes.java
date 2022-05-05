@@ -73,8 +73,7 @@ public class Nodes {
     @Override
     public String toString() {
         return "Nodes{" +
-                "osmNode=" + osmNode.toString() +
-                ", id=" + id +
+                "id=" + id +
                 ", point=" + "(" + point.x + "," + point.y+ ")" +
                 ", poI=" + poI +
                 ", ways=" + ways +

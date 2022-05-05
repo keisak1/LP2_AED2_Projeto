@@ -14,10 +14,14 @@ public class Main {
     public static void main(String[] args) {
 
         loadFromFiles();
+        now();
+    }
+
+
+
+    private static void now(){
         dataBase.printBST();
         dataBase.printUserList();
-        dataBase.deleteNode(2486710615L);
-        dataBase.printBST();
         dataBase.printEdges();
         dataBase.printHash();
     }
