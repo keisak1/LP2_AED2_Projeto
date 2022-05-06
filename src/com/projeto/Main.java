@@ -12,13 +12,13 @@ public class Main {
     static DataBase dataBase = new DataBase();
 
     public static void main(String[] args) {
-
         loadFromFiles();
         now();
     }
 
-
-
+    /**
+     * Prints all database on the instant of the calling method
+     */
     private static void now(){
         dataBase.printBST();
         dataBase.printUserList();
@@ -26,6 +26,9 @@ public class Main {
         dataBase.printHash();
     }
 
+    /**
+     * Loads content from files to the database
+     */
     private static void loadFromFiles() {
         String fileSource1 = "data\\dataset1_nodes.txt";
         String fileSource2 = "data\\dataset1_ways_nodepairs.txt";
@@ -38,7 +41,11 @@ public class Main {
         fillHash();
     }
 
-
+    /**
+     * Loads content from file path to Nodes database
+     *
+     * @param path - String
+     */
     private static void loadFromFileNodes(String path) {
         In in = new In(path);
         in.readLine();
@@ -73,6 +80,11 @@ public class Main {
         }
     }
 
+    /**
+     * Loads content from file path to Ways database
+     *
+     * @param path - String
+     */
     private static void loadFromFileWays(String path) {
         In in = new In(path);
         in.readLine();
@@ -130,6 +142,11 @@ public class Main {
         }
     }
 
+    /**
+     * Loads content from file path to PoI database
+     *
+     * @param path - String
+     */
     private static void loadFromFilePoI(String path) {
         In in = new In(path);
         in.readLine();
@@ -153,6 +170,11 @@ public class Main {
         }
     }
 
+    /**
+     * Loads content from file path to User database
+     *
+     * @param path - String
+     */
     private static void loadFromFileUser(String path) {
         In in = new In(path);
         in.readLine();
@@ -194,6 +216,9 @@ public class Main {
         }
     }
 
+    /**
+     * Fills HashTable from database with Nodes and Ways tags
+     */
     private static void fillHash() {
         for (Long i : dataBase.bst.keys()) {
             Nodes node = dataBase.bst.get(i);

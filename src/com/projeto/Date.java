@@ -15,7 +15,11 @@ public class Date {
 
     public Integer year;
 
-
+    /**
+     * Checks if date is before the date given
+     *
+     * @param d - date class
+     */
     public boolean beforeDate(Date d) {
         if (this.year < d.year) return true;
         else if (this.year.equals(d.year)) {
@@ -28,6 +32,11 @@ public class Date {
         return false;
     }
 
+    /**
+     * Checks if date is after the date given
+     *
+     * @param d - date class
+     */
     public boolean afterDate(Date d) {
         if (this.day.equals(d.day) && this.month.equals(d.month) && this.year.equals(d.year))
             return false;

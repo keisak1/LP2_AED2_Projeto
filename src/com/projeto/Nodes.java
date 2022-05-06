@@ -3,7 +3,6 @@ package com.projeto;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 
 public class Nodes {
 
@@ -34,7 +33,7 @@ public class Nodes {
 
     public Coordinate point;
 
-    public ArrayList<PoI> poI;
+    public ArrayList<PoI> poI = new ArrayList<>();
 
     public ArrayList<Ways> ways = new ArrayList<>();
 
@@ -66,8 +65,12 @@ public class Nodes {
         this.point = point;
     }
 
-    public List<Ways> getWays() {
+    public ArrayList<Ways> getWays() {
         return ways;
+    }
+
+    public void setWays(Ways ways) {
+        this.ways.add(ways);
     }
 
     @Override
@@ -78,10 +81,6 @@ public class Nodes {
                 ", poI=" + poI +
                 ", ways=" + ways +
                 '}';
-    }
-
-    public void setWays(Ways ways) {
-        this.ways.add(ways);
     }
 }
 

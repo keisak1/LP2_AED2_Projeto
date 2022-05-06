@@ -212,7 +212,12 @@ public class DataBase {
         }
     }
 
-
+    /**
+     * Finds points of interest that were visited by a user in a certain period of time
+     *
+     * @param d    - the date
+     * @param user - user class
+     **/
     public ArrayList<PoI> visitedBy(Date d, User user) {
         ArrayList<PoI> visitedPoI = new ArrayList<>();
         for (User user1 : users) {
@@ -232,6 +237,12 @@ public class DataBase {
         return visitedPoI;
     }
 
+    /**
+     * Finds points of interest that were not visited by a user in a certain period of time
+     *
+     * @param d    - the date
+     * @param user - user class
+     **/
     public ArrayList<PoI> notVisitedBy(Date d, User user) {
         ArrayList<PoI> notVisitedPoI = new ArrayList<>();
 
@@ -252,6 +263,12 @@ public class DataBase {
         return notVisitedPoI;
     }
 
+    /**
+     * Finds points of interest that were visited in a certain period of time
+     *
+     * @param d - the date
+     * @param p - point of interest class
+     **/
     public ArrayList<User> whoVisited(Date d, PoI p) {
         ArrayList<User> usersWhoVisited = new ArrayList<>();
         for (User user : users) {
@@ -270,6 +287,11 @@ public class DataBase {
         return usersWhoVisited;
     }
 
+    /**
+     * Finds points of interest that weren't visited on a certain period of time
+     *
+     * @param d - the date
+     **/
     public ArrayList<PoI> notVisitedPoI(Date d) {
         ArrayList<PoI> notVisited = new ArrayList<>();
         for (User user : users) {
@@ -282,6 +304,11 @@ public class DataBase {
         return notVisited;
     }
 
+    /**
+     * Finds top 5 users that visited most points of interest
+     *
+     * @param d - the date
+     **/
     public ArrayList<User> top5Users(Date d) {
         ArrayList<User> top5usersWhoVisitedMostPoI = new ArrayList<>(5);
         for (User user : users) {
@@ -305,6 +332,11 @@ public class DataBase {
         return top5usersWhoVisitedMostPoI;
     }
 
+    /**
+     * Finds top 5 points of interest most visited
+     *
+     * @param d - the date
+     **/
     public ArrayList<PoI> top5PoIs(Date d) {
         ArrayList<PoI> top5PoIsWhoWereVisited = new ArrayList<>(5);
         BinarySearchST<PoI, Integer> funcBst = new BinarySearchST<>();

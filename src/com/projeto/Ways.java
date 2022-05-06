@@ -2,9 +2,7 @@ package com.projeto;
 
 import com.projeto.algorithms.LongEdge;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 
 
 public class Ways extends LongEdge {
@@ -33,16 +31,15 @@ public class Ways extends LongEdge {
         this.postcode = postcode;
     }
 
-    @Override
-    public String toString() {
-        return "Ways{" +
-                "name=" + name + '\'' +
-                ", id=" + id +
-                ", weight=" + weight +
-                ", address='" + address + '\'' +
-                ", postcode='" + postcode + '\'' +
-                '}';
-    }
+    public String name;
+
+    public Long id;
+
+    public Integer weight;
+
+    public String address;
+
+    public String postcode;
 
     public Long getId() {
         return id;
@@ -70,18 +67,6 @@ public class Ways extends LongEdge {
 
     public Hashtable<String[], String[]> osmWay = new Hashtable<>();
 
-    public String name;
-
-    public Long id;
-
-    public Integer weight;
-
-
-    public String address;
-
-    public String postcode;
-
-
     public Hashtable<String[], String[]> getOsmWay() {
         return osmWay;
     }
@@ -89,7 +74,6 @@ public class Ways extends LongEdge {
     public void setOsmWay(Hashtable<String[], String[]> osmWay) {
         this.osmWay = osmWay;
     }
-
 
     public String getName() {
         return name;
@@ -107,4 +91,14 @@ public class Ways extends LongEdge {
         this.weight = weight;
     }
 
+    @Override
+    public String toString() {
+        return "Ways{" +
+                "name=" + name + '\'' +
+                ", id=" + id +
+                ", weight=" + weight +
+                ", address='" + address + '\'' +
+                ", postcode='" + postcode + '\'' +
+                '}';
+    }
 }
