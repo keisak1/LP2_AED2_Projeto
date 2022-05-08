@@ -20,10 +20,15 @@ public class Main {
      * Prints all database on the instant of the calling method
      */
     private static void now(){
+        Date d = new Date(8,5,2022);
         dataBase.printBST();
         dataBase.printUserList();
         dataBase.printEdges();
         dataBase.printHash();
+        dataBase.tagFound("crossing");
+        dataBase.top5PoIs(d);
+        dataBase.top5Users(d);
+        dataBase.notVisitedPoI(d);
     }
 
     /**
