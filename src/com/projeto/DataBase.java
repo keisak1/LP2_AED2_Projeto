@@ -4,12 +4,30 @@ import edu.princeton.cs.algs4.*;
 
 import java.util.*;
 
+/**
+ * The type Data base.
+ */
 public class DataBase {
+    /**
+     * The Bst.
+     */
     public BinarySearchST<Long, Nodes> bst = new BinarySearchST<>();
+    /**
+     * The Ht.
+     */
     public Hashtable<String, Grafo> ht = new Hashtable<>();
+    /**
+     * The Users.
+     */
     public ArrayList<User> users = new ArrayList<>();
+    /**
+     * The Edges.
+     */
     public ArrayList<Ways> edges = new ArrayList<>();
 
+    /**
+     * Instantiates a new Data base.
+     */
     public DataBase() {
     }
 
@@ -81,6 +99,7 @@ public class DataBase {
      * Searchs for edge. If it exists or not
      *
      * @param edgeToBeSearched - the edge
+     * @return the boolean
      */
     public boolean searchEdge(Ways edgeToBeSearched) {
         return edges.contains(edgeToBeSearched);
@@ -110,7 +129,7 @@ public class DataBase {
      *
      * @param key  - the key
      * @param node - node class
-     **/
+     */
     public void editNode(long key, Nodes node) {
         if (bst.get(key) != null) {
             bst.put(key, node);
@@ -145,6 +164,7 @@ public class DataBase {
      * Searches for the specified key's value
      *
      * @param key - the key
+     * @return the nodes
      */
     public Nodes searchNode(long key) {
         return bst.get(key);
@@ -217,7 +237,8 @@ public class DataBase {
      *
      * @param d    - the date
      * @param user - user class
-     **/
+     * @return the array list
+     */
     public ArrayList<PoI> visitedBy(Date d, User user) {
         ArrayList<PoI> visitedPoI = new ArrayList<>();
         for (User user1 : users) {
@@ -242,7 +263,8 @@ public class DataBase {
      *
      * @param d    - the date
      * @param user - user class
-     **/
+     * @return the array list
+     */
     public ArrayList<PoI> notVisitedBy(Date d, User user) {
         ArrayList<PoI> notVisitedPoI = new ArrayList<>();
 
@@ -268,7 +290,8 @@ public class DataBase {
      *
      * @param d - the date
      * @param p - point of interest class
-     **/
+     * @return the array list
+     */
     public ArrayList<User> whoVisited(Date d, PoI p) {
         ArrayList<User> usersWhoVisited = new ArrayList<>();
         for (User user : users) {
@@ -291,7 +314,8 @@ public class DataBase {
      * Finds points of interest that weren't visited on a certain period of time
      *
      * @param d - the date
-     **/
+     * @return the array list
+     */
     public ArrayList<PoI> notVisitedPoI(Date d) {
         ArrayList<PoI> notVisited = new ArrayList<>();
         for (User user : users) {
@@ -308,7 +332,8 @@ public class DataBase {
      * Finds top 5 users that visited most points of interest
      *
      * @param d - the date
-     **/
+     * @return the array list
+     */
     public ArrayList<User> top5Users(Date d) {
         ArrayList<User> top5usersWhoVisitedMostPoI = new ArrayList<>(5);
         for (User user : users) {
@@ -336,7 +361,8 @@ public class DataBase {
      * Finds top 5 points of interest most visited
      *
      * @param d - the date
-     **/
+     * @return the array list
+     */
     public ArrayList<PoI> top5PoIs(Date d) {
         ArrayList<PoI> top5PoIsWhoWereVisited = new ArrayList<>(5);
         BinarySearchST<PoI, Integer> funcBst = new BinarySearchST<>();
@@ -381,7 +407,7 @@ public class DataBase {
      * Looks for a tag in the Hashtable, if it is found, returns an ArrayList of Graph Object
      *
      * @param tag - the tag
-     * @return tagFound
+     * @return tagFound array list
      */
     public ArrayList<Grafo> tagFound(String tag) {
         ArrayList<Grafo> tagFound = new ArrayList<>();

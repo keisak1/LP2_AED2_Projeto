@@ -3,6 +3,9 @@ package com.projeto;
 
 import java.util.ArrayList;
 
+/**
+ * The type Node visited.
+ */
 public class NodeVisited {
 
     public NodeVisited(Long nodeID, Integer poiID, Date dateVisited, ArrayList<PoI> poI){

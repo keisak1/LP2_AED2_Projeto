@@ -1,5 +1,8 @@
 package com.projeto;
 
+/**
+ * The type Coordinate.
+ */
 public class Coordinate {
 
   public Coordinate(double x, double y) {

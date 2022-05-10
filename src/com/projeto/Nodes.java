@@ -4,6 +4,9 @@ package com.projeto;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+/**
+ * The type Nodes.
+ */
 public class Nodes {
 
 

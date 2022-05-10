@@ -5,6 +5,9 @@ import com.projeto.algorithms.LongEdge;
 import java.util.Hashtable;
 
 
+/**
+ * The type Ways.
+ */
 public class Ways extends LongEdge {
 
     /**

@@ -26,8 +26,8 @@ public class Main {
         dataBase.printEdges();
         dataBase.printHash();
         dataBase.tagFound("crossing");
-        dataBase.top5PoIs(d);
-        dataBase.top5Users(d);
+        //dataBase.top5PoIs(d);
+        //dataBase.top5Users(d);
         dataBase.notVisitedPoI(d);
     }
 

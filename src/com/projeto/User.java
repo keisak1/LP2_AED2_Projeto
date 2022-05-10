@@ -3,6 +3,9 @@ package com.projeto;
 
 import java.util.ArrayList;
 
+/**
+ * The type User.
+ */
 public class User {
 
     public User(Integer id, String name, Date birthday, Vehicle vehicle, ArrayList<NodeVisited> nodesVisited){

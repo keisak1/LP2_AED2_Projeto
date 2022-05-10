@@ -1,5 +1,8 @@
 package com.projeto;
 
+/**
+ * The type Po i.
+ */
 public class PoI implements Comparable<PoI> {
 
   public PoI(Long id, String name, Vehicle type){
