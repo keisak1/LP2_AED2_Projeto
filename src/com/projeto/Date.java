@@ -1,7 +1,7 @@
 package com.projeto;
 
 
-public class Date {
+public class Date implements Comparable<Date> {
 
     public Date(Integer day, Integer month, Integer year){
         this.day = day;
@@ -65,5 +65,10 @@ public class Date {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    @Override
+    public int compareTo(Date o) {
+        return 0;
     }
 }

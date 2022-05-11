@@ -267,15 +267,13 @@ public class DataBase {
      */
     public ArrayList<PoI> notVisitedBy(Date d, User user) {
         ArrayList<PoI> notVisitedPoI = new ArrayList<>();
-
         for (User user1 : users) {
             if (user1.id.equals(user.id)) {
-                for (NodeVisited nodeVisited1 : user.getNodesVisited()) {
-                    if (nodeVisited1.dateVisited.beforeDate(d)) {
-                        for (Long i : bst.keys()) {
-                            boolean b = bst.get(i).id.equals(nodeVisited1.nodeID);
-                            if (!b) {
-                                notVisitedPoI.addAll(nodeVisited1.getPoI());
+                for (Long i : bst.keys()) {
+                    for (NodeVisited nodeVisited1 : user.getNodesVisited()) {
+                        for (PoI poi : bst.get(i).poI) {
+                            if (nodeVisited1.dateVisited.beforeDate(d) && !nodeVisited1.getPoI().contains(poi)) {
+                                notVisitedPoI.add(poi);
                             }
                         }
                     }

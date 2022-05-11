@@ -8,9 +8,8 @@ import java.util.ArrayList;
  */
 public class NodeVisited {
 
-    public NodeVisited(Long nodeID, Integer poiID, Date dateVisited, ArrayList<PoI> poI){
+    public NodeVisited(Long nodeID, Date dateVisited, ArrayList<PoI> poI){
         this.nodeID = nodeID;
-        this.poiID = poiID;
         this.dateVisited = dateVisited;
         this.poI = poI;
     }
@@ -20,7 +19,6 @@ public class NodeVisited {
     }
 
     public Long nodeID;
-    public Integer poiID;
     public Date dateVisited;
     public ArrayList<PoI> poI = new ArrayList<>();
 
@@ -30,14 +28,6 @@ public class NodeVisited {
 
     public void setNodeID(Long nodeID) {
         this.nodeID = nodeID;
-    }
-
-    public Integer getPoiID() {
-        return poiID;
-    }
-
-    public void setPoiID(Integer poiID) {
-        this.poiID = poiID;
     }
 
     public Date getDateVisited() {

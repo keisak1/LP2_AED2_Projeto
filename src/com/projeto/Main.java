@@ -209,7 +209,7 @@ public class Main {
                         poI.add(poi1);
                     }
                 }
-                NodeVisited nodeVisited = new NodeVisited(nodeID, poiID, nodeVisitedDate, poI);
+                NodeVisited nodeVisited = new NodeVisited(nodeID, nodeVisitedDate, poI);
                 visitedNodes.add(nodeVisited);
                 u += 2;
                 tagNumb -= 2;
