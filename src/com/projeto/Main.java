@@ -1,6 +1,7 @@
 package com.projeto;
 
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -19,8 +20,8 @@ public class Main {
     /**
      * Prints all database on the instant of the calling method
      */
-    private static void now(){
-        Date d = new Date(8,5,2022);
+    private static void now() {
+        Date d = new Date(8, 5, 2022);
         dataBase.printBST();
         dataBase.printUserList();
         dataBase.printEdges();
@@ -29,6 +30,9 @@ public class Main {
         //dataBase.top5PoIs(d);
         //dataBase.top5Users(d);
         dataBase.notVisitedPoI(d);
+        dataBase.createGraph();
+        dataBase.addEdges();
+        dataBase.printGraph();
     }
 
     /**
@@ -52,22 +56,25 @@ public class Main {
      * @param path - String
      */
     private static void loadFromFileNodes(String path) {
+        int size = 0;
         In in = new In(path);
         in.readLine();
-        long id;
+        int id;
+        int vertexID;
         String[] value;
         String[] tag;
         float coordenateX;
         float coordenateY;
         while (!in.isEmpty()) {
             String[] text = in.readLine().split(",");
-            id = Long.parseLong(text[0]);
+            id = Integer.parseInt(text[0]);
             coordenateX = Float.parseFloat(text[1]);
             coordenateY = Float.parseFloat(text[2]);
+            vertexID = Integer.parseInt(text[3]);
             tag = new String[10];
             value = new String[10];
-            int tagNumb = text.length - 3;
-            int i = 0, u = 3;
+            int tagNumb = text.length - 4;
+            int i = 0, u = 4;
             while (tagNumb != 0) {
                 tag[i] = text[u];
                 value[i] = text[u + 1];
@@ -80,8 +87,9 @@ public class Main {
             Coordinate coordinate = new Coordinate(coordenateX, coordenateY);
             ArrayList<Ways> waysArrayList = new ArrayList<>();
             ArrayList<PoI> PoIArrayList = new ArrayList<>();
-            Nodes node = new Nodes(osm, id, coordinate, PoIArrayList, waysArrayList);
+            Nodes node = new Nodes(osm, id, vertexID, coordinate, PoIArrayList, waysArrayList);
             dataBase.bst.put(id, node);
+            dataBase.setBstSize(size++);
         }
     }
 
@@ -91,14 +99,15 @@ public class Main {
      * @param path - String
      */
     private static void loadFromFileWays(String path) {
+        int size = 0;
         In in = new In(path);
         in.readLine();
         while (!in.isEmpty()) {
             String address = null, address2 = null, address3 = null;
             String[] text = in.readLine().split(",");
-            long id = Long.parseLong(text[0]);
-            long nodeID1 = Long.parseLong(text[1]);
-            long nodeID2 = Long.parseLong(text[2]);
+            Integer id = Integer.parseInt(text[0]);
+            int nodeID1 = Integer.parseInt(text[1]);
+            int nodeID2 = Integer.parseInt(text[2]);
             float weight = Float.parseFloat(text[3]);
             String[] value = new String[10];
             String[] tag = new String[10];
@@ -138,12 +147,13 @@ public class Main {
             }
             Hashtable<String[], String[]> osmWay = new Hashtable<>();
             osmWay.put(tag, value);
-            Ways way = new Ways(nodeID1, nodeID2, weight, id, osmWay, address2, address, address3);
-            dataBase.edges.add(way);
             Nodes node = dataBase.bst.get(nodeID1);
+            Nodes node2 = dataBase.bst.get(nodeID2);
+            Ways way = new Ways(node.getVertexID(), node2.getVertexID(), weight, id, osmWay, address2, address, address3);
+            dataBase.edges.add(way);
+            node2.setWays(way);
             node.setWays(way);
-            node = dataBase.bst.get(nodeID2);
-            node.setWays(way);
+            dataBase.setEdgesSize(size++);
         }
     }
 
@@ -155,18 +165,18 @@ public class Main {
     private static void loadFromFilePoI(String path) {
         In in = new In(path);
         in.readLine();
-        long poiID;
-        long nodeID;
+        int poiID;
+        int nodeID;
         String name, Vehicle;
         Vehicle vehicle = new Vehicle();
-        while(!in.isEmpty()){
+        while (!in.isEmpty()) {
             String[] text = in.readLine().split(",");
-            poiID = Long.parseLong(text[0]);
-            nodeID = Long.parseLong(text[1]);
+            poiID = Integer.parseInt(text[0]);
+            nodeID = Integer.parseInt(text[1]);
             name = text[2];
-            if(!Objects.equals(text[3], "none")) {
+            if (!Objects.equals(text[3], "none")) {
                 Vehicle = text[3];
-            }else{
+            } else {
                 Vehicle = null;
             }
             PoI poi = new PoI(poiID, name, vehicle);
@@ -183,7 +193,7 @@ public class Main {
     private static void loadFromFileUser(String path) {
         In in = new In(path);
         in.readLine();
-        long nodeID;
+        int nodeID;
         int tagNumb, u, poiID, userID;
         String name, vehicle;
         String[] bd, nodesVisited, dateNodeVisited;
@@ -199,7 +209,7 @@ public class Main {
             u = 4;
             while (tagNumb >= 0) {
                 nodesVisited = text[u].split(":");
-                nodeID = Long.parseLong(nodesVisited[1]);
+                nodeID = Integer.parseInt(nodesVisited[1]);
                 poiID = Integer.parseInt(nodesVisited[2]);
                 dateNodeVisited = nodesVisited[3].split("-");
                 Date nodeVisitedDate = new Date(Integer.parseInt(dateNodeVisited[0]), Integer.parseInt(dateNodeVisited[1]), Integer.parseInt(dateNodeVisited[2]));
@@ -225,7 +235,7 @@ public class Main {
      * Fills HashTable from database with Nodes and Ways tags
      */
     private static void fillHash() {
-        for (Long i : dataBase.bst.keys()) {
+        for (Integer i : dataBase.bst.keys()) {
             Nodes node = dataBase.bst.get(i);
             Set<String[]> a = node.osmNode.keySet();
             String[] text = new String[0];
@@ -255,7 +265,7 @@ public class Main {
 
             ArrayList<Nodes> vertice = new ArrayList<>();
             ArrayList<Ways> edges = new ArrayList<>();
-            Grafo newGrafo = new Grafo(edges,vertice);
+            Grafo newGrafo = new Grafo(edges, vertice);
             newGrafo.setEdges(edge);
             while (text[x] != null) {
                 if (dataBase.ht.containsKey(text[x])) {

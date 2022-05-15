@@ -12,9 +12,10 @@ public class Nodes {
 
     public Hashtable<String[], String[]> osmNode = new Hashtable<>();
 
-    public Nodes(Hashtable<String[], String[]> osmNode, Long id, Coordinate point, ArrayList<PoI> poI, ArrayList<Ways> ways) {
+    public Nodes(Hashtable<String[], String[]> osmNode, Integer id, Integer vertexID, Coordinate point, ArrayList<PoI> poI, ArrayList<Ways> ways) {
         this.osmNode = osmNode;
         this.id = id;
+        this.vertexID=vertexID;
         this.point = point;
         this.poI = poI;
         this.ways = ways;
@@ -32,7 +33,17 @@ public class Nodes {
         this.osmNode = osmNode;
     }
 
-    public Long id;
+    public Integer id;
+
+    public Integer vertexID;
+
+    public Integer getVertexID() {
+        return vertexID;
+    }
+
+    public void setVertexID(Integer vertexID) {
+        this.vertexID = vertexID;
+    }
 
     public Coordinate point;
 
@@ -40,11 +51,11 @@ public class Nodes {
 
     public ArrayList<Ways> ways = new ArrayList<>();
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

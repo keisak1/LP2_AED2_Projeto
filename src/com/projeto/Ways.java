@@ -1,6 +1,6 @@
 package com.projeto;
 
-import com.projeto.algorithms.LongEdge;
+import edu.princeton.cs.algs4.Edge;
 
 import java.util.Hashtable;
 
@@ -8,7 +8,7 @@ import java.util.Hashtable;
 /**
  * The type Ways.
  */
-public class Ways extends LongEdge {
+public class Ways extends Edge {
 
     /**
      * Initializes an edge between vertices {@code v} and {@code w} of
@@ -21,11 +21,9 @@ public class Ways extends LongEdge {
      *                                  is a negative integer
      * @throws IllegalArgumentException if {@code weight} is {@code NaN}
      */
-    public Ways(Long v, Long w, double weight) {
-        super(v, w, weight);
-    }
 
-    public Ways(Long v, Long w, double weight, Long id, Hashtable<String[], String[]> osmWay, String name, String address, String postcode) {
+
+    public Ways(int v, int w, double weight, Integer id, Hashtable<String[], String[]> osmWay, String name, String address, String postcode) {
         super(v, w, weight);
         this.osmWay = osmWay;
         this.id = id;
@@ -36,19 +34,23 @@ public class Ways extends LongEdge {
 
     public String name;
 
-    public Long id;
+    public Integer id;
 
-    public Integer weight;
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public Double weight;
 
     public String address;
 
     public String postcode;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -86,12 +88,16 @@ public class Ways extends LongEdge {
         this.name = name;
     }
 
-    public Integer getWeight() {
-        return weight;
+    public int getV() {
+        return super.either();
     }
 
-    public void setWeight(Integer weight) {
-        this.weight = weight;
+    public int getW() {
+        return super.other(super.either());
+    }
+
+    public double getWeight() {
+        return super.weight();
     }
 
     @Override
@@ -99,7 +105,7 @@ public class Ways extends LongEdge {
         return "Ways{" +
                 "name=" + name + '\'' +
                 ", id=" + id +
-                ", weight=" + weight +
+                ", weight=" + getWeight() +
                 ", address='" + address + '\'' +
                 ", postcode='" + postcode + '\'' +
                 '}';

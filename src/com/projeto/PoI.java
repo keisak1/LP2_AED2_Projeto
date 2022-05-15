@@ -5,7 +5,7 @@ package com.projeto;
  */
 public class PoI implements Comparable<PoI> {
 
-  public PoI(Long id, String name, Vehicle type){
+  public PoI(Integer id, String name, Vehicle type){
     this.id = id;
     this.name = name;
     this.type = type;
@@ -19,7 +19,7 @@ public class PoI implements Comparable<PoI> {
 
   public String name;
 
-  public Long id;
+  public Integer id;
 
   public Vehicle getType() {
     return type;
@@ -37,11 +37,11 @@ public class PoI implements Comparable<PoI> {
     this.name = name;
   }
 
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
