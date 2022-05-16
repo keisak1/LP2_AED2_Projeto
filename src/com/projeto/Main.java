@@ -33,6 +33,7 @@ public class Main {
         dataBase.createGraph();
         dataBase.addEdges();
         dataBase.printGraph();
+        dataBase.shortestPath(0,7);
     }
 
     /**

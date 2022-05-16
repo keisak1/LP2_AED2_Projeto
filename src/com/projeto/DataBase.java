@@ -25,7 +25,7 @@ public class DataBase {
      */
     public ArrayList<Ways> edges = new ArrayList<>();
 
-    public EdgeWeightedGraph ewg;
+    public EdgeWeightedDigraph ewg;
 
     public Integer bstSize;
 
@@ -53,18 +53,58 @@ public class DataBase {
     public DataBase() {
     }
 
+    /**
+     * Creates graph
+     */
     public void createGraph() {
-        ewg = new EdgeWeightedGraph(getBstSize() + 1, getEdgesSize() + 1);
+        ewg = new EdgeWeightedDigraph(getBstSize() + 1, getEdgesSize() + 1);
     }
 
+    /**
+     * Prints Graph
+     */
     public void printGraph() {
         StdOut.println(ewg.toString());
     }
 
+    /**
+     * Adds edges to the graph
+     */
     public void addEdges() {
         for (Ways ways : edges) {
-            Edge edge = new Edge(ways.getV(), ways.getW(), ways.getWeight());
+            DirectedEdge edge = new DirectedEdge(ways.getV(), ways.getW(), ways.getWeight());
             ewg.addEdge(edge);
+
+        }
+    }
+
+    /**
+     * Set of overpopulated nodes
+     * @param timestamp - Date
+     */
+    public void overPopulatedNode(Date timestamp){
+        Set<Nodes> set = new HashSet<Nodes>();
+        for (User user:users) {
+            for (NodeVisited nodeVisited:user.getNodesVisited()) {
+                if(nodeVisited.getDateVisited()==timestamp){
+
+                }
+            }
+        }
+    }
+
+    /**
+     *  Calculates the shortest path from one vertex to another
+     * @param from - starting vertex
+     * @param to - to vertex
+     */
+    public void shortestPath(int from, int to) {
+        DijkstraSP sp = new DijkstraSP(ewg, from);
+        if (sp.hasPathTo(to)) {
+            System.out.println(sp.pathTo(to));
+            System.out.println("Shortest path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
+        }else{
+            System.out.println("There's no such path.");
         }
     }
 

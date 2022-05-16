@@ -1,5 +1,6 @@
 package com.projeto;
 
+import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.Edge;
 
 import java.util.Hashtable;
@@ -8,7 +9,7 @@ import java.util.Hashtable;
 /**
  * The type Ways.
  */
-public class Ways extends Edge {
+public class Ways extends DirectedEdge {
 
     /**
      * Initializes an edge between vertices {@code v} and {@code w} of
@@ -89,11 +90,11 @@ public class Ways extends Edge {
     }
 
     public int getV() {
-        return super.either();
+        return super.from();
     }
 
     public int getW() {
-        return super.other(super.either());
+        return super.to();
     }
 
     public double getWeight() {
