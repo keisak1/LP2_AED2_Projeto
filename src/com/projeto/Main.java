@@ -34,8 +34,10 @@ public class Main {
         dataBase.addEdges();
         dataBase.printGraph();
         dataBase.overPopulatedNode(d);
-        dataBase.shortestPath(0,7);
-        dataBase.shortestPathNotOverpopulated(11,7);
+        dataBase.shortestPath(19,22);
+        dataBase.shortestPathNotOverpopulated(19,22);
+        dataBase.checkConnectivity();
+        dataBase.checkSubGraphConnectivity();
     }
 
     /**

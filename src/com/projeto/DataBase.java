@@ -27,7 +27,7 @@ public class DataBase {
     public Set<Nodes> set = new HashSet<>();
 
     public EdgeWeightedDigraph ewg;
-
+    public EdgeWeightedDigraph subGraph;
     public Integer bstSize;
 
     public Integer getBstSize() {
@@ -96,9 +96,57 @@ public class DataBase {
                             set.add(node);
                         }
                     }
-                 }
+                }
             }
             count = 0;
+        }
+    }
+
+    public void checkConnectivity() {
+        System.out.println("Graph connectivity data:");
+
+        Graph graph = new Graph(bstSize + 1);
+        for (Ways ways : edges) {
+            graph.addEdge(ways.getV(), ways.getW());
+        }
+        for (int i = 0; i < getBstSize() + 1; i++) {
+            DepthFirstSearch dfs = new DepthFirstSearch(graph, i);
+            for (int v = 0; v < graph.V(); v++) {
+                if (dfs.marked(v))
+                    StdOut.print(v + " ");
+            }
+            StdOut.println();
+            if (dfs.count() != graph.V()) StdOut.println("NOT connected");
+            else StdOut.println("connected");
+        }
+    }
+
+    public void checkSubGraphConnectivity() {
+        System.out.println("Subgraph connectivity data:");
+        Graph graph = new Graph(bstSize + 1);
+
+        int flag = 0;
+        for (Ways way : edges) {
+            for (Nodes nodes : set) {
+                if (nodes.getVertexID() == way.getW() || nodes.getVertexID() == way.getV()) {
+                    flag = 1;
+                }
+            }
+            if (flag == 0) {
+                graph.addEdge(way.getV(), way.getW());
+            }
+            flag = 0;
+        }
+
+        for (int u = 0; u < getBstSize() + 1; u++) {
+            DepthFirstSearch dfs = new DepthFirstSearch(graph, u);
+            for (int v = 0; v < graph.V(); v++) {
+                if (dfs.marked(v))
+                    StdOut.print(v + " ");
+            }
+            StdOut.println();
+            if (dfs.count() != graph.V()) StdOut.println("NOT connected");
+            else StdOut.println("connected");
         }
     }
 
@@ -109,19 +157,26 @@ public class DataBase {
      * @param to   - to vertex
      */
     public void shortestPathNotOverpopulated(int from, int to) {
-        EdgeWeightedDigraph ewg2 = new EdgeWeightedDigraph(getBstSize() + 1);
-        for (Integer i : bst.keys()) {
-            Nodes node = bst.get(i);
-            if (!set.contains(node)) {
-                for (Ways way : node.getWays()) {
-                    DirectedEdge edge = new DirectedEdge(way.getV(), way.getW(), way.getWeight());
-                    ewg2.addEdge(edge);
+        subGraph = new EdgeWeightedDigraph(getBstSize() + 1);
 
+
+        int flag = 0;
+        for (Ways way : edges) {
+            for (Nodes nodes : set) {
+                if (nodes.getVertexID() == way.getW() || nodes.getVertexID() == way.getV()) {
+                    flag = 1;
                 }
             }
+            if (flag == 0) {
+                DirectedEdge edge = new DirectedEdge(way.getV(), way.getW(), way.getWeight());
+                subGraph.addEdge(edge);
+            }
+            flag = 0;
         }
 
-        DijkstraSP sp = new DijkstraSP(ewg2, from);
+
+        DijkstraSP sp = new DijkstraSP(subGraph, from);
+
         if (sp.hasPathTo(to)) {
             System.out.println("Shortest non overpopulated path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
         } else {
@@ -138,7 +193,6 @@ public class DataBase {
     public void shortestPath(int from, int to) {
         DijkstraSP sp = new DijkstraSP(ewg, from);
         if (sp.hasPathTo(to)) {
-            System.out.println(sp.pathTo(to));
             System.out.println("Shortest path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
         } else {
             System.out.println("There's no such path.");
