@@ -58,7 +58,7 @@ public class DataBase {
      * Creates graph
      */
     public void createGraph() {
-        ewg = new EdgeWeightedDigraph(getBstSize() + 1, getEdgesSize() + 1);
+        ewg = new EdgeWeightedDigraph(getBstSize() + 1);
     }
 
     /**
@@ -109,17 +109,7 @@ public class DataBase {
      * @param to   - to vertex
      */
     public void shortestPathNotOverpopulated(int from, int to) {
-        int wayCounter = 0;
-        for (Integer i : bst.keys()) {
-            Nodes node = bst.get(i);
-            if (!set.contains(node)) {
-                for (Ways way : node.getWays()) {
-                    wayCounter++;
-                }
-            }
-        }
-
-        EdgeWeightedDigraph ewg2 = new EdgeWeightedDigraph(getBstSize() - set.size() + 1, wayCounter + 1);
+        EdgeWeightedDigraph ewg2 = new EdgeWeightedDigraph(getBstSize() + 1);
         for (Integer i : bst.keys()) {
             Nodes node = bst.get(i);
             if (!set.contains(node)) {
@@ -130,10 +120,9 @@ public class DataBase {
                 }
             }
         }
-        ewg2.toString();
+
         DijkstraSP sp = new DijkstraSP(ewg2, from);
         if (sp.hasPathTo(to)) {
-            System.out.println(sp.pathTo(to));
             System.out.println("Shortest non overpopulated path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
         } else {
             System.out.println("There's no such path or there's no non overpopulated route.");

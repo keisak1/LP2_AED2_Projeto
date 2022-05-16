@@ -35,7 +35,7 @@ public class Main {
         dataBase.printGraph();
         dataBase.overPopulatedNode(d);
         dataBase.shortestPath(0,7);
-        dataBase.shortestPathNotOverpopulated(0,7);
+        dataBase.shortestPathNotOverpopulated(11,7);
     }
 
     /**
