@@ -24,26 +24,61 @@ public class DataBase {
      * The Edges.
      */
     public ArrayList<Ways> edges = new ArrayList<>();
+    /**
+     * The Set.
+     */
     public Set<Nodes> set = new HashSet<>();
 
+    /**
+     * The Ewg.
+     */
     public EdgeWeightedDigraph ewg;
+    /**
+     * The Sub graph.
+     */
     public EdgeWeightedDigraph subGraph;
+    /**
+     * The Bst size.
+     */
     public Integer bstSize;
 
+    /**
+     * Gets bst size.
+     *
+     * @return the bst size
+     */
     public Integer getBstSize() {
         return bstSize;
     }
 
+    /**
+     * Sets bst size.
+     *
+     * @param bstSize the bst size
+     */
     public void setBstSize(Integer bstSize) {
         this.bstSize = bstSize;
     }
 
+    /**
+     * The Edges size.
+     */
     public Integer edgesSize;
 
+    /**
+     * Gets edges size.
+     *
+     * @return the edges size
+     */
     public Integer getEdgesSize() {
         return edgesSize;
     }
 
+    /**
+     * Sets edges size.
+     *
+     * @param edgesSize the edges size
+     */
     public void setEdgesSize(Integer edgesSize) {
         this.edgesSize = edgesSize;
     }
@@ -102,6 +137,9 @@ public class DataBase {
         }
     }
 
+    /**
+     * Checks if there is connectivity in the graph
+     */
     public void checkConnectivity() {
         System.out.println("Graph connectivity data:");
 
@@ -121,6 +159,9 @@ public class DataBase {
         }
     }
 
+    /**
+     * Checks if there is connectivity in the sub graph
+     */
     public void checkSubGraphConnectivity() {
         System.out.println("Subgraph connectivity data:");
         Graph graph = new Graph(bstSize + 1);

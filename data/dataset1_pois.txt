@@ -1,8 +1,0 @@
-7
-31,60446,traffic_light,car
-32,64068,electric_charging_station,car
-33,10610,fire_hydrants,none
-34,87683,cr7_museum,none
-36,17714,siuuu_restaurant,none
-38,60441,trivago_hotel,none
-40,17092,bus_station,none
