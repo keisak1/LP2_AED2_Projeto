@@ -21,7 +21,7 @@ public class Main {
      * Prints all database on the instant of the calling method
      */
     private static void now() {
-        Date d = new Date(8, 5, 2022);
+        Date d = new Date(29, 4, 2022);
         dataBase.printBST();
         dataBase.printUserList();
         dataBase.printEdges();
@@ -33,7 +33,9 @@ public class Main {
         dataBase.createGraph();
         dataBase.addEdges();
         dataBase.printGraph();
+        dataBase.overPopulatedNode(d);
         dataBase.shortestPath(0,7);
+        dataBase.shortestPathNotOverpopulated(0,7);
     }
 
     /**

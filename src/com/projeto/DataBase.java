@@ -24,6 +24,7 @@ public class DataBase {
      * The Edges.
      */
     public ArrayList<Ways> edges = new ArrayList<>();
+    public Set<Nodes> set = new HashSet<>();
 
     public EdgeWeightedDigraph ewg;
 
@@ -80,30 +81,77 @@ public class DataBase {
 
     /**
      * Set of overpopulated nodes
+     *
      * @param timestamp - Date
      */
-    public void overPopulatedNode(Date timestamp){
-        Set<Nodes> set = new HashSet<Nodes>();
-        for (User user:users) {
-            for (NodeVisited nodeVisited:user.getNodesVisited()) {
-                if(nodeVisited.getDateVisited()==timestamp){
-
-                }
+    public void overPopulatedNode(Date timestamp) {
+        int count = 0;
+        for (Integer i : bst.keys()) {
+            Nodes node = bst.get(i);
+            for (User user : users) {
+                for (NodeVisited nodeVisited : user.getNodesVisited()) {
+                    if ((node.getId().equals(nodeVisited.getNodeID()) && (nodeVisited.getDateVisited().compareTo(timestamp)) == 0)) {
+                        count++;
+                        if (count == 5) {
+                            set.add(node);
+                        }
+                    }
+                 }
             }
+            count = 0;
         }
     }
 
     /**
-     *  Calculates the shortest path from one vertex to another
+     * Calculates the shortest path that is non overpopulated from one vertex to another
+     *
      * @param from - starting vertex
-     * @param to - to vertex
+     * @param to   - to vertex
+     */
+    public void shortestPathNotOverpopulated(int from, int to) {
+        int wayCounter = 0;
+        for (Integer i : bst.keys()) {
+            Nodes node = bst.get(i);
+            if (!set.contains(node)) {
+                for (Ways way : node.getWays()) {
+                    wayCounter++;
+                }
+            }
+        }
+
+        EdgeWeightedDigraph ewg2 = new EdgeWeightedDigraph(getBstSize() - set.size() + 1, wayCounter + 1);
+        for (Integer i : bst.keys()) {
+            Nodes node = bst.get(i);
+            if (!set.contains(node)) {
+                for (Ways way : node.getWays()) {
+                    DirectedEdge edge = new DirectedEdge(way.getV(), way.getW(), way.getWeight());
+                    ewg2.addEdge(edge);
+
+                }
+            }
+        }
+        ewg2.toString();
+        DijkstraSP sp = new DijkstraSP(ewg2, from);
+        if (sp.hasPathTo(to)) {
+            System.out.println(sp.pathTo(to));
+            System.out.println("Shortest non overpopulated path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
+        } else {
+            System.out.println("There's no such path or there's no non overpopulated route.");
+        }
+    }
+
+    /**
+     * Calculates the shortest path from one vertex to another
+     *
+     * @param from - starting vertex
+     * @param to   - to vertex
      */
     public void shortestPath(int from, int to) {
         DijkstraSP sp = new DijkstraSP(ewg, from);
         if (sp.hasPathTo(to)) {
             System.out.println(sp.pathTo(to));
             System.out.println("Shortest path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
-        }else{
+        } else {
             System.out.println("There's no such path.");
         }
     }
