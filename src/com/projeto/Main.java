@@ -1,12 +1,10 @@
 package com.projeto;
 
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Out;
 import edu.princeton.cs.algs4.StdOut;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
 
@@ -15,6 +13,11 @@ public class Main {
     public static void main(String[] args) {
         loadFromFiles();
         now();
+        Date d = new Date(17, 11, 2002);
+        dataBase.tagFound("crossing");
+        dataBase.top5Users(d);
+        dataBase.top5PoIs(d);
+        dataBase.notVisitedPoI(d);
     }
 
     /**
@@ -285,5 +288,88 @@ public class Main {
             }
         }
     }
-}
 
+    private static void loadToFiles() {
+        String fileSource1 = "data\\overpopulated_nodes.txt";
+        String fileSource2 = "data\\graph.txt";
+        String fileSource3 = "data\\nodes_visit.txt";
+        String fileSource4 = "data\\top5s.txt";
+        loadOverpopulatedNodesToFile(fileSource1);
+        loadGraphToFile(fileSource2);
+        loadNodesVisitToFile(fileSource3);
+        loadTop5sToFile(fileSource4);
+    }
+
+    public static void loadOverpopulatedNodesToFile(String path){
+        Out out = new Out(path);
+        Date d = new Date(29, 4, 2022);
+        Iterator itr = dataBase.set.iterator();
+        out.println("At this date: " + d + " there were these overpopulated nodes:");
+        while(itr.hasNext()){
+            Nodes node = (Nodes) itr.next();
+            out.println("-Node id: " + node.getId());
+        }
+
+    }
+
+    public static void loadGraphToFile(String path){
+        Out out = new Out(path);
+    }
+
+    public static void loadNodesVisitToFile(String path){
+        Out out = new Out(path);
+        Date d = new Date(17, 11, 2002);
+        ArrayList<PoI> visitedPoI = new ArrayList<>();
+        ArrayList<PoI> notVisitedPoI = new ArrayList<>();
+        ArrayList<User> users = new ArrayList<>();
+
+        out.println("At this date: " + d + " these points of interest were visited by a user:");
+        for(User user : dataBase.users){
+            visitedPoI = dataBase.visitedBy(d, user);
+            for(PoI poI : visitedPoI){
+                out.println("-PoI id: " + poI.getId());
+            }
+        }
+        out.println("At this date: " + d + " these points of interest were not visited by a user:");
+        for(User user : dataBase.users){
+            notVisitedPoI = dataBase.visitedBy(d, user);
+            for(PoI poI : notVisitedPoI){
+                out.println("-PoI id: " + poI.getId());
+            }
+        }
+        out.println("At this date: " + d + " these users visited a point of interest:");
+        for(Integer nodeKey : dataBase.bst.keys()){
+            for(PoI poi : dataBase.searchNode(nodeKey).poI){
+                users = dataBase.whoVisited(d, poi);
+                for(User user : users){
+                    out.println("-User id: " + user.getId());
+                }
+            }
+        }
+        out.println("At this date: " + d + " these points of interest were not visited:");
+        for(Integer nodeKey : dataBase.bst.keys()){
+            for(PoI poi : dataBase.searchNode(nodeKey).poI){
+                out.println("-PoI id: " + poi.getId());
+            }
+        }
+    }
+
+    public static void loadTop5sToFile(String path){
+        Out out = new Out(path);
+        Date d = new Date(17, 11, 2002);
+        ArrayList<User> top5users = new ArrayList<>();
+        ArrayList<PoI> top5pois = new ArrayList<>();
+
+        out.println("At this date: " + d + " these are the top 5 users that visited most points of interest:");
+        top5users = dataBase.top5Users(d);
+        for(User user : top5users){
+            out.println("-User id: " + user.getId());
+        }
+
+        out.println("At this date: " + d + " these are the top 5 points of interest most visited:");
+        top5pois = dataBase.top5PoIs(d);
+        for(PoI poI : top5pois){
+            out.println("-PoI id: " + poI.getId());
+        }
+    }
+}

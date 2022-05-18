@@ -219,6 +219,7 @@ public class DataBase {
         DijkstraSP sp = new DijkstraSP(subGraph, from);
 
         if (sp.hasPathTo(to)) {
+            System.out.println(sp.pathTo(to));
             System.out.println("Shortest non overpopulated path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
         } else {
             System.out.println("There's no such path or there's no non overpopulated route.");
@@ -234,6 +235,7 @@ public class DataBase {
     public void shortestPath(int from, int to) {
         DijkstraSP sp = new DijkstraSP(ewg, from);
         if (sp.hasPathTo(to)) {
+            System.out.println(sp.pathTo(to));
             System.out.println("Shortest path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
         } else {
             System.out.println("There's no such path.");
