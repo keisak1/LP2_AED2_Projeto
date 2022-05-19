@@ -5,7 +5,6 @@ import edu.princeton.cs.algs4.Out;
 
 import java.util.*;
 
-import static java.lang.System.out;
 
 public class Main {
 

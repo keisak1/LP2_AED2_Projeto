@@ -1,7 +1,9 @@
 package com.projeto;
 
 import edu.princeton.cs.algs4.*;
+import javafx.fxml.Initializable;
 
+import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -12,7 +14,10 @@ import static java.lang.System.out;
 /**
  * The type Data base.
  */
-public class DataBase {
+public class DataBase implements Initializable {
+
+    public Textfield
+
     /**
      * The Bst.
      */
@@ -667,5 +672,10 @@ public class DataBase {
             tagFound.add(ht.get(tag));
         }
         return tagFound;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }
