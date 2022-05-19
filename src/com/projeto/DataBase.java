@@ -457,7 +457,7 @@ public class DataBase {
         for (User user1 : users) {
             if (user1.id.equals(user.id)) {
                 for (NodeVisited nodeVisited1 : user.getNodesVisited()) {
-                    if (nodeVisited1.getDateVisited().beforeDate(d)) {
+                    if (nodeVisited1.getDateVisited().compareTo(d) > 0) {
                         for (Integer i : bst.keys()) {
                             boolean b = Objects.equals(bst.get(i).getId(), nodeVisited1.getNodeID());
                             if (b) {
@@ -485,7 +485,7 @@ public class DataBase {
                 for (Integer i : bst.keys()) {
                     for (NodeVisited nodeVisited1 : user.getNodesVisited()) {
                         for (PoI poi : bst.get(i).getPoI()) {
-                            if (nodeVisited1.getDateVisited().beforeDate(d) && !nodeVisited1.getPoI().contains(poi)) {
+                            if (nodeVisited1.getDateVisited().compareTo(d) > 0 && !nodeVisited1.getPoI().contains(poi)) {
                                 notVisitedPoI.add(poi);
                             }
                         }
@@ -510,7 +510,7 @@ public class DataBase {
                 for (PoI poi : node.getPoI()) {
                     if (poi == p) {
                         for (Integer i : bst.keys()) {
-                            if (node.getNodeID().equals(bst.get(i).getId()) && node.getDateVisited().beforeDate(d)) {
+                            if (node.getNodeID().equals(bst.get(i).getId()) && node.getDateVisited().compareTo(d) > 0) {
                                 usersWhoVisited.add(user);
                             }
                         }
@@ -552,7 +552,7 @@ public class DataBase {
             int counter = 0;
             for (int i = 0; i < user.getNodesVisited().size(); i++) {
                 NodeVisited node = user.getNodesVisited().get(i);
-                if (node.getDateVisited().beforeDate(d)) {
+                if (node.getDateVisited().compareTo(d) > 0) {
                     counter += node.getPoI().size();
                 }
             }
@@ -608,7 +608,7 @@ public class DataBase {
         int value = 0;
         for (User user : users) {
             for (NodeVisited nodeVisited : user.getNodesVisited()) {
-                if (nodeVisited.getDateVisited().beforeDate(d)) {
+                if (nodeVisited.getDateVisited().compareTo(d) > 0) {
                     for (PoI poi : nodeVisited.getPoI()) {
                         for (Map.Entry<String, Integer> map : tempMap.entrySet()) {
                             if (map.getKey().equals(poi.getName())) {
@@ -617,7 +617,7 @@ public class DataBase {
                             }
                         }
                         if (flag == 1) {
-                            tempMap.put(poi.getName(),value+1);
+                            tempMap.put(poi.getName(), value + 1);
                         } else {
                             tempMap.put(poi.getName(), value);
                         }
@@ -629,7 +629,7 @@ public class DataBase {
         Map<String, Integer> sortedMap = sortByValue(tempMap);
         int i = 0;
         for (Map.Entry<String, Integer> map : sortedMap.entrySet()) {
-            for (Integer a: bst.keys()) {
+            for (Integer a : bst.keys()) {
                 Nodes node = bst.get(a);
                 for (PoI poi : node.getPoI()) {
                     if (map.getKey().equals(poi.getName())) {

@@ -3,7 +3,7 @@ package com.projeto;
 
 public class Date implements Comparable<Date> {
 
-    public Date(Integer day, Integer month, Integer year){
+    public Date(Integer day, Integer month, Integer year) {
         this.day = day;
         this.month = month;
         this.year = year;
@@ -69,6 +69,9 @@ public class Date implements Comparable<Date> {
 
     @Override
     public int compareTo(Date o) {
+        if (o.day.equals(this.day) && o.month.equals(this.month) && this.year.equals(o.year)) {
+            return 1;
+        }
         return 0;
     }
 
