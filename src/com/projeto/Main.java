@@ -5,6 +5,8 @@ import edu.princeton.cs.algs4.Out;
 
 import java.util.*;
 
+import static java.lang.System.out;
+
 public class Main {
 
     static DataBase dataBase = new DataBase();
@@ -26,6 +28,7 @@ public class Main {
     static Date d = new Date(29, 4, 2022);
 
     private static void now() {
+        Date d2 = new Date(29, 4, 2022);
         dataBase.printBST();
         dataBase.printUserList();
         dataBase.printEdges();
@@ -37,11 +40,7 @@ public class Main {
         dataBase.createGraph();
         dataBase.addEdges();
         dataBase.printGraph();
-        dataBase.overPopulatedNode(d);
-        dataBase.shortestPath(19, 22);
-        dataBase.shortestPathNotOverpopulated(19, 22);
-        dataBase.checkConnectivity();
-        dataBase.checkSubGraphConnectivity();
+        dataBase.overPopulatedNode(d2);
     }
 
     /**
@@ -297,13 +296,13 @@ public class Main {
         String fileSource2 = "data\\graph.txt";
         String fileSource3 = "data\\nodes_visit.txt";
         String fileSource4 = "data\\top5s.txt";
-        loadOverpopulatedNodesToFile(fileSource1);
+        loadOverpopulatedNodesToFile(fileSource1, 19, 22);
         loadGraphToFile(fileSource2);
         loadNodesVisitToFile(fileSource3);
         loadTop5sToFile(fileSource4);
     }
 
-    public static void loadOverpopulatedNodesToFile(String path) {
+    public static void loadOverpopulatedNodesToFile(String path, int from, int to) {
         Out out = new Out(path);
         Iterator<Nodes> itr = dataBase.set.iterator();
         out.println("At this date: " + d.toString() + " there were these overpopulated nodes:");
@@ -311,11 +310,42 @@ public class Main {
             Nodes node = (Nodes) itr.next();
             out.println("-Node id: " + node.getId());
         }
+        dataBase.shortestPathNotOverpopulated(from, to);
+        out.println();
+        if (dataBase.sp.hasPathTo(to)) {
+            out.println(dataBase.sp.pathTo(to));
+            out.println("Shortest non overpopulated path from vertex " + from + " to vertex " + to + " is " + dataBase.sp.distTo(to));
+        } else {
+            out.println("There's no such path or there's no non overpopulated route.");
+        }
 
+        out.println();
+        dataBase.shortestPath(from, to);
+
+        if (dataBase.sp.hasPathTo(to)) {
+            out.println(dataBase.sp.pathTo(to));
+            out.println("Shortest path from vertex " + from + " to vertex " + to + " is " + dataBase.sp.distTo(to));
+        } else {
+            out.println("There's no such path.");
+        }
     }
 
     public static void loadGraphToFile(String path) {
         Out out = new Out(path);
+        out.println("Check graph connectivity data:");
+        if(dataBase.checkConnectivity()==0){
+            out.println("The graph is connected.");
+        }else{
+            out.println("The graph isn't connected.");
+        }
+        out.println();
+        out.println("Check subgraph connectivity data:");
+
+        if(dataBase.checkSubGraphConnectivity()==0){
+            out.println("The subgraph is connected.");
+        }else{
+            out.println("The subgrap isn't connected.");
+        }
     }
 
     public static void loadNodesVisitToFile(String path) {
@@ -353,10 +383,10 @@ public class Main {
         out.println("At this date: " + d + " these users visited a point of interest:");
         for (Integer nodeKey : dataBase.bst.keys()) {
             for (PoI poi : dataBase.searchNode(nodeKey).getPoI()) {
-                out.println("-PoI:"+ poi.getName());
+                out.println("-PoI:" + poi.getName());
                 users = dataBase.whoVisited(d, poi);
                 for (User user : users) {
-                    out.println("-PoI:"+poi.getName());
+                    out.println("-PoI:" + poi.getName());
                     out.println("---User id: " + user.getId());
                 }
             }

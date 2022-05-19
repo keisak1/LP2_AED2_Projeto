@@ -1,0 +1,5 @@
+Check graph connectivity data:
+The graph isn't connected.
+
+Check subgraph connectivity data:
+The subgrap isn't connected.

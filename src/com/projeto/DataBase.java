@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import static java.lang.System.out;
+
 
 /**
  * The type Data base.
@@ -36,6 +38,9 @@ public class DataBase {
      * The Ewg.
      */
     public EdgeWeightedDigraph ewg;
+
+    public DijkstraSP sp;
+
     /**
      * The Sub graph.
      */
@@ -128,7 +133,7 @@ public class DataBase {
             Nodes node = bst.get(i);
             for (User user : users) {
                 for (NodeVisited nodeVisited : user.getNodesVisited()) {
-                    if ((node.getId().equals(nodeVisited.getNodeID()) && (nodeVisited.getDateVisited().compareTo(timestamp)) == 0)) {
+                    if ((node.getId().equals(nodeVisited.getNodeID()) && (nodeVisited.getDateVisited().compareTo(timestamp)) > 0)) {
                         count++;
                         if (count == 5) {
                             set.add(node);
@@ -143,9 +148,10 @@ public class DataBase {
     /**
      * Checks if there is connectivity in the graph
      */
-    public void checkConnectivity() {
-        System.out.println("Graph connectivity data:");
+    public int checkConnectivity() {
 
+        out.println("Graph connectivity data:");
+        int flag = 0;
         Graph graph = new Graph(bstSize + 1);
         for (Ways ways : edges) {
             graph.addEdge(ways.getV(), ways.getW());
@@ -157,16 +163,24 @@ public class DataBase {
                     StdOut.print(v + " ");
             }
             StdOut.println();
-            if (dfs.count() != graph.V()) StdOut.println("NOT connected");
-            else StdOut.println("connected");
+            if (dfs.count() != graph.V()) {
+                flag = 1;
+            }
+        }
+        if (flag == 1) {
+            out.println("The graph isn't connected");
+            return 1;
+        } else {
+            out.println("The graph is connected");
+            return 0;
         }
     }
 
     /**
      * Checks if there is connectivity in the sub graph
      */
-    public void checkSubGraphConnectivity() {
-        System.out.println("Subgraph connectivity data:");
+    public int checkSubGraphConnectivity() {
+        out.println("Subgraph connectivity data:");
         Graph graph = new Graph(bstSize + 1);
 
         int flag = 0;
@@ -189,10 +203,19 @@ public class DataBase {
                     StdOut.print(v + " ");
             }
             StdOut.println();
-            if (dfs.count() != graph.V()) StdOut.println("NOT connected");
-            else StdOut.println("connected");
+            if (dfs.count() != graph.V()) {
+                flag = 1;
+            }
+        }
+        if (flag == 1) {
+            out.println("The subgraph isn't connected");
+            return 1;
+        } else {
+            out.println("The subgraph is connected");
+            return 0;
         }
     }
+
 
     /**
      * Calculates the shortest path that is non overpopulated from one vertex to another
@@ -218,15 +241,8 @@ public class DataBase {
             flag = 0;
         }
 
+        sp = new DijkstraSP(subGraph, from);
 
-        DijkstraSP sp = new DijkstraSP(subGraph, from);
-
-        if (sp.hasPathTo(to)) {
-            System.out.println(sp.pathTo(to));
-            System.out.println("Shortest non overpopulated path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
-        } else {
-            System.out.println("There's no such path or there's no non overpopulated route.");
-        }
     }
 
     /**
@@ -236,13 +252,7 @@ public class DataBase {
      * @param to   - to vertex
      */
     public void shortestPath(int from, int to) {
-        DijkstraSP sp = new DijkstraSP(ewg, from);
-        if (sp.hasPathTo(to)) {
-            System.out.println(sp.pathTo(to));
-            System.out.println("Shortest path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
-        } else {
-            System.out.println("There's no such path.");
-        }
+        sp = new DijkstraSP(ewg, from);
     }
 
     /**
@@ -368,7 +378,7 @@ public class DataBase {
                     }
                 }
                 bst.delete(key);
-                System.out.println("Node removed successfully.");
+                out.println("Node removed successfully.");
             }
         }
     }
@@ -441,7 +451,7 @@ public class DataBase {
      */
     public void printUserList() {
         for (User user : users) {
-            System.out.println(user.toString());
+            out.println(user.toString());
         }
     }
 
