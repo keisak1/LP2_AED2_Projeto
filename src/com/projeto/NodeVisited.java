@@ -18,9 +18,9 @@ public class NodeVisited {
 
     }
 
-    public Integer nodeID;
-    public Date dateVisited;
-    public ArrayList<PoI> poI = new ArrayList<>();
+    private Integer nodeID;
+    private Date dateVisited;
+    private ArrayList<PoI> poI = new ArrayList<>();
 
     public Integer getNodeID() {
         return nodeID;

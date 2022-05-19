@@ -1,0 +1,8 @@
+7
+31,64067,traffic_light,car
+32,64068,electric_charging_station,car
+33,10610,fire_hydrants,none
+34,10615,cr7_museum,none
+36,10615,siuuu_restaurant,none
+38,58449,trivago_hotel,none
+40,58449,bus_station,none

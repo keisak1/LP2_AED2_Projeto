@@ -2,7 +2,6 @@ package com.projeto;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Out;
-import edu.princeton.cs.algs4.StdOut;
 
 import java.util.*;
 
@@ -13,18 +12,20 @@ public class Main {
     public static void main(String[] args) {
         loadFromFiles();
         now();
-        Date d = new Date(17, 11, 2002);
+        Date d = new Date(17, 11, 2032);
         dataBase.tagFound("crossing");
         dataBase.top5Users(d);
         dataBase.top5PoIs(d);
         dataBase.notVisitedPoI(d);
+        loadToFiles();
     }
 
     /**
      * Prints all database on the instant of the calling method
      */
+    static Date d = new Date(29, 4, 2022);
+
     private static void now() {
-        Date d = new Date(29, 4, 2022);
         dataBase.printBST();
         dataBase.printUserList();
         dataBase.printEdges();
@@ -37,8 +38,8 @@ public class Main {
         dataBase.addEdges();
         dataBase.printGraph();
         dataBase.overPopulatedNode(d);
-        dataBase.shortestPath(19,22);
-        dataBase.shortestPathNotOverpopulated(19,22);
+        dataBase.shortestPath(19, 22);
+        dataBase.shortestPathNotOverpopulated(19, 22);
         dataBase.checkConnectivity();
         dataBase.checkSubGraphConnectivity();
     }
@@ -189,7 +190,8 @@ public class Main {
             }
             PoI poi = new PoI(poiID, name, vehicle);
             Nodes node = dataBase.bst.get(nodeID);
-            node.poI.add(poi);
+            node.getPoI().add(poi);
+            dataBase.bst.put(nodeID, node);
         }
     }
 
@@ -205,9 +207,10 @@ public class Main {
         int tagNumb, u, poiID, userID;
         String name, vehicle;
         String[] bd, nodesVisited, dateNodeVisited;
-        ArrayList<PoI> poI = new ArrayList<>();
-        ArrayList<NodeVisited> visitedNodes = new ArrayList<>();
+
         while (!in.isEmpty()) {
+            ArrayList<PoI> poI = new ArrayList<>();
+            ArrayList<NodeVisited> visitedNodes = new ArrayList<>();
             String[] text = in.readLine().split(",");
             userID = Integer.parseInt(text[0]);
             name = text[1];
@@ -223,7 +226,7 @@ public class Main {
                 Date nodeVisitedDate = new Date(Integer.parseInt(dateNodeVisited[0]), Integer.parseInt(dateNodeVisited[1]), Integer.parseInt(dateNodeVisited[2]));
                 Nodes node = dataBase.bst.get(nodeID);
                 for (PoI poi1 : node.getPoI()) {
-                    if (poi1 == node.poI.get(poiID)) {
+                    if (node.getPoI().contains(node.getPoI().get(node.getPoI().indexOf(poi1)))) {
                         poI.add(poi1);
                     }
                 }
@@ -300,75 +303,86 @@ public class Main {
         loadTop5sToFile(fileSource4);
     }
 
-    public static void loadOverpopulatedNodesToFile(String path){
+    public static void loadOverpopulatedNodesToFile(String path) {
         Out out = new Out(path);
-        Date d = new Date(29, 4, 2022);
-        Iterator itr = dataBase.set.iterator();
-        out.println("At this date: " + d + " there were these overpopulated nodes:");
-        while(itr.hasNext()){
+        Iterator<Nodes> itr = dataBase.set.iterator();
+        out.println("At this date: " + d.toString() + " there were these overpopulated nodes:");
+        while (itr.hasNext()) {
             Nodes node = (Nodes) itr.next();
             out.println("-Node id: " + node.getId());
         }
 
     }
 
-    public static void loadGraphToFile(String path){
+    public static void loadGraphToFile(String path) {
         Out out = new Out(path);
     }
 
-    public static void loadNodesVisitToFile(String path){
+    public static void loadNodesVisitToFile(String path) {
         Out out = new Out(path);
-        Date d = new Date(17, 11, 2002);
         ArrayList<PoI> visitedPoI = new ArrayList<>();
-        ArrayList<PoI> notVisitedPoI = new ArrayList<>();
         ArrayList<User> users = new ArrayList<>();
 
         out.println("At this date: " + d + " these points of interest were visited by a user:");
-        for(User user : dataBase.users){
+        for (User user : dataBase.users) {
             visitedPoI = dataBase.visitedBy(d, user);
-            for(PoI poI : visitedPoI){
-                out.println("-PoI id: " + poI.getId());
+            out.println("-" + user.getName());
+            for (PoI poI : visitedPoI) {
+                out.println("---PoI name: " + poI.getName());
             }
         }
-        out.println("At this date: " + d + " these points of interest were not visited by a user:");
-        for(User user : dataBase.users){
-            notVisitedPoI = dataBase.visitedBy(d, user);
-            for(PoI poI : notVisitedPoI){
-                out.println("-PoI id: " + poI.getId());
+        out.println("At this date: " + d + " these points of interest were not visited by any user:");
+        Set<String> notVisited = new HashSet<>();
+        for (User user : dataBase.users) {
+            dataBase.visitedBy(d, user);
+            for (Integer i : dataBase.bst.keys()) {
+                Nodes node = dataBase.bst.get(i);
+                for (PoI poI : node.getPoI()) {
+                    if (!dataBase.visitedBy(d, user).contains(poI)) {
+                        notVisited.add(poI.getName());
+
+                    }
+                }
             }
         }
+
+        for (String s : notVisited) {
+            out.println("-PoI: " + s);
+        }
+
         out.println("At this date: " + d + " these users visited a point of interest:");
-        for(Integer nodeKey : dataBase.bst.keys()){
-            for(PoI poi : dataBase.searchNode(nodeKey).poI){
+        for (Integer nodeKey : dataBase.bst.keys()) {
+            for (PoI poi : dataBase.searchNode(nodeKey).getPoI()) {
+                out.println("-PoI:"+ poi.getName());
                 users = dataBase.whoVisited(d, poi);
-                for(User user : users){
-                    out.println("-User id: " + user.getId());
+                for (User user : users) {
+                    out.println("-PoI:"+poi.getName());
+                    out.println("---User id: " + user.getId());
                 }
             }
         }
         out.println("At this date: " + d + " these points of interest were not visited:");
-        for(Integer nodeKey : dataBase.bst.keys()){
-            for(PoI poi : dataBase.searchNode(nodeKey).poI){
+        for (Integer nodeKey : dataBase.bst.keys()) {
+            for (PoI poi : dataBase.searchNode(nodeKey).getPoI()) {
                 out.println("-PoI id: " + poi.getId());
             }
         }
     }
 
-    public static void loadTop5sToFile(String path){
+    public static void loadTop5sToFile(String path) {
         Out out = new Out(path);
-        Date d = new Date(17, 11, 2002);
-        ArrayList<User> top5users = new ArrayList<>();
-        ArrayList<PoI> top5pois = new ArrayList<>();
+        ArrayList<User> top5users;
+        ArrayList<PoI> top5pois;
 
         out.println("At this date: " + d + " these are the top 5 users that visited most points of interest:");
         top5users = dataBase.top5Users(d);
-        for(User user : top5users){
+        for (User user : top5users) {
             out.println("-User id: " + user.getId());
         }
 
         out.println("At this date: " + d + " these are the top 5 points of interest most visited:");
         top5pois = dataBase.top5PoIs(d);
-        for(PoI poI : top5pois){
+        for (PoI poI : top5pois) {
             out.println("-PoI id: " + poI.getId());
         }
     }

@@ -3,6 +3,9 @@ package com.projeto;
 import edu.princeton.cs.algs4.*;
 
 import java.util.*;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
 
 /**
  * The type Data base.
@@ -296,9 +299,9 @@ public class DataBase {
     public void deleteEdge(Ways edgeToDelete) {
         for (Integer i : bst.keys()) {
             Nodes node = bst.get(i);
-            for (Ways way : node.ways) {
+            for (Ways way : node.getWays()) {
                 if (way == edgeToDelete) {
-                    node.ways.remove(edgeToDelete);
+                    node.getWays().remove(edgeToDelete);
                 }
             }
         }
@@ -454,11 +457,11 @@ public class DataBase {
         for (User user1 : users) {
             if (user1.id.equals(user.id)) {
                 for (NodeVisited nodeVisited1 : user.getNodesVisited()) {
-                    if (nodeVisited1.dateVisited.beforeDate(d)) {
+                    if (nodeVisited1.getDateVisited().beforeDate(d)) {
                         for (Integer i : bst.keys()) {
-                            boolean b = Objects.equals(bst.get(i).id, nodeVisited1.nodeID);
+                            boolean b = Objects.equals(bst.get(i).getId(), nodeVisited1.getNodeID());
                             if (b) {
-                                visitedPoI.addAll(nodeVisited1.poI);
+                                visitedPoI.addAll(nodeVisited1.getPoI());
                             }
                         }
                     }
@@ -481,8 +484,8 @@ public class DataBase {
             if (user1.id.equals(user.id)) {
                 for (Integer i : bst.keys()) {
                     for (NodeVisited nodeVisited1 : user.getNodesVisited()) {
-                        for (PoI poi : bst.get(i).poI) {
-                            if (nodeVisited1.dateVisited.beforeDate(d) && !nodeVisited1.getPoI().contains(poi)) {
+                        for (PoI poi : bst.get(i).getPoI()) {
+                            if (nodeVisited1.getDateVisited().beforeDate(d) && !nodeVisited1.getPoI().contains(poi)) {
                                 notVisitedPoI.add(poi);
                             }
                         }
@@ -507,7 +510,7 @@ public class DataBase {
                 for (PoI poi : node.getPoI()) {
                     if (poi == p) {
                         for (Integer i : bst.keys()) {
-                            if (node.nodeID.equals(bst.get(i).id) && node.dateVisited.beforeDate(d)) {
+                            if (node.getNodeID().equals(bst.get(i).getId()) && node.getDateVisited().beforeDate(d)) {
                                 usersWhoVisited.add(user);
                             }
                         }
@@ -528,7 +531,7 @@ public class DataBase {
         ArrayList<PoI> notVisited = new ArrayList<>();
         for (User user : users) {
             for (Integer i : bst.keys()) {
-                if (!user.getNodesVisited().contains(bst.get(i).id) || (user.getNodesVisited().contains(d.afterDate(d)) && user.getNodesVisited().contains(bst.get(i).id))) {
+                if (!user.getNodesVisited().contains(bst.get(i).getId()) || (user.getNodesVisited().contains(d.afterDate(d)) && user.getNodesVisited().contains(bst.get(i).getId()))) {
                     notVisited.addAll(bst.get(i).getPoI());
                 }
             }
@@ -543,27 +546,54 @@ public class DataBase {
      * @return the array list
      */
     public ArrayList<User> top5Users(Date d) {
-        ArrayList<User> top5usersWhoVisitedMostPoI = new ArrayList<>(5);
+        ArrayList<User> top5usersWhoVisitedMostPoI = new ArrayList<>();
+        Map<String, Integer> tempMap = new HashMap<>();
         for (User user : users) {
-            int counter = user.getNodesVisited().size();
-            for (NodeVisited node : user.getNodesVisited()) {
-                if (node.dateVisited.beforeDate(d)) {
-                    if (top5usersWhoVisitedMostPoI.isEmpty()) {
-                        top5usersWhoVisitedMostPoI.add(user);
-                    }
-                    for (int i = 0; i < 5; i++) {
-                        if (counter > top5usersWhoVisitedMostPoI.get(i).nodesVisited.size()) {
-                            top5usersWhoVisitedMostPoI.add(i, user);
-                            break;
-                        } else if (top5usersWhoVisitedMostPoI.get(i) == null) {
-                            top5usersWhoVisitedMostPoI.add(user);
-                        }
-                    }
+            int counter = 0;
+            for (int i = 0; i < user.getNodesVisited().size(); i++) {
+                NodeVisited node = user.getNodesVisited().get(i);
+                if (node.getDateVisited().beforeDate(d)) {
+                    counter += node.getPoI().size();
                 }
             }
+            tempMap.put(user.getName(), counter);
         }
+
+        Map<String, Integer> sortedMap = sortByValue(tempMap);
+        int i = 0;
+        for (Map.Entry<String, Integer> map : sortedMap.entrySet()) {
+            for (User user : users) {
+                if (map.getKey().equals(user.getName())) {
+                    top5usersWhoVisitedMostPoI.add(user);
+                }
+            }
+            i++;
+            if (i == 5) {
+                break;
+            }
+        }
+
+        StdOut.println(top5usersWhoVisitedMostPoI.toString());
         return top5usersWhoVisitedMostPoI;
     }
+
+    /**
+     * Sorts an unsorted map by descending order
+     *
+     * @param unsortMap - Map wanted to be sorted
+     * @return - a sorted map
+     */
+    private static Map<String, Integer> sortByValue(Map<String, Integer> unsortMap) {
+        List<Entry<String, Integer>> list = new LinkedList<>(unsortMap.entrySet());
+
+        // Sorting the list based on values
+        list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()) == 0
+                ? o2.getKey().compareTo(o1.getKey())
+                : o2.getValue().compareTo(o1.getValue()));
+        return list.stream().collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> b, LinkedHashMap::new));
+
+    }
+
 
     /**
      * Finds top 5 points of interest most visited
@@ -572,43 +602,47 @@ public class DataBase {
      * @return the array list
      */
     public ArrayList<PoI> top5PoIs(Date d) {
-        ArrayList<PoI> top5PoIsWhoWereVisited = new ArrayList<>(5);
-        BinarySearchST<PoI, Integer> funcBst = new BinarySearchST<>();
-        for (Integer i : bst.keys()) {
-            for (User user : users) {
-                for (NodeVisited node : user.getNodesVisited()) {
-                    if (node.dateVisited.beforeDate(d)) {
-                        for (PoI poi : bst.get(i).getPoI()) {
-                            for (PoI poi1 : node.getPoI()) {
-                                if (poi == poi1) {
-                                    if (funcBst.contains(poi)) {
-                                        int aux = funcBst.get(poi);
-                                        funcBst.put(poi, aux + 1);
-                                    } else {
-                                        funcBst.put(poi, 1);
-                                    }
-                                }
+        ArrayList<PoI> top5PoIs = new ArrayList<>();
+        Map<String, Integer> tempMap = new HashMap<>();
+        int flag = 0;
+        int value = 0;
+        for (User user : users) {
+            for (NodeVisited nodeVisited : user.getNodesVisited()) {
+                if (nodeVisited.getDateVisited().beforeDate(d)) {
+                    for (PoI poi : nodeVisited.getPoI()) {
+                        for (Map.Entry<String, Integer> map : tempMap.entrySet()) {
+                            if (map.getKey().equals(poi.getName())) {
+                                flag = 1;
+                                value = map.getValue();
                             }
+                        }
+                        if (flag == 1) {
+                            tempMap.put(poi.getName(),value+1);
+                        } else {
+                            tempMap.put(poi.getName(), value);
                         }
                     }
                 }
             }
         }
-        for (int i = 0; i < 5; i++) {
-            Integer max = 0;
-            for (PoI poi : funcBst.keys()) {
-                if (max < funcBst.get(poi)) {
-                    max = funcBst.get(poi);
+
+        Map<String, Integer> sortedMap = sortByValue(tempMap);
+        int i = 0;
+        for (Map.Entry<String, Integer> map : sortedMap.entrySet()) {
+            for (Integer a: bst.keys()) {
+                Nodes node = bst.get(a);
+                for (PoI poi : node.getPoI()) {
+                    if (map.getKey().equals(poi.getName())) {
+                        top5PoIs.add(poi);
+                    }
                 }
             }
-            for (PoI pois : funcBst.keys()) {
-                if (Objects.equals(max, funcBst.get(pois))) {
-                    top5PoIsWhoWereVisited.add(pois);
-                    funcBst.delete(pois);
-                }
+            i++;
+            if (i == 5) {
+                break;
             }
         }
-        return top5PoIsWhoWereVisited;
+        return top5PoIs;
     }
 
     /**

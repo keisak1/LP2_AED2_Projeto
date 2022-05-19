@@ -9,11 +9,11 @@ public class Date implements Comparable<Date> {
         this.year = year;
     }
 
-    public Integer day;
+    private Integer day;
 
-    public Integer month;
+    private Integer month;
 
-    public Integer year;
+    private Integer year;
 
     /**
      * Checks if date is before the date given
@@ -70,5 +70,10 @@ public class Date implements Comparable<Date> {
     @Override
     public int compareTo(Date o) {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return day + "/" + month + "/" + year;
     }
 }

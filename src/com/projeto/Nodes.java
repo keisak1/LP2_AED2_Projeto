@@ -33,9 +33,9 @@ public class Nodes {
         this.osmNode = osmNode;
     }
 
-    public Integer id;
+    private Integer id;
 
-    public Integer vertexID;
+    private Integer vertexID;
 
     public Integer getVertexID() {
         return vertexID;
@@ -45,11 +45,11 @@ public class Nodes {
         this.vertexID = vertexID;
     }
 
-    public Coordinate point;
+    private Coordinate point;
 
-    public ArrayList<PoI> poI = new ArrayList<>();
+    private ArrayList<PoI> poI = new ArrayList<>();
 
-    public ArrayList<Ways> ways = new ArrayList<>();
+    private ArrayList<Ways> ways = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -91,7 +91,7 @@ public class Nodes {
     public String toString() {
         return "Nodes{" +
                 "id=" + id +
-                ", point=" + "(" + point.x + "," + point.y+ ")" +
+                ", point=" + "(" + point.getX() + "," + point.getY()+ ")" +
                 ", poI=" + poI +
                 ", ways=" + ways +
                 '}';

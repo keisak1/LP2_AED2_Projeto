@@ -33,19 +33,15 @@ public class Ways extends DirectedEdge {
         this.postcode = postcode;
     }
 
-    public String name;
+    private String name;
 
-    public Integer id;
+    private Integer id;
 
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
+    private Double weight;
 
-    public Double weight;
+    private String address;
 
-    public String address;
-
-    public String postcode;
+    private String postcode;
 
     public Integer getId() {
         return id;

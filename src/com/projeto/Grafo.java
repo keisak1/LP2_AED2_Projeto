@@ -10,9 +10,9 @@ public class Grafo {
         this.vertices = vertices;
     }
 
-    public ArrayList<Ways> edges;
+    private final ArrayList<Ways> edges;
 
-    public ArrayList<Nodes> vertices;
+    private final ArrayList<Nodes> vertices;
 
     public ArrayList<Ways> getEdges() {return edges;}
 

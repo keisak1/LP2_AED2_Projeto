@@ -6,7 +6,7 @@ package com.projeto;
  */
 public class Vehicle {
 
-    public String type;
+    private String type;
 
 
 }

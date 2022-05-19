@@ -15,11 +15,11 @@ public class PoI implements Comparable<PoI> {
 
     }
 
-    public Vehicle type;
+    private Vehicle type;
 
-    public String name;
+    private String name;
 
-    public Integer id;
+    private Integer id;
 
     public Vehicle getType() {
         return type;

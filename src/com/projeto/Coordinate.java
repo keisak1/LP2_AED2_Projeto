@@ -10,9 +10,9 @@ public class Coordinate {
     this.y = y;
   }
 
-  public double x;
+  private double x;
 
-  public double y;
+  private double y;
 
   public double getX() {
     return x;
