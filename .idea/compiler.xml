@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Projeto_LP2_AED2_JavaFX" />
+        <module name="Projeto_LP2_AED2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Projeto_LP2_AED2_JavaFX" target="17" />
+      <module name="Projeto_LP2_AED2" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
