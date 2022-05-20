@@ -291,14 +291,22 @@ public class Main {
     }
 
     private static void loadToFiles() {
-        String fileSource1 = "data\\overpopulated_nodes.txt";
-        String fileSource2 = "data\\graph.txt";
-        String fileSource3 = "data\\nodes_visit.txt";
-        String fileSource4 = "data\\top5s.txt";
+        String fileSource1 = "data\\overpopulated_nodes_file_txt.txt";
+        String fileSource2 = "data\\graph_file_txt.txt";
+        String fileSource3 = "data\\nodes_visit_file_txt.txt";
+        String fileSource4 = "data\\top5s_file_txt.txt";
+        String fileSource5 = "data\\overpopulated_nodes.bin";
+        String fileSource6 = "data\\graph_file_bin.bin";
+        String fileSource7 = "data\\nodes_visit_file_bin.bin";
+        String fileSource8 = "data\\top5s_file_bin.bin";
         loadOverpopulatedNodesToFile(fileSource1, 19, 22);
         loadGraphToFile(fileSource2);
         loadNodesVisitToFile(fileSource3);
         loadTop5sToFile(fileSource4);
+        loadOverpopulatedNodesToBin(fileSource5, 19, 22);
+        loadGraphToBin(fileSource6);
+        loadNodesVisitToBin(fileSource7);
+        loadTop5sToBin(fileSource8);
     }
 
     public static void loadOverpopulatedNodesToFile(String path, int from, int to) {
@@ -414,5 +422,302 @@ public class Main {
         for (PoI poI : top5pois) {
             out.println("-PoI id: " + poI.getId());
         }
+    }
+
+    public static void loadOverpopulatedNodesToBin(String path, int from, int to) {
+        DataOutputStream dos = null;
+        Iterator itr = dataBase.set.iterator();
+
+        try {
+            dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path)));
+            String msg1 = "At this date: ";
+            msg1 = msg1.concat(d.toString());
+            msg1 = msg1.concat(" there were these overpopulated nodes:\n");
+            dos.writeChars(msg1);
+            String msg2 = "-Node id: ";
+            String msg3 = "\n";
+
+            while(itr.hasNext()) {
+                Nodes node = (Nodes)itr.next();
+                dos.writeChars(msg2);
+                dos.writeInt(node.getId());
+                dos.writeChars(msg3);
+            }
+
+            dataBase.shortestPathNotOverpopulated(from, to);
+            String msg4 = "Shortest non overpopulated path from vertex ";
+            msg4 = msg4.concat(String.valueOf(from));
+            msg4 = msg4.concat(" to vertex ");
+            msg4 = msg4.concat(String.valueOf(to));
+            msg4 = msg4.concat(" is ");
+            msg4 = msg4.concat(String.valueOf(dataBase.sp.distTo(to)));
+            String msg5 = "There's no such path or there's no non overpopulated route.";
+            if (dataBase.sp.hasPathTo(to)) {
+                dos.writeChars(String.valueOf(dataBase.sp.pathTo(to)));
+                dos.writeChars(msg4);
+            } else {
+                dos.writeChars(msg5);
+            }
+
+            dos.writeChars(msg3);
+            dataBase.shortestPath(from, to);
+            String msg6 = "Shortest path from vertex ";
+            msg6 = msg6.concat(String.valueOf(from));
+            msg6 = msg6.concat(" to vertex ");
+            msg6 = msg6.concat(String.valueOf(to));
+            msg6 = msg6.concat(" is ");
+            msg6 = msg6.concat(String.valueOf(dataBase.sp.distTo(to)));
+            String msg7 = "There's no such path.";
+            if (dataBase.sp.hasPathTo(to)) {
+                dos.writeChars(String.valueOf(dataBase.sp.pathTo(to)));
+                dos.writeChars(msg6);
+            } else {
+                dos.writeChars(msg7);
+            }
+        } catch (Exception var20) {
+            StdOut.print(var20);
+        } finally {
+            try {
+                if (dos != null) {
+                    dos.close();
+                }
+            } catch (Exception var19) {
+                StdOut.print(var19);
+            }
+
+        }
+
+    }
+
+    public static void loadGraphToBin(String path) {
+        DataOutputStream dos = null;
+
+        try {
+            dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path)));
+            String msg1 = "Check graph connectivity data:\n";
+            dos.writeChars(msg1);
+            String msg2 = "The graph is connected.";
+            String msg3 = "The graph isn't connected.";
+            if (dataBase.checkConnectivity() == 0) {
+                dos.writeChars(msg2);
+            } else {
+                dos.writeChars(msg3);
+            }
+
+            String msg4 = "\n";
+            dos.writeChars(msg4);
+            String msg5 = "Check subgraph connectivity data:\n";
+            dos.writeChars(msg5);
+            String msg6 = "The subgraph is connected.";
+            String msg7 = "The subgraph isn't connected.";
+            if (dataBase.checkSubGraphConnectivity() == 0) {
+                dos.writeChars(msg6);
+            } else {
+                dos.writeChars(msg7);
+            }
+        } catch (Exception var17) {
+            StdOut.print(var17);
+        } finally {
+            try {
+                if (dos != null) {
+                    dos.close();
+                }
+            } catch (Exception var16) {
+                StdOut.print(var16);
+            }
+
+        }
+
+    }
+
+    public static void loadNodesVisitToBin(String path) {
+        DataOutputStream dos = null;
+        new ArrayList();
+        new ArrayList();
+
+        try {
+            dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path)));
+            String msg1 = "At this date: ";
+            msg1 = msg1.concat(d.toString());
+            msg1 = msg1.concat(" these points of interest were visited by a user:\n");
+            dos.writeChars(msg1);
+            String msg6 = "\n";
+            Iterator var6 = dataBase.users.iterator();
+
+            String msg7;
+            Iterator var9;
+            while(var6.hasNext()) {
+                User user = (User)var6.next();
+                ArrayList<PoI> visitedPoI = dataBase.visitedBy(d, user);
+                msg7 = "-";
+                msg7 = msg7.concat(user.getName());
+                dos.writeChars(msg7);
+                dos.writeChars(msg6);
+                var9 = visitedPoI.iterator();
+
+                while(var9.hasNext()) {
+                    PoI poI = (PoI)var9.next();
+                    String msg3 = "---PoI name: ";
+                    msg3 = msg3.concat(poI.getName());
+                    dos.writeChars(msg3);
+                    dos.writeChars(msg6);
+                }
+            }
+
+            dos.writeChars(msg6);
+            Set<String> notVisited = new HashSet();
+            String msg4 = "At this date: ";
+            msg4 = msg4.concat(d.toString());
+            msg4 = msg4.concat(" these points of interest were not visited by any user:\n");
+            dos.writeChars(msg4);
+            Iterator var29 = dataBase.users.iterator();
+
+            Iterator var32;
+            Integer nodeKey;
+            while(var29.hasNext()) {
+                User user = (User)var29.next();
+                dataBase.visitedBy(d, user);
+                var32 = dataBase.bst.keys().iterator();
+
+                while(var32.hasNext()) {
+                    nodeKey = (Integer)var32.next();
+                    Nodes node = (Nodes)dataBase.bst.get(nodeKey);
+                    Iterator var13 = node.getPoI().iterator();
+
+                    while(var13.hasNext()) {
+                        PoI poI = (PoI)var13.next();
+                        if (!dataBase.visitedBy(d, user).contains(poI)) {
+                            notVisited.add(poI.getName());
+                        }
+                    }
+                }
+            }
+
+            var29 = notVisited.iterator();
+
+            String msg10;
+            while(var29.hasNext()) {
+                msg10 = (String)var29.next();
+                String msg5 = "-PoI ";
+                msg5 = msg5.concat(msg10);
+                dos.writeChars(msg5);
+                dos.writeChars(msg6);
+            }
+
+            dos.writeChars(msg6);
+            msg7 = "At this date: ";
+            msg7 = msg7.concat(d.toString());
+            msg7 = msg7.concat(" these users visited a point of interest:\n");
+            dos.writeChars(msg7);
+            var9 = dataBase.bst.keys().iterator();
+
+            while(var9.hasNext()) {
+                Integer nodeKey = (Integer)var9.next();
+                Iterator var36 = dataBase.searchNode(nodeKey).getPoI().iterator();
+
+                while(var36.hasNext()) {
+                    PoI poi = (PoI)var36.next();
+                    String msg8 = "-PoI: ";
+                    msg8 = msg8.concat(poi.getName());
+                    dos.writeChars(msg8);
+                    dos.writeChars(msg6);
+                    ArrayList<User> users = dataBase.whoVisited(d, poi);
+                    Iterator var41 = users.iterator();
+
+                    while(var41.hasNext()) {
+                        User user = (User)var41.next();
+                        String msg9 = "---User id: ";
+                        msg9 = msg9.concat(String.valueOf(user.getId()));
+                        dos.writeChars(msg9);
+                        dos.writeChars(msg6);
+                    }
+                }
+            }
+
+            dos.writeChars(msg6);
+            msg10 = "At this date: ";
+            msg10 = msg10.concat(d.toString());
+            msg10 = msg10.concat(" these points of interest were not visited:\n");
+            dos.writeChars(msg10);
+            var32 = dataBase.bst.keys().iterator();
+
+            while(var32.hasNext()) {
+                nodeKey = (Integer)var32.next();
+                Iterator var38 = dataBase.searchNode(nodeKey).getPoI().iterator();
+
+                while(var38.hasNext()) {
+                    PoI poi = (PoI)var38.next();
+                    String msg11 = "-PoI id: ";
+                    msg11 = msg11.concat(String.valueOf(poi.getId()));
+                    dos.writeChars(msg11);
+                    dos.writeChars(msg6);
+                }
+            }
+        } catch (Exception var25) {
+            StdOut.print(var25);
+        } finally {
+            try {
+                if (dos != null) {
+                    dos.close();
+                }
+            } catch (Exception var24) {
+                StdOut.print(var24);
+            }
+
+        }
+
+    }
+
+    public static void loadTop5sToBin(String path) {
+        DataOutputStream dos = null;
+
+        try {
+            dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path)));
+            String msg1 = "At this date: ";
+            msg1 = msg1.concat(d.toString());
+            msg1 = msg1.concat(" these are the top 5 users that visited most points of interest:");
+            dos.writeChars(msg1);
+            String msg2 = "\n";
+            dos.writeChars(msg2);
+            ArrayList<User> top5users = dataBase.top5Users(d);
+            Iterator var6 = top5users.iterator();
+
+            while(var6.hasNext()) {
+                User user = (User)var6.next();
+                String msg3 = "-User id: ";
+                msg3 = msg3.concat(String.valueOf(user.getId()));
+                dos.writeChars(msg3);
+                dos.writeChars(msg2);
+            }
+
+            dos.writeChars(msg2);
+            String msg4 = "At this date: ";
+            msg4 = msg4.concat(d.toString());
+            msg4 = msg4.concat(" these are the top 5 points of interest most visited:");
+            dos.writeChars(msg4);
+            dos.writeChars(msg2);
+            ArrayList<PoI> top5pois = dataBase.top5PoIs(d);
+            Iterator var21 = top5pois.iterator();
+
+            while(var21.hasNext()) {
+                PoI poI = (PoI)var21.next();
+                String msg5 = "-PoI id: ";
+                msg5 = msg5.concat(String.valueOf(poI.getId()));
+                dos.writeChars(msg5);
+                dos.writeChars(msg2);
+            }
+        } catch (Exception var18) {
+            StdOut.print(var18);
+        } finally {
+            try {
+                if (dos != null) {
+                    dos.close();
+                }
+            } catch (Exception var17) {
+                StdOut.print(var17);
+            }
+
+        }
+
     }
 }
