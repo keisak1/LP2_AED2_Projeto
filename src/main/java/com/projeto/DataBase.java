@@ -33,6 +33,7 @@ public class DataBase implements Initializable {
     public TableColumn<User, Date> colBirthday;
     public TableColumn<User, Vehicle> colVehicle;
 
+    ObservableList<User> observableUserList = FXCollections.observableArrayList();
 
     private static final String fileSource1 = "data\\dataset1_nodes.txt";
     private static final String fileSource2 = "data\\dataset1_ways_nodepairs.txt";
@@ -76,7 +77,6 @@ public class DataBase implements Initializable {
      * The Bst size.
      */
     public Integer bstSize;
-
 
 
     /**
@@ -705,8 +705,10 @@ public class DataBase implements Initializable {
         colBirthday.setCellValueFactory(new PropertyValueFactory<>("Birthday"));
         colVehicle.setCellValueFactory(new PropertyValueFactory<>("Vehicle"));
 
-        ObservableList<User> observableUserList= FXCollections.observableArrayList();
+        ObservableList<User> observableUserList = FXCollections.observableArrayList();
+        observableUserList.removeAll();
         observableUserList.addAll(users);
+        afterReadFileAction();
     }
 
     private void loadFromFileNodes(String path) {
@@ -942,12 +944,13 @@ public class DataBase implements Initializable {
             userTableView.
         }
     }*/
-        private void clearTableItems() {
+    private void clearTableItems() {
 
     }
 
     public void handleReadTextFileAction(ActionEvent actionEvent) {
-        clearTableItems();
+        observableUserList.removeAll();
+
 
         try {
             loadFromFileNodes(fileSource1);
@@ -959,7 +962,12 @@ public class DataBase implements Initializable {
             e.printStackTrace();
         }
 
-       // afterReadFileAction();
+        afterReadFileAction();
+    }
+
+    private void afterReadFileAction() {
+            tableView.setItems(observableUserList);
+
     }
 
     public void addUserBtn(ActionEvent actionEvent) {
@@ -969,5 +977,17 @@ public class DataBase implements Initializable {
     }
 
     public void removeUserBtn(ActionEvent actionEvent) {
+    }
+
+    public void handleSaveBinFileAction(ActionEvent actionEvent) {
+    }
+
+    public void handleSaveTextFileAction(ActionEvent actionEvent) {
+    }
+
+    public void handleExitAction(ActionEvent actionEvent) {
+    }
+
+    public void handleReadBinFileAction(ActionEvent actionEvent) {
     }
 }

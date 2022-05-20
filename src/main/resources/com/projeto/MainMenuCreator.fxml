@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
 <AnchorPane prefHeight="576.0" prefWidth="918.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projeto.DataBase">
    <children>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="918.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
+                <MenuItem mnemonicParsing="false" onAction="#handleReadBinFileAction" text="Open Bin File" />
+                <MenuItem mnemonicParsing="false" onAction="#handleReadTextFileAction" text="Open Text File" />
+                <MenuItem mnemonicParsing="false" onAction="#handleSaveBinFileAction" text="Save Bin File" />
+                <MenuItem mnemonicParsing="false" onAction="#handleSaveTextFileAction" text="Save Text File" />
+                <MenuItem mnemonicParsing="false" onAction="#handleExitAction" text="Exit" />            </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
