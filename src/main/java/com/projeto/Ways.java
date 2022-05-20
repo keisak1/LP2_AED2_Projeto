@@ -1,7 +1,6 @@
 package com.projeto;
 
 import edu.princeton.cs.algs4.DirectedEdge;
-import edu.princeton.cs.algs4.Edge;
 
 import java.util.Hashtable;
 

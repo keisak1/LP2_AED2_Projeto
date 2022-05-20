@@ -1,0 +1,7 @@
+At this date: 29/4/2022 there were these overpopulated nodes:
+-Node id: 10615
+
+There's no such path or there's no non overpopulated route.
+
+19->20 31.06 20->21 90.28 21->22  8.18 
+Shortest path from vertex 19 to vertex 22 is 129.5164670944214

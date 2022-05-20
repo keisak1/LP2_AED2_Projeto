@@ -303,10 +303,10 @@ public class Main {
         loadGraphToFile(fileSource2);
         loadNodesVisitToFile(fileSource3);
         loadTop5sToFile(fileSource4);
-        loadOverpopulatedNodesToBin(fileSource5, 19, 22);
+        /*loadOverpopulatedNodesToBin(fileSource5, 19, 22);
         loadGraphToBin(fileSource6);
         loadNodesVisitToBin(fileSource7);
-        loadTop5sToBin(fileSource8);
+        loadTop5sToBin(fileSource8);*/
     }
 
     public static void loadOverpopulatedNodesToFile(String path, int from, int to) {
@@ -424,7 +424,7 @@ public class Main {
         }
     }
 
-    public static void loadOverpopulatedNodesToBin(String path, int from, int to) {
+  /*  public static void loadOverpopulatedNodesToBin(String path, int from, int to) {
         DataOutputStream dos = null;
         Iterator itr = dataBase.set.iterator();
 
@@ -719,5 +719,5 @@ public class Main {
 
         }
 
-    }
+    }*/
 }

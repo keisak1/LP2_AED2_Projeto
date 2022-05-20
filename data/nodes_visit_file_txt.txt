@@ -1,0 +1,170 @@
+At this date: 29/4/2022 these points of interest were visited by a user:
+-Armindo
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Joao
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Miguel
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Josh
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Michael
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Juan
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Pablo
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Robert
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Roberto
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Silvester
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Schwarzenegger
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Rambo
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Daniel
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-Nuno
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+-ObiWan
+---PoI name: traffic_light
+---PoI name: cr7_museum
+---PoI name: siuuu_restaurant
+At this date: 29/4/2022 these points of interest were not visited by any user:
+-PoI: bus_station
+-PoI: trivago_hotel
+-PoI: electric_charging_station
+-PoI: fire_hydrants
+-PoI: traffic_light
+At this date: 29/4/2022 these users visited a point of interest:
+-PoI:fire_hydrants
+-PoI:cr7_museum
+-PoI:cr7_museum
+---User id: 1
+-PoI:cr7_museum
+---User id: 2
+-PoI:cr7_museum
+---User id: 3
+-PoI:cr7_museum
+---User id: 4
+-PoI:cr7_museum
+---User id: 5
+-PoI:cr7_museum
+---User id: 6
+-PoI:cr7_museum
+---User id: 7
+-PoI:cr7_museum
+---User id: 8
+-PoI:cr7_museum
+---User id: 9
+-PoI:cr7_museum
+---User id: 10
+-PoI:cr7_museum
+---User id: 11
+-PoI:cr7_museum
+---User id: 12
+-PoI:cr7_museum
+---User id: 13
+-PoI:cr7_museum
+---User id: 14
+-PoI:cr7_museum
+---User id: 15
+-PoI:siuuu_restaurant
+-PoI:siuuu_restaurant
+---User id: 1
+-PoI:siuuu_restaurant
+---User id: 2
+-PoI:siuuu_restaurant
+---User id: 3
+-PoI:siuuu_restaurant
+---User id: 4
+-PoI:siuuu_restaurant
+---User id: 5
+-PoI:siuuu_restaurant
+---User id: 6
+-PoI:siuuu_restaurant
+---User id: 7
+-PoI:siuuu_restaurant
+---User id: 8
+-PoI:siuuu_restaurant
+---User id: 9
+-PoI:siuuu_restaurant
+---User id: 10
+-PoI:siuuu_restaurant
+---User id: 11
+-PoI:siuuu_restaurant
+---User id: 12
+-PoI:siuuu_restaurant
+---User id: 13
+-PoI:siuuu_restaurant
+---User id: 14
+-PoI:siuuu_restaurant
+---User id: 15
+-PoI:trivago_hotel
+-PoI:bus_station
+-PoI:traffic_light
+-PoI:traffic_light
+---User id: 1
+-PoI:traffic_light
+---User id: 2
+-PoI:traffic_light
+---User id: 3
+-PoI:traffic_light
+---User id: 5
+-PoI:traffic_light
+---User id: 6
+-PoI:traffic_light
+---User id: 7
+-PoI:traffic_light
+---User id: 8
+-PoI:traffic_light
+---User id: 9
+-PoI:traffic_light
+---User id: 10
+-PoI:traffic_light
+---User id: 11
+-PoI:traffic_light
+---User id: 12
+-PoI:traffic_light
+---User id: 13
+-PoI:traffic_light
+---User id: 14
+-PoI:traffic_light
+---User id: 15
+-PoI:electric_charging_station
+At this date: 29/4/2022 these points of interest were not visited:
+-PoI id: 33
+-PoI id: 34
+-PoI id: 36
+-PoI id: 38
+-PoI id: 40
+-PoI id: 31
+-PoI id: 32
