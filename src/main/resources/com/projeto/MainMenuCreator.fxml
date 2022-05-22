@@ -69,6 +69,8 @@
                                                                         <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addUserBtn" text="Add" translateX="250.0" translateY="50.0" />
                                                                         <Button fx:id="editBtn" mnemonicParsing="false" onAction="#editUserBtn" text="Edit" translateX="275.0" translateY="50.0" />
                                                                         <Button fx:id="removeBtn" mnemonicParsing="false" onAction="#removeUserBtn" text="Remove" translateX="300.0" translateY="50.0" />
+                                                      <TextField fx:id="NodeVisitedField" prefHeight="6.0" prefWidth="122.0" promptText="Nodes Visited" translateX="-20.0" translateY="50.0" />
+                                                      <DatePicker fx:id="DateVisitedField" promptText="Date Visited" translateX="-477.0" translateY="90.0" />
                                                                     </children>
                                                                 </HBox>
                                                             </children>
@@ -79,9 +81,34 @@
                                         </Tab>
                                         <Tab text="Nodes Visited">
                                             <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView fx:id="tableViewNodesVisited" prefHeight="483.0" prefWidth="918.0">
+                                            <columns>
+                                              <TableColumn fx:id="userID" prefWidth="56.0" text="User ID " />
+                                              <TableColumn fx:id="nodeID" prefWidth="94.0" text="Node ID" />
+                                                <TableColumn fx:id="dateVisited" prefWidth="93.0" text="Date Visited" />
+                                            </columns>
+                                          </TableView>
+                                       </children></AnchorPane>
                                             </content>
                                         </Tab>
+                              <Tab text="Point of Interest">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView fx:id="tableViewPoI" prefHeight="483.0" prefWidth="918.0">
+                                             <columns>
+                                                <TableColumn fx:id="poiNodeID" prefWidth="56.0" text="Node ID" />
+                                                <TableColumn fx:id="poiID" prefWidth="77.0" text="PoI ID" />
+                                                <TableColumn fx:id="poiName" prefWidth="110.0" text="Name" />
+                                                <TableColumn fx:id="poiVehicle" prefWidth="110.0" text="Vehicle" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
                                     </tabs>
                                 </TabPane>
                             </children>

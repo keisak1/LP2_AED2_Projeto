@@ -6,12 +6,13 @@ import java.util.ArrayList;
 /**
  * The type Node visited.
  */
-public class NodeVisited {
+public class NodeVisited extends User {
 
     public NodeVisited(Integer nodeID, Date dateVisited, ArrayList<PoI> poI){
         this.nodeID = nodeID;
         this.dateVisited = dateVisited;
         this.poI = poI;
+
     }
 
     public NodeVisited(){

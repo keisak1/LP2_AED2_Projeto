@@ -3,7 +3,7 @@ package com.projeto;
 /**
  * The type Po i.
  */
-public class PoI implements Comparable<PoI> {
+public class PoI extends Nodes {
 
     public PoI(Integer id, String name, Vehicle type) {
         this.id = id;
@@ -45,8 +45,4 @@ public class PoI implements Comparable<PoI> {
         this.id = id;
     }
 
-    @Override
-    public int compareTo(PoI o) {
-        return 0;
-    }
 }

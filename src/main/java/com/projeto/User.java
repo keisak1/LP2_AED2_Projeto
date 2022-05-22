@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class User {
 
-    public User(Integer id, String name, Date birthday, Vehicle vehicle, ArrayList<NodeVisited> nodesVisited){
+    public User(Integer id, String name, Date birthday, String vehicle, ArrayList<NodeVisited> nodesVisited){
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -26,7 +26,7 @@ public class User {
 
     public Date birthday;
 
-    public Vehicle vehicle;
+    public String vehicle;
 
     public ArrayList<NodeVisited> nodesVisited;
 
@@ -62,11 +62,11 @@ public class User {
         this.birthday = birthday;
     }
 
-    public Vehicle getVehicle() {
+    public String getVehicle() {
         return vehicle;
     }
 
-    public void setVehicle(Vehicle vehicle) {
+    public void setVehicle(String vehicle) {
         this.vehicle = vehicle;
     }
 

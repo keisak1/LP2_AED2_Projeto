@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
@@ -28,13 +29,32 @@ public class DataBase implements Initializable {
     public Button addBtn;
     public Button editBtn;
     public Button removeBtn;
+
+    //Basic Information tab
     public TableView<User> tableView;
     public TableColumn<User, Integer> colID;
     public TableColumn<User, String> colName;
     public TableColumn<User, Date> colBirthday;
-    public TableColumn<User, Vehicle> colVehicle;
+    public TableColumn<User, String> colVehicle;
+
+    //DateVisited tab
+    public TableView<NodeVisited> tableViewNodesVisited;
+    public TableColumn<User, Integer> userID;
+    public TableColumn<Nodes, Integer> nodeID;
+    public TableColumn<NodeVisited, Date> dateVisited;
+
+    //PoI tab
+    public TableColumn<Nodes, Integer> poiNodeID;
+    public TableColumn<PoI, Integer> poiID;
+    public TableColumn<PoI, String> poiName;
+    public TableColumn<PoI, String> poiVehicle;
+    public TableView<PoI> tableViewPoI;
+    public TextField NodeVisitedField;
+    public DatePicker DateVisitedField;
 
     ObservableList<User> observableUserList = FXCollections.observableArrayList();
+    ObservableList<NodeVisited> observableNodeVisitedList = FXCollections.observableArrayList();
+    ObservableList<PoI> observablePoiList = FXCollections.observableArrayList();
 
     private static final String fileSource1 = "data\\dataset1_nodes.txt";
     private static final String fileSource2 = "data\\dataset1_ways_nodepairs.txt";
@@ -53,6 +73,7 @@ public class DataBase implements Initializable {
     /**
      * The Users.
      */
+
     public ArrayList<User> users = new ArrayList<>();
     /**
      * The Edges.
@@ -186,6 +207,7 @@ public class DataBase implements Initializable {
         for (Ways ways : edges) {
             graph.addEdge(ways.getV(), ways.getW());
         }
+
         for (int i = 0; i < getBstSize() + 1; i++) {
             DepthFirstSearch dfs = new DepthFirstSearch(graph, i);
             for (int v = 0; v < graph.V(); v++) {
@@ -451,7 +473,7 @@ public class DataBase implements Initializable {
         int i = 0;
         while (u.hasNext()) {
             if (u.next().name.equals(user.name)) {
-                users.set(i, user);
+                users.set(i + 1, user);
             }
             i++;
         }
@@ -701,15 +723,19 @@ public class DataBase implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         colID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         colBirthday.setCellValueFactory(new PropertyValueFactory<>("Birthday"));
         colVehicle.setCellValueFactory(new PropertyValueFactory<>("Vehicle"));
+        userID.setCellValueFactory(new PropertyValueFactory<>("User::Id"));
+        nodeID.setCellValueFactory(new PropertyValueFactory<>("nodeID"));
+        dateVisited.setCellValueFactory(new PropertyValueFactory<>("dateVisited"));
+        poiID.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        poiName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        poiNodeID.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        poiVehicle.setCellValueFactory(new PropertyValueFactory<>("Vehicle"));
 
-        ObservableList<User> observableUserList = FXCollections.observableArrayList();
-        observableUserList.removeAll();
-        observableUserList.addAll(users);
-        afterReadFileAction();
     }
 
     private void loadFromFileNodes(String path) {
@@ -883,9 +909,8 @@ public class DataBase implements Initializable {
                 u += 2;
                 tagNumb -= 2;
             }
-            Vehicle vehicle1 = new Vehicle();
             Date bday = new Date(Integer.parseInt(bd[0]), Integer.parseInt(bd[1]), Integer.parseInt(bd[2]));
-            User user = new User(userID, name, bday, vehicle1, visitedNodes);
+            User user = new User(userID, name, bday, vehicle, visitedNodes);
             addUser(user);
         }
     }
@@ -946,12 +971,12 @@ public class DataBase implements Initializable {
         }
     }*/
     private void clearTableItems() {
+        observableUserList.removeAll();
 
     }
 
     public void handleReadTextFileAction(ActionEvent actionEvent) {
-        observableUserList.removeAll();
-
+        clearTableItems();
 
         try {
             loadFromFileNodes(fileSource1);
@@ -967,14 +992,113 @@ public class DataBase implements Initializable {
     }
 
     private void afterReadFileAction() {
-            tableView.setItems(observableUserList);
 
+        observableUserList.removeAll();
+        observableUserList.addAll(users);
+        tableView.setItems(observableUserList);
+        for (User user : users) {
+            for (NodeVisited nodeVisited : user.getNodesVisited()) {
+
+                observableNodeVisitedList.add(nodeVisited);
+
+                observablePoiList.addAll(nodeVisited.getPoI());
+            }
+        }
+        tableViewNodesVisited.setItems(observableNodeVisitedList);
+        tableViewPoI.setItems(observablePoiList);
     }
 
     public void addUserBtn(ActionEvent actionEvent) {
+        try {
+            String name = textfieldName.getText();
+            int day = Birthday.getValue().getDayOfMonth();
+            int month = Birthday.getValue().getMonthValue();
+            int year = Birthday.getValue().getYear();
+            int id = users.size() + 1;
+            String Vehicle = textfieldVehicle.getText();
+            Date d = new Date(day, month, year);
+            ArrayList<NodeVisited> nodeVisitedArrayList = new ArrayList<>();
+            String visitedField = NodeVisitedField.getText();
+            day = DateVisitedField.getValue().getDayOfMonth();
+            month = DateVisitedField.getValue().getMonthValue();
+            year = DateVisitedField.getValue().getYear();
+            Date d2 = new Date(day, month, year);
+            String[] text = visitedField.split(",");
+            int length = text.length;
+            ArrayList<PoI> poi = new ArrayList<>();
+            while (length != 0) {
+                String s = text[length - 1];
+                int nodeid = Integer.parseInt(s);
+                for (Integer x : bst.keys()) {
+                    Nodes node = bst.get(x);
+
+                    if (node.getId() == nodeid) {
+                        poi.addAll(node.getPoI());
+                    }
+                }
+                NodeVisited nodeVisited = new NodeVisited(nodeid, d2, poi);
+                nodeVisitedArrayList.add(nodeVisited);
+                length--;
+            }
+            User user = new User(id, name, d, Vehicle, nodeVisitedArrayList);
+
+            users.add(user);
+            tableView.getItems().add(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void editUserBtn(ActionEvent actionEvent) {
+        try {
+            String name = textfieldName.getText();
+            Iterator<User> u = users.iterator();
+            String Vehicle = textfieldVehicle.getText();
+            int i = 0;
+            while (u.hasNext()) {
+                if (u.next().getName().equals(name)) {
+                    i = u.next().getId();
+                }
+            }
+            User editedUser = users.get(i-2);
+            int day = Birthday.getValue().getDayOfMonth();
+            int month = Birthday.getValue().getMonthValue();
+            int year = Birthday.getValue().getYear();
+            Date d = new Date(day, month, year);
+            editedUser.setBirthday(d);
+            ArrayList<NodeVisited> nodeVisitedArrayList = new ArrayList<>();
+            String visitedField = NodeVisitedField.getText();
+            day = DateVisitedField.getValue().getDayOfMonth();
+            month = DateVisitedField.getValue().getMonthValue();
+            year = DateVisitedField.getValue().getYear();
+            Date d2 = new Date(day, month, year);
+            String[] text = visitedField.split(",");
+            int length = text.length;
+            ArrayList<PoI> poi = new ArrayList<>();
+            while (length != 0) {
+                String s = text[length - 1];
+                int nodeid = Integer.parseInt(s);
+                for (Integer x : bst.keys()) {
+                    Nodes node = bst.get(x);
+
+                    if (node.getId() == nodeid) {
+                        poi.addAll(node.getPoI());
+                    }
+                }
+                NodeVisited nodeVisited = new NodeVisited(nodeid, d2, poi);
+                nodeVisitedArrayList.add(nodeVisited);
+                length--;
+            }
+            editedUser.setNodesVisited(nodeVisitedArrayList);
+            editedUser.setVehicle(Vehicle);
+
+            tableView.getItems().clear();
+            observableUserList.removeAll();
+            observableUserList.addAll(users);
+            tableView.getItems().addAll(observableUserList);
+        } catch (Exception e) {
+            System.out.println("There's no such user to be edited");
+        }
     }
 
     public void removeUserBtn(ActionEvent actionEvent) {

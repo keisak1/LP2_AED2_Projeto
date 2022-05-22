@@ -233,9 +233,8 @@ public class Main {
                 u += 2;
                 tagNumb -= 2;
             }
-            Vehicle vehicle1 = new Vehicle();
             Date bday = new Date(Integer.parseInt(bd[0]), Integer.parseInt(bd[1]), Integer.parseInt(bd[2]));
-            User user = new User(userID, name, bday, vehicle1, visitedNodes);
+            User user = new User(userID, name, bday, vehicle, visitedNodes);
             dataBase.addUser(user);
         }
     }
