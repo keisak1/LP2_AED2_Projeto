@@ -144,8 +144,8 @@
                                                       <TextField fx:id="vertexIdTextField" prefHeight="6.0" prefWidth="122.0" promptText="Vertex ID" translateX="75.0" translateY="50.0" />
                                                       <TextField fx:id="coordinateXTextField" prefHeight="6.0" prefWidth="122.0" promptText="X" translateX="100.0" translateY="50.0" />
                                                       <Button fx:id="addNodeBtn" mnemonicParsing="false" onAction="#addNodeBtn" text="Add" translateX="250.0" translateY="50.0" />
-                                                      <Button fx:id="editNodeBtn" mnemonicParsing="false" onAction="#removeNodeBtn" text="Edit" translateX="275.0" translateY="50.0" />
-                                                      <Button fx:id="removeNodeBtn" mnemonicParsing="false" onAction="#removeUserBtn" text="Remove" translateX="300.0" translateY="50.0" />
+                                                      <Button fx:id="editNodeBtn" mnemonicParsing="false" onAction="#editNodeBtn" text="Edit" translateX="275.0" translateY="50.0" />
+                                                      <Button fx:id="removeNodeBtn" mnemonicParsing="false" onAction="#removeNodeBtn" text="Remove" translateX="300.0" translateY="50.0" />
                                                       <TextField fx:id="coordinateYTextField" prefHeight="6.0" prefWidth="122.0" promptText="Y" translateX="-20.0" translateY="50.0" />
                                                       <TextField fx:id="poiTextField" prefHeight="6.0" prefWidth="122.0" promptText="PoI" translateX="-572.0" translateY="100.0" />
                                                       <TextField fx:id="waysTextField" prefHeight="6.0" prefWidth="122.0" promptText="Ways" translateX="-547.0" translateY="100.0" />
@@ -169,11 +169,10 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView fx:id="tableViewNodesVisited1" prefHeight="483.0" prefWidth="918.0">
+                                          <TableView fx:id="tableViewTag" prefHeight="483.0" prefWidth="918.0">
                                              <columns>
-                                                <TableColumn fx:id="userID1" prefWidth="56.0" text="Node ID" />
-                                                <TableColumn fx:id="nodeID1" prefWidth="94.0" text="Tag" />
-                                                <TableColumn fx:id="dateVisited1" prefWidth="93.0" text="Value" />
+                                                <TableColumn fx:id="tagNodeID" prefWidth="56.0" text="Node ID" />
+                                                <TableColumn fx:id="tagCol" prefWidth="378.0" text="Tag : Value" />
                                              </columns>
                                           </TableView>
                                        </children>
@@ -184,12 +183,12 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView fx:id="tableViewPoI1" prefHeight="483.0" prefWidth="918.0">
+                                          <TableView fx:id="tableViewPoI2" prefHeight="483.0" prefWidth="918.0">
                                              <columns>
-                                                <TableColumn fx:id="poiNodeID1" prefWidth="56.0" text="Node ID" />
-                                                <TableColumn fx:id="poiID1" prefWidth="77.0" text="PoI ID" />
-                                                <TableColumn fx:id="poiName1" prefWidth="110.0" text="Name" />
-                                                <TableColumn fx:id="poiVehicle1" prefWidth="110.0" text="Vehicle" />
+                                                <TableColumn fx:id="colPOI" prefWidth="56.0" text="PoI ID" />
+                                                <TableColumn fx:id="colNodeID" prefWidth="77.0" text="Node ID" />
+                                                <TableColumn fx:id="colPOIName" prefWidth="110.0" text="Name" />
+                                                <TableColumn fx:id="colVehiclePOI" prefWidth="110.0" text="Vehicle" />
                                              </columns>
                                           </TableView>
                                        </children>

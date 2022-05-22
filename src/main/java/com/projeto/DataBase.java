@@ -1,5 +1,6 @@
 package com.projeto;
 
+
 import edu.princeton.cs.algs4.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +10,9 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
@@ -77,8 +81,19 @@ public class DataBase implements Initializable {
     public Button searchNodeBtn;
     public TextField valueTextField;
     public TextField tagTextField;
+    public TableView<Nodes> tableViewTag;
+    public TableColumn<Nodes, Integer> tagNodeID;
+    public TableColumn<Nodes, String> tagCol;
+    public TableColumn<Nodes, String> valueCol;
+    // Node - PoI tab
+    public TableView<PoI> tableViewPoI2;
+    public TableColumn<PoI, Integer> colPOI;
+    public TableColumn<PoI, Integer> colNodeID;
+    public TableColumn<PoI, String> colPOIName;
+    public TableColumn<PoI, String> colVehiclePOI;
 
 
+    ObservableList<PoI> observablePoiList2 = FXCollections.observableArrayList();
     ObservableList<User> observableUserList = FXCollections.observableArrayList();
     ObservableList<NodeVisited> observableNodeVisitedList = FXCollections.observableArrayList();
     ObservableList<PoI> observablePoiList = FXCollections.observableArrayList();
@@ -763,6 +778,12 @@ public class DataBase implements Initializable {
         coordinates.setCellValueFactory(new PropertyValueFactory<>("Point"));
         ways.setCellValueFactory(new PropertyValueFactory<>("Ways"));
         poi.setCellValueFactory(new PropertyValueFactory<>("PoI"));
+        tagNodeID.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        tagCol.setCellValueFactory(new PropertyValueFactory<>("OsmNode"));
+        colPOI.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        colNodeID.setCellValueFactory(new PropertyValueFactory<>("NodeID"));
+        colPOIName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        colVehiclePOI.setCellValueFactory(new PropertyValueFactory<>("Type"));
     }
 
     private void loadFromFileNodes(String path) {
@@ -943,25 +964,23 @@ public class DataBase implements Initializable {
         for (Integer i : bst.keys()) {
             Nodes node = bst.get(i);
             Set<String> a = node.osmNode.keySet();
-            String text = "";
+            String text = null;
             for (String key : a) text = key;
             int x = 0;
             ArrayList<Nodes> vertice = new ArrayList<>();
             ArrayList<Ways> edges = new ArrayList<>();
             Grafo grafo = new Grafo(edges, vertice);
             grafo.setVertices(node);
-            while (text != null) {
-                if (ht.containsKey(text)) {
-                    grafo = ht.get(text);
-                    grafo.setVertices(node);
-                    ht.put(text, grafo);
-                    x++;
-                    continue;
-                }
+            if (text != null && ht.containsKey(text)) {
+                grafo = ht.get(text);
+                grafo.setVertices(node);
                 ht.put(text, grafo);
-                x++;
+            }
+            if (text != null) {
+                ht.put(text, grafo);
             }
         }
+
         for (Ways edge : edges) {
             Set<String[]> a = edge.osmWay.keySet();
             String[] text = new String[0];
@@ -1023,13 +1042,21 @@ public class DataBase implements Initializable {
                 }
             }
         }
+
         for (Integer i : bst.keys()) {
             Nodes node = bst.get(i);
             observableNodeList.add(node);
+            for (PoI poi:node.getPoI()) {
+                if(!observablePoiList2.contains(poi)){
+                    observablePoiList2.add(poi);
+                }
+            }
         }
         tableViewNodes.setItems(observableNodeList);
+        tableViewTag.setItems(observableNodeList);
         tableViewNodesVisited.setItems(observableNodeVisitedList);
         tableViewPoI.setItems(observablePoiList);
+        tableViewPoI2.setItems(observablePoiList2);
     }
 
     public void addUserBtn(ActionEvent actionEvent) {
@@ -1133,9 +1160,90 @@ public class DataBase implements Initializable {
     }
 
     public void handleSaveBinFileAction(ActionEvent actionEvent) {
+        DataOutputStream dos = null;
+
+        try {
+            dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(fileSource1)));
+
+
+        } catch (Exception e) {
+            StdOut.println(e);
+        } finally {
+            try {
+                if (dos != null) {
+                    dos.close();
+                }
+            } catch (IOException ioex) {
+                StdOut.println(ioex);
+            }
+        }
     }
 
     public void handleSaveTextFileAction(ActionEvent actionEvent) {
+        Out out = new Out(fileSource1);
+        Out out1 = new Out(fileSource2);
+        Out out2 = new Out(fileSource3);
+        Out out3 = new Out(fileSource4);
+
+        out.println(bstSize);
+        for (Integer i : bst.keys()) {
+            Nodes node = bst.get(i);
+            out.print(node.getId() + "," + node.getPoint().getX() + "," + node.getPoint().getY() + "," + node.getVertexID());
+            Enumeration<String> e = node.osmNode.keys();
+            while (e.hasMoreElements()) {
+                String tag = e.nextElement();
+                out.print("," + tag + "," + node.osmNode.get(tag));
+            }
+            out.println();
+        }
+
+        out1.println(edgesSize);
+        int nodeID1 = 0, nodeID2 = 0;
+        for (Ways way : edges) {
+            int vertexIDNode1 = way.getV(), vertexIDNode2 = way.getW();
+            for (Integer j : bst.keys()) {
+                Nodes node1 = bst.get(j);
+                if (node1.getVertexID() == vertexIDNode1) {
+                    nodeID1 = node1.getId();
+                }
+                if (node1.getVertexID() == vertexIDNode2) {
+                    nodeID2 = node1.getId();
+                }
+            }
+            out1.print(way.getId() + "," + nodeID1 + "," + nodeID2 + "," + way.getWeight());
+            Enumeration<String[]> en = way.osmWay.keys();
+            while (en.hasMoreElements()) {
+                String[] tag1 = en.nextElement();
+                if(tag1 != null && way.osmWay.get(tag1)!=null) {
+                    out1.print("," + Arrays.toString(tag1) + ":" + Arrays.toString(way.osmWay.get(tag1)));
+                }
+            }
+            out1.println();
+        }
+
+        int size = 0;
+        for (Integer m : bst.keys()) {
+            Nodes node2 = bst.get(m);
+            size += node2.getPoI().size();
+        }
+        out2.println(size);
+        for (Integer n : bst.keys()) {
+            Nodes node3 = bst.get(n);
+            for (PoI poI : node3.getPoI()) {
+                out2.println(poI.getId() + "," + node3.getId() + "," + poI.getName() + "," + poI.getType());
+            }
+        }
+
+        out3.println(users.size());
+        for (User user : users) {
+            out3.print(user.getId() + "," + user.getName() + "," + user.getBirthday() + "," + user.getVehicle());
+            for (NodeVisited nodeVisited : user.getNodesVisited()) {
+                for (PoI poi : nodeVisited.getPoI()) {
+                    out3.print("Visited:" + nodeVisited.getNodeID() + ":" + poi.getId() + ":" + nodeVisited.getDateVisited().toString());
+                }
+            }
+            out3.println();
+        }
     }
 
     public void handleExitAction(ActionEvent actionEvent) {
@@ -1160,9 +1268,26 @@ public class DataBase implements Initializable {
     }
 
     public void searchNodeBtn(ActionEvent actionEvent) {
+        Integer id = Integer.parseInt(searchFieldNode.getText());
+        try {
+            for (Integer i : bst.keys()) {
+                if (Objects.equals(i, id)) {
+                    Nodes node = bst.get(i);
+                    tableViewNodes.getItems().clear();
+                    tableViewNodes.getItems().add(node);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("There's no such node");
+        }
     }
 
     public void removeNodeBtn(ActionEvent actionEvent) {
+        Integer id = tableViewNodes.getSelectionModel().getSelectedItem().getId();
+        bst.delete(id);
+        tableViewNodes.getItems().clear();
+        afterReadFileAction();
+
     }
 
     public void addNodeBtn(ActionEvent actionEvent) throws IOException {
@@ -1199,7 +1324,44 @@ public class DataBase implements Initializable {
 
         Hashtable<String, String> ht = new Hashtable<>();
         ht.put(tagTextField.getText(), valueTextField.getText());
-        Nodes node = new Nodes(ht,id,vertexID,coordinate,poIArrayList,waysArrayList);
+        Nodes node = new Nodes(ht, id, vertexID, coordinate, poIArrayList, waysArrayList);
+        bst.put(id, node);
+        tableViewNodes.getItems().add(node);
+    }
 
+    public void editNodeBtn(ActionEvent actionEvent) {
+        try {
+            Nodes node = bst.get(Integer.parseInt(nodeidtextfield.getText()));
+            node.setVertexID(Integer.parseInt(vertexIdTextField.getText()));
+            ArrayList<Ways> waysArrayList = new ArrayList<>();
+            String[] text = waysTextField.getText().split(",");
+            for (String s : text) {
+                for (Ways way : edges) {
+                    if (Integer.parseInt(s) == way.getId()) {
+                        waysArrayList.add(way);
+                    }
+                }
+            }
+            node.setWays(waysArrayList);
+            Hashtable<String, String> ht = new Hashtable<>();
+            ht.put(tagTextField.getText(), valueTextField.getText());
+            node.setOsmNode(ht);
+            for (String s : text) {
+                for (Integer x : bst.keys()) {
+                    Nodes nodes = bst.get(x);
+                    for (PoI poi : nodes.getPoI()) {
+                        if (poi.getId().equals(Integer.parseInt(s))) {
+                            node.setPoI(poi);
+                        }
+                    }
+                }
+            }
+            Coordinate coordinate = new Coordinate(Double.parseDouble(coordinateXTextField.getText()), Double.parseDouble(coordinateYTextField.getText()));
+            node.setPoint(coordinate);
+            tableViewNodes.getItems().clear();
+            afterReadFileAction();
+        } catch (Exception e) {
+            System.out.println("Node doesn't exist");
+        }
     }
 }

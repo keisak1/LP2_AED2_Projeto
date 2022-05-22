@@ -15,7 +15,7 @@ public class Nodes {
     public Nodes(Hashtable<String, String> osmNode, Integer id, Integer vertexID, Coordinate point, ArrayList<PoI> poI, ArrayList<Ways> ways) {
         this.osmNode = osmNode;
         this.id = id;
-        this.vertexID=vertexID;
+        this.vertexID = vertexID;
         this.point = point;
         this.poI = poI;
         this.ways = ways;
@@ -32,6 +32,8 @@ public class Nodes {
     public void setOsmNode(Hashtable<String, String> osmNode) {
         this.osmNode = osmNode;
     }
+
+
 
     private Integer id;
 
@@ -91,7 +93,7 @@ public class Nodes {
     public String toString() {
         return "Nodes{" +
                 "id=" + id +
-                ", point=" + "(" + point.getX() + "," + point.getY()+ ")" +
+                ", point=" + "(" + point.getX() + "," + point.getY() + ")" +
                 ", poI=" + poI +
                 ", ways=" + ways +
                 '}';

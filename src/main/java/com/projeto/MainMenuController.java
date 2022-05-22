@@ -19,7 +19,7 @@ public class MainMenuController extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("MainMenuCreator.fxml"));
 
         Scene scene = new Scene(root);
-        primaryStage.setTitle("Java HateSquad");
+        primaryStage.setTitle("Projeto LP2 AED2 JavaFX");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
