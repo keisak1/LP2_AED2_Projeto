@@ -5,8 +5,9 @@ package com.projeto;
  */
 public class PoI extends Nodes {
 
-    public PoI(Integer id, String name, String type) {
+    public PoI(Integer id, Integer nodeID, String name, String type) {
         this.id = id;
+        this.nodeID = nodeID;
         this.name = name;
         this.type = type;
     }
@@ -16,6 +17,8 @@ public class PoI extends Nodes {
     }
 
     private String type;
+
+    private Integer nodeID;
 
     private String name;
 
@@ -41,8 +44,21 @@ public class PoI extends Nodes {
         return id;
     }
 
+    public Integer getNodeID() {
+        return nodeID;
+    }
+
+    public void setNodeID(Integer nodeID) {
+        this.nodeID = nodeID;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
 
+
+    @Override
+    public String toString() {
+        return name + '\'' + ", id=" + id;
+    }
 }

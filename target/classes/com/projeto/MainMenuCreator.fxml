@@ -75,6 +75,8 @@
                                                                 </HBox>
                                                             </children>
                                                         </VBox>
+                                          <TextField fx:id="searchFieldName" prefHeight="6.0" prefWidth="122.0" promptText="User" translateX="785.0" />
+                                          <Button fx:id="searchBtn" mnemonicParsing="false" onAction="#searchUserBtn" text="Search" translateX="725.0" />
                                                     </children>
                                                 </AnchorPane>
                                             </content>
@@ -115,9 +117,79 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Untitled Tab 2">
+                <Tab text="Nodes">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TabPane prefHeight="520.0" prefWidth="918.0" tabClosingPolicy="UNAVAILABLE">
+                           <tabs>
+                              <Tab text="Basic Information">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox layoutY="-1.0" prefHeight="493.0" prefWidth="918.0">
+                                             <children>
+                                                <TableView fx:id="tableViewNodes" prefHeight="340.0" prefWidth="918.0">
+                                                   <columns>
+                                                      <TableColumn fx:id="ID" prefWidth="45.0" text="ID" />
+                                                      <TableColumn fx:id="vertexID" prefWidth="115.0" text="Vertex ID" />
+                                                      <TableColumn fx:id="coordinates" prefWidth="100.0" text="Coordinates" />
+                                                      <TableColumn fx:id="poi" prefWidth="246.0" text="Points of Interest" />
+                                                      <TableColumn fx:id="ways" prefWidth="411.0" text="Ways" />
+                                                   </columns>
+                                                </TableView>
+                                                <HBox prefHeight="156.0" prefWidth="918.0">
+                                                   <children>
+                                                      <TextField fx:id="textfieldName1" prefHeight="6.0" prefWidth="122.0" promptText="User" translateX="50.0" translateY="50.0" />
+                                                      <DatePicker fx:id="Birthday1" promptText="Year Born" translateX="75.0" translateY="50.0" />
+                                                      <TextField fx:id="textfieldVehicle1" prefHeight="6.0" prefWidth="122.0" promptText="Vehicle" translateX="100.0" translateY="50.0" />
+                                                      <Button fx:id="addBtn1" mnemonicParsing="false" onAction="#addUserBtn" text="Add" translateX="250.0" translateY="50.0" />
+                                                      <Button fx:id="editBtn1" mnemonicParsing="false" onAction="#editUserBtn" text="Edit" translateX="275.0" translateY="50.0" />
+                                                      <Button fx:id="removeBtn1" mnemonicParsing="false" onAction="#removeUserBtn" text="Remove" translateX="300.0" translateY="50.0" />
+                                                      <TextField fx:id="NodeVisitedField1" prefHeight="6.0" prefWidth="122.0" promptText="Nodes Visited" translateX="-20.0" translateY="50.0" />
+                                                      <DatePicker fx:id="DateVisitedField1" promptText="Date Visited" translateX="-477.0" translateY="90.0" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Tags">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView fx:id="tableViewNodesVisited1" prefHeight="483.0" prefWidth="918.0">
+                                             <columns>
+                                                <TableColumn fx:id="userID1" prefWidth="56.0" text="Node ID" />
+                                                <TableColumn fx:id="nodeID1" prefWidth="94.0" text="Tag" />
+                                                <TableColumn fx:id="dateVisited1" prefWidth="93.0" text="Value" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Point of Interest">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView fx:id="tableViewPoI1" prefHeight="483.0" prefWidth="918.0">
+                                             <columns>
+                                                <TableColumn fx:id="poiNodeID1" prefWidth="56.0" text="Node ID" />
+                                                <TableColumn fx:id="poiID1" prefWidth="77.0" text="PoI ID" />
+                                                <TableColumn fx:id="poiName1" prefWidth="110.0" text="Name" />
+                                                <TableColumn fx:id="poiVehicle1" prefWidth="110.0" text="Vehicle" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                           </tabs>
+                        </TabPane>
+                     </children></AnchorPane>
                     </content>
                 </Tab>
             </tabs>

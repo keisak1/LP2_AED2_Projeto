@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -36,10 +37,12 @@ public class DataBase implements Initializable {
     public TableColumn<User, String> colName;
     public TableColumn<User, Date> colBirthday;
     public TableColumn<User, String> colVehicle;
+    public TextField searchFieldName;
+    public Button searchBtn;
 
     //DateVisited tab
     public TableView<NodeVisited> tableViewNodesVisited;
-    public TableColumn<User, Integer> userID;
+    public TableColumn<NodeVisited, Integer> userID;
     public TableColumn<Nodes, Integer> nodeID;
     public TableColumn<NodeVisited, Date> dateVisited;
 
@@ -52,9 +55,19 @@ public class DataBase implements Initializable {
     public TextField NodeVisitedField;
     public DatePicker DateVisitedField;
 
+    //Nodes tab
+    public TableView<Nodes> tableViewNodes;
+    public TableColumn<Nodes, Integer> ID;
+    public TableColumn<Nodes, Integer> vertexID;
+    public TableColumn<Nodes, Coordinate> coordinates;
+    public TableColumn<Nodes, PoI> poi;
+    public TableColumn<Nodes, Ways> ways;
+
+
     ObservableList<User> observableUserList = FXCollections.observableArrayList();
     ObservableList<NodeVisited> observableNodeVisitedList = FXCollections.observableArrayList();
     ObservableList<PoI> observablePoiList = FXCollections.observableArrayList();
+    ObservableList<Nodes> observableNodeList = FXCollections.observableArrayList();
 
     private static final String fileSource1 = "data\\dataset1_nodes.txt";
     private static final String fileSource2 = "data\\dataset1_ways_nodepairs.txt";
@@ -211,8 +224,7 @@ public class DataBase implements Initializable {
         for (int i = 0; i < getBstSize() + 1; i++) {
             DepthFirstSearch dfs = new DepthFirstSearch(graph, i);
             for (int v = 0; v < graph.V(); v++) {
-                if (dfs.marked(v))
-                    StdOut.print(v + " ");
+                if (dfs.marked(v)) StdOut.print(v + " ");
             }
             StdOut.println();
             if (dfs.count() != graph.V()) {
@@ -251,8 +263,7 @@ public class DataBase implements Initializable {
         for (int u = 0; u < getBstSize() + 1; u++) {
             DepthFirstSearch dfs = new DepthFirstSearch(graph, u);
             for (int v = 0; v < graph.V(); v++) {
-                if (dfs.marked(v))
-                    StdOut.print(v + " ");
+                if (dfs.marked(v)) StdOut.print(v + " ");
             }
             StdOut.println();
             if (dfs.count() != graph.V()) {
@@ -649,9 +660,7 @@ public class DataBase implements Initializable {
         List<Entry<String, Integer>> list = new LinkedList<>(unsortMap.entrySet());
 
         // Sorting the list based on values
-        list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()) == 0
-                ? o2.getKey().compareTo(o1.getKey())
-                : o2.getValue().compareTo(o1.getValue()));
+        list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()) == 0 ? o2.getKey().compareTo(o1.getKey()) : o2.getValue().compareTo(o1.getValue()));
         return list.stream().collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> b, LinkedHashMap::new));
 
     }
@@ -723,19 +732,22 @@ public class DataBase implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         colID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         colBirthday.setCellValueFactory(new PropertyValueFactory<>("Birthday"));
         colVehicle.setCellValueFactory(new PropertyValueFactory<>("Vehicle"));
-        userID.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        userID.setCellValueFactory(new PropertyValueFactory<>("UserID"));
         nodeID.setCellValueFactory(new PropertyValueFactory<>("nodeID"));
         dateVisited.setCellValueFactory(new PropertyValueFactory<>("dateVisited"));
         poiID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         poiName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        poiNodeID.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        poiVehicle.setCellValueFactory(new PropertyValueFactory<>("Vehicle"));
-
+        poiNodeID.setCellValueFactory(new PropertyValueFactory<>("nodeID"));
+        poiVehicle.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        ID.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        vertexID.setCellValueFactory(new PropertyValueFactory<>("VertexID"));
+        coordinates.setCellValueFactory(new PropertyValueFactory<>("Point"));
+        ways.setCellValueFactory(new PropertyValueFactory<>("Ways"));
+        poi.setCellValueFactory(new PropertyValueFactory<>("PoI"));
     }
 
     private void loadFromFileNodes(String path) {
@@ -856,12 +868,9 @@ public class DataBase implements Initializable {
             poiID = Integer.parseInt(text[0]);
             nodeID = Integer.parseInt(text[1]);
             name = text[2];
-            if (!Objects.equals(text[3], "none")) {
-                Vehicle = text[3];
-            } else {
-                Vehicle = null;
-            }
-            PoI poi = new PoI(poiID, name, Vehicle);
+            Vehicle = text[3];
+
+            PoI poi = new PoI(poiID, nodeID, name, Vehicle);
             Nodes node = bst.get(nodeID);
             node.getPoI().add(poi);
             bst.put(nodeID, node);
@@ -964,11 +973,7 @@ public class DataBase implements Initializable {
         }
     }
 
-    /*private void loadTables() {
-        for (User user:users) {
-            userTableView.
-        }
-    }*/
+
     private void clearTableItems() {
         observableUserList.removeAll();
 
@@ -997,12 +1002,19 @@ public class DataBase implements Initializable {
         tableView.setItems(observableUserList);
         for (User user : users) {
             for (NodeVisited nodeVisited : user.getNodesVisited()) {
-
                 observableNodeVisitedList.add(nodeVisited);
-
-                observablePoiList.addAll(nodeVisited.getPoI());
+                for (PoI poi : nodeVisited.getPoI()) {
+                    if (!observablePoiList.contains(poi)) {
+                        observablePoiList.add(poi);
+                    }
+                }
             }
         }
+        for (Integer i : bst.keys()) {
+            Nodes node = bst.get(i);
+            observableNodeList.add(node);
+        }
+        tableViewNodes.setItems(observableNodeList);
         tableViewNodesVisited.setItems(observableNodeVisitedList);
         tableViewPoI.setItems(observablePoiList);
     }
@@ -1117,5 +1129,20 @@ public class DataBase implements Initializable {
     }
 
     public void handleReadBinFileAction(ActionEvent actionEvent) {
+    }
+
+    public void searchUserBtn(ActionEvent actionEvent) {
+        String name = searchFieldName.getText();
+        try {
+            for (User user : users) {
+                if (user.name.equals(name)) {
+                    tableView.getItems().clear();
+                    tableView.getItems().add(user);
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("There's no such user");
+        }
     }
 }
