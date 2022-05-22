@@ -10,9 +10,9 @@ import java.util.Hashtable;
 public class Nodes {
 
 
-    public Hashtable<String[], String[]> osmNode = new Hashtable<>();
+    public Hashtable<String, String> osmNode = new Hashtable<>();
 
-    public Nodes(Hashtable<String[], String[]> osmNode, Integer id, Integer vertexID, Coordinate point, ArrayList<PoI> poI, ArrayList<Ways> ways) {
+    public Nodes(Hashtable<String, String> osmNode, Integer id, Integer vertexID, Coordinate point, ArrayList<PoI> poI, ArrayList<Ways> ways) {
         this.osmNode = osmNode;
         this.id = id;
         this.vertexID=vertexID;
@@ -25,11 +25,11 @@ public class Nodes {
 
     }
 
-    public Hashtable<String[], String[]> getOsmNode() {
+    public Hashtable<String, String> getOsmNode() {
         return osmNode;
     }
 
-    public void setOsmNode(Hashtable<String[], String[]> osmNode) {
+    public void setOsmNode(Hashtable<String, String> osmNode) {
         this.osmNode = osmNode;
     }
 

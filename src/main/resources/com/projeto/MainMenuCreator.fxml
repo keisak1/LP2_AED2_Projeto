@@ -16,7 +16,7 @@
 
 <AnchorPane prefHeight="576.0" prefWidth="918.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projeto.DataBase">
     <children>
-        <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="918.0">
+        <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="1049.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
@@ -39,7 +39,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <TabPane layoutY="27.0" prefHeight="549.0" prefWidth="918.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane layoutY="25.0" prefHeight="551.0" prefWidth="1049.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Users">
                     <content>
@@ -121,35 +121,44 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TabPane prefHeight="520.0" prefWidth="918.0" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane layoutY="-1.0" prefHeight="521.0" prefWidth="1049.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
                               <Tab text="Basic Information">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <VBox layoutY="-1.0" prefHeight="493.0" prefWidth="918.0">
+                                          <VBox layoutY="-1.0" prefHeight="493.0" prefWidth="928.0">
                                              <children>
-                                                <TableView fx:id="tableViewNodes" prefHeight="340.0" prefWidth="918.0">
+                                                <TableView fx:id="tableViewNodes" prefHeight="339.0" prefWidth="928.0">
                                                    <columns>
                                                       <TableColumn fx:id="ID" prefWidth="45.0" text="ID" />
                                                       <TableColumn fx:id="vertexID" prefWidth="115.0" text="Vertex ID" />
                                                       <TableColumn fx:id="coordinates" prefWidth="100.0" text="Coordinates" />
                                                       <TableColumn fx:id="poi" prefWidth="246.0" text="Points of Interest" />
-                                                      <TableColumn fx:id="ways" prefWidth="411.0" text="Ways" />
+                                                      <TableColumn fx:id="ways" prefWidth="239.0" text="Ways" />
                                                    </columns>
                                                 </TableView>
-                                                <HBox prefHeight="156.0" prefWidth="918.0">
+                                                <HBox prefHeight="155.0" prefWidth="861.0">
                                                    <children>
-                                                      <TextField fx:id="textfieldName1" prefHeight="6.0" prefWidth="122.0" promptText="User" translateX="50.0" translateY="50.0" />
-                                                      <DatePicker fx:id="Birthday1" promptText="Year Born" translateX="75.0" translateY="50.0" />
-                                                      <TextField fx:id="textfieldVehicle1" prefHeight="6.0" prefWidth="122.0" promptText="Vehicle" translateX="100.0" translateY="50.0" />
-                                                      <Button fx:id="addBtn1" mnemonicParsing="false" onAction="#addUserBtn" text="Add" translateX="250.0" translateY="50.0" />
-                                                      <Button fx:id="editBtn1" mnemonicParsing="false" onAction="#editUserBtn" text="Edit" translateX="275.0" translateY="50.0" />
-                                                      <Button fx:id="removeBtn1" mnemonicParsing="false" onAction="#removeUserBtn" text="Remove" translateX="300.0" translateY="50.0" />
-                                                      <TextField fx:id="NodeVisitedField1" prefHeight="6.0" prefWidth="122.0" promptText="Nodes Visited" translateX="-20.0" translateY="50.0" />
-                                                      <DatePicker fx:id="DateVisitedField1" promptText="Date Visited" translateX="-477.0" translateY="90.0" />
+                                                      <TextField fx:id="nodeidtextfield" prefHeight="6.0" prefWidth="122.0" promptText="ID" translateX="50.0" translateY="50.0" />
+                                                      <TextField fx:id="vertexIdTextField" prefHeight="6.0" prefWidth="122.0" promptText="Vertex ID" translateX="75.0" translateY="50.0" />
+                                                      <TextField fx:id="coordinateXTextField" prefHeight="6.0" prefWidth="122.0" promptText="X" translateX="100.0" translateY="50.0" />
+                                                      <Button fx:id="addNodeBtn" mnemonicParsing="false" onAction="#addNodeBtn" text="Add" translateX="250.0" translateY="50.0" />
+                                                      <Button fx:id="editNodeBtn" mnemonicParsing="false" onAction="#removeNodeBtn" text="Edit" translateX="275.0" translateY="50.0" />
+                                                      <Button fx:id="removeNodeBtn" mnemonicParsing="false" onAction="#removeUserBtn" text="Remove" translateX="300.0" translateY="50.0" />
+                                                      <TextField fx:id="coordinateYTextField" prefHeight="6.0" prefWidth="122.0" promptText="Y" translateX="-20.0" translateY="50.0" />
+                                                      <TextField fx:id="poiTextField" prefHeight="6.0" prefWidth="122.0" promptText="PoI" translateX="-572.0" translateY="100.0" />
+                                                      <TextField fx:id="waysTextField" prefHeight="6.0" prefWidth="122.0" promptText="Ways" translateX="-547.0" translateY="100.0" />
                                                    </children>
                                                 </HBox>
+                                             </children>
+                                          </VBox>
+                                          <TextField fx:id="searchFieldNode" prefHeight="6.0" prefWidth="122.0" promptText="NODE ID" translateX="800.0" />
+                                          <Button fx:id="searchNodeBtn" mnemonicParsing="false" onAction="#searchNodeBtn" text="Search" translateX="745.0" />
+                                          <VBox layoutX="928.0" prefHeight="495.0" prefWidth="121.0">
+                                             <children>
+                                                <TextField fx:id="valueTextField" prefHeight="6.0" prefWidth="122.0" promptText="Value" translateY="435.0" />
+                                                <TextField fx:id="tagTextField" prefHeight="6.0" prefWidth="122.0" promptText="Tag" translateY="360.0" />
                                              </children>
                                           </VBox>
                                        </children>

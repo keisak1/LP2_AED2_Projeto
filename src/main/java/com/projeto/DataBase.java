@@ -9,12 +9,14 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import static java.lang.System.exit;
 import static java.lang.System.out;
 
 
@@ -62,6 +64,19 @@ public class DataBase implements Initializable {
     public TableColumn<Nodes, Coordinate> coordinates;
     public TableColumn<Nodes, PoI> poi;
     public TableColumn<Nodes, Ways> ways;
+    public TextField nodeidtextfield;
+    public TextField vertexIdTextField;
+    public TextField coordinateXTextField;
+    public Button addNodeBtn;
+    public Button editNodeBtn;
+    public Button removeNodeBtn;
+    public TextField coordinateYTextField;
+    public TextField poiTextField;
+    public TextField waysTextField;
+    public TextField searchFieldNode;
+    public Button searchNodeBtn;
+    public TextField valueTextField;
+    public TextField tagTextField;
 
 
     ObservableList<User> observableUserList = FXCollections.observableArrayList();
@@ -756,8 +771,8 @@ public class DataBase implements Initializable {
         in.readLine();
         int id;
         int vertexID;
-        String[] value;
-        String[] tag;
+        String value;
+        String tag;
         float coordenateX;
         float coordenateY;
         while (!in.isEmpty()) {
@@ -766,19 +781,17 @@ public class DataBase implements Initializable {
             coordenateX = Float.parseFloat(text[1]);
             coordenateY = Float.parseFloat(text[2]);
             vertexID = Integer.parseInt(text[3]);
-            tag = new String[10];
-            value = new String[10];
             int tagNumb = text.length - 4;
             int i = 0, u = 4;
+            Hashtable<String, String> osm = new Hashtable<>();
             while (tagNumb != 0) {
-                tag[i] = text[u];
-                value[i] = text[u + 1];
+                tag = text[u];
+                value = text[u + 1];
                 tagNumb -= 2;
                 i++;
                 u += 2;
+                osm.put(tag, value);
             }
-            Hashtable<String[], String[]> osm = new Hashtable<>();
-            osm.put(tag, value);
             Coordinate coordinate = new Coordinate(coordenateX, coordenateY);
             ArrayList<Ways> waysArrayList = new ArrayList<>();
             ArrayList<PoI> PoIArrayList = new ArrayList<>();
@@ -929,23 +942,23 @@ public class DataBase implements Initializable {
     private static void fillHash() {
         for (Integer i : bst.keys()) {
             Nodes node = bst.get(i);
-            Set<String[]> a = node.osmNode.keySet();
-            String[] text = new String[0];
-            for (String[] key : a) text = key;
+            Set<String> a = node.osmNode.keySet();
+            String text = "";
+            for (String key : a) text = key;
             int x = 0;
             ArrayList<Nodes> vertice = new ArrayList<>();
             ArrayList<Ways> edges = new ArrayList<>();
             Grafo grafo = new Grafo(edges, vertice);
             grafo.setVertices(node);
-            while (text[x] != null) {
-                if (ht.containsKey(text[x])) {
-                    grafo = ht.get(text[x]);
+            while (text != null) {
+                if (ht.containsKey(text)) {
+                    grafo = ht.get(text);
                     grafo.setVertices(node);
-                    ht.put(text[x], grafo);
+                    ht.put(text, grafo);
                     x++;
                     continue;
                 }
-                ht.put(text[x], grafo);
+                ht.put(text, grafo);
                 x++;
             }
         }
@@ -1144,5 +1157,49 @@ public class DataBase implements Initializable {
         } catch (Exception e) {
             System.out.println("There's no such user");
         }
+    }
+
+    public void searchNodeBtn(ActionEvent actionEvent) {
+    }
+
+    public void removeNodeBtn(ActionEvent actionEvent) {
+    }
+
+    public void addNodeBtn(ActionEvent actionEvent) throws IOException {
+        Integer id = Integer.parseInt(nodeidtextfield.getText());
+
+        for (Integer i : bst.keys()) {
+            if (id.equals(i)) {
+                throw new IOException("Node already exists");
+            }
+        }
+        Integer vertexID = Integer.parseInt(vertexIdTextField.getText());
+        Coordinate coordinate = new Coordinate(Double.parseDouble(coordinateXTextField.getText()), Double.parseDouble(coordinateYTextField.getText()));
+        String[] text = poiTextField.getText().split(",");
+        ArrayList<PoI> poIArrayList = new ArrayList<>();
+        for (String s : text) {
+            for (Integer x : bst.keys()) {
+                Nodes node = bst.get(x);
+                for (PoI poi : node.getPoI()) {
+                    if (poi.getId().equals(Integer.parseInt(s))) {
+                        poIArrayList.add(poi);
+                    }
+                }
+            }
+        }
+        ArrayList<Ways> waysArrayList = new ArrayList<>();
+        text = waysTextField.getText().split(",");
+        for (String s : text) {
+            for (Ways way : edges) {
+                if (Integer.parseInt(s) == way.getId()) {
+                    waysArrayList.add(way);
+                }
+            }
+        }
+
+        Hashtable<String, String> ht = new Hashtable<>();
+        ht.put(tagTextField.getText(), valueTextField.getText());
+        Nodes node = new Nodes(ht,id,vertexID,coordinate,poIArrayList,waysArrayList);
+
     }
 }
