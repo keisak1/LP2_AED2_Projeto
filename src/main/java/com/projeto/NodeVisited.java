@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * The type Node visited.
  */
-public class NodeVisited extends User {
+public class NodeVisited {
 
     public NodeVisited(Integer nodeID, Date dateVisited, ArrayList<PoI> poI){
         this.nodeID = nodeID;

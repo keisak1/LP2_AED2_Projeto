@@ -175,7 +175,6 @@ public class Main {
         int poiID;
         int nodeID;
         String name, Vehicle;
-        Vehicle vehicle = new Vehicle();
         while (!in.isEmpty()) {
             String[] text = in.readLine().split(",");
             poiID = Integer.parseInt(text[0]);
@@ -186,7 +185,7 @@ public class Main {
             } else {
                 Vehicle = null;
             }
-            PoI poi = new PoI(poiID, name, vehicle);
+            PoI poi = new PoI(poiID, name, Vehicle);
             Nodes node = dataBase.bst.get(nodeID);
             node.getPoI().add(poi);
             dataBase.bst.put(nodeID, node);

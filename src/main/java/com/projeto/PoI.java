@@ -5,7 +5,7 @@ package com.projeto;
  */
 public class PoI extends Nodes {
 
-    public PoI(Integer id, String name, Vehicle type) {
+    public PoI(Integer id, String name, String type) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -15,17 +15,17 @@ public class PoI extends Nodes {
 
     }
 
-    private Vehicle type;
+    private String type;
 
     private String name;
 
     private Integer id;
 
-    public Vehicle getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Vehicle type) {
+    public void setType(String type) {
         this.type = type;
     }
 

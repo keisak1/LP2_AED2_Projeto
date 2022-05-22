@@ -485,7 +485,7 @@ public class DataBase implements Initializable {
      * @param userID - user ID
      */
     public void deleteUser(int userID) {
-        users.remove(userID);
+        users.removeIf(user -> user.id == userID);
     }
 
     /**
@@ -728,7 +728,7 @@ public class DataBase implements Initializable {
         colName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         colBirthday.setCellValueFactory(new PropertyValueFactory<>("Birthday"));
         colVehicle.setCellValueFactory(new PropertyValueFactory<>("Vehicle"));
-        userID.setCellValueFactory(new PropertyValueFactory<>("User::Id"));
+        userID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         nodeID.setCellValueFactory(new PropertyValueFactory<>("nodeID"));
         dateVisited.setCellValueFactory(new PropertyValueFactory<>("dateVisited"));
         poiID.setCellValueFactory(new PropertyValueFactory<>("Id"));
@@ -851,7 +851,6 @@ public class DataBase implements Initializable {
         int poiID;
         int nodeID;
         String name, Vehicle;
-        Vehicle vehicle = new Vehicle();
         while (!in.isEmpty()) {
             String[] text = in.readLine().split(",");
             poiID = Integer.parseInt(text[0]);
@@ -862,7 +861,7 @@ public class DataBase implements Initializable {
             } else {
                 Vehicle = null;
             }
-            PoI poi = new PoI(poiID, name, vehicle);
+            PoI poi = new PoI(poiID, name, Vehicle);
             Nodes node = bst.get(nodeID);
             node.getPoI().add(poi);
             bst.put(nodeID, node);
@@ -1060,7 +1059,7 @@ public class DataBase implements Initializable {
                     i = u.next().getId();
                 }
             }
-            User editedUser = users.get(i-2);
+            User editedUser = users.get(i - 2);
             int day = Birthday.getValue().getDayOfMonth();
             int month = Birthday.getValue().getMonthValue();
             int year = Birthday.getValue().getYear();
@@ -1095,13 +1094,17 @@ public class DataBase implements Initializable {
             tableView.getItems().clear();
             observableUserList.removeAll();
             observableUserList.addAll(users);
-            tableView.getItems().addAll(observableUserList);
         } catch (Exception e) {
             System.out.println("There's no such user to be edited");
         }
     }
 
     public void removeUserBtn(ActionEvent actionEvent) {
+        Integer id = tableView.getSelectionModel().getSelectedItem().getId();
+
+        deleteUser(id);
+        tableView.getItems().clear();
+        afterReadFileAction();
     }
 
     public void handleSaveBinFileAction(ActionEvent actionEvent) {
