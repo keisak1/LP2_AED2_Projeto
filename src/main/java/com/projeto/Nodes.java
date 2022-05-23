@@ -34,6 +34,15 @@ public class Nodes {
     }
 
 
+    private Integer poISize;
+
+    public void setPoISize(Integer poISize) {
+        this.poISize = poISize;
+    }
+
+    public Integer getPoISize() {
+        return poISize;
+    }
 
     private Integer id;
 

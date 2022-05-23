@@ -23,7 +23,7 @@ public class Ways extends DirectedEdge {
      */
 
 
-    public Ways(int v, int w, double weight, Integer id, Hashtable<String[], String[]> osmWay, String name, String address, String postcode) {
+    public Ways(int v, int w, double weight, Integer id, Hashtable<String, String> osmWay, String name, String address, String postcode) {
         super(v, w, weight);
         this.osmWay = osmWay;
         this.id = id;
@@ -66,13 +66,13 @@ public class Ways extends DirectedEdge {
         this.postcode = postcode;
     }
 
-    public Hashtable<String[], String[]> osmWay = new Hashtable<>();
+    public Hashtable<String, String> osmWay = new Hashtable<>();
 
-    public Hashtable<String[], String[]> getOsmWay() {
+    public Hashtable<String, String> getOsmWay() {
         return osmWay;
     }
 
-    public void setOsmWay(Hashtable<String[], String[]> osmWay) {
+    public void setOsmWay(Hashtable<String, String> osmWay) {
         this.osmWay = osmWay;
     }
 
