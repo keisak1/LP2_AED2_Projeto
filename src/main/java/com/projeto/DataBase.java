@@ -1655,7 +1655,7 @@ public class DataBase implements Initializable {
         createGraph();
         for (int i = 0; i < vNumber; i++) {
             Random r = new Random();
-            int radius = 30;
+            int radius = 10;
 
             double posX = radius + r.nextDouble() * 800;
             double posY = radius + r.nextDouble() * 300;
@@ -1690,5 +1690,41 @@ public class DataBase implements Initializable {
         }
         System.out.println(ewg);
 
+    }
+    public ArrayList<Nodes> searchTagNodes(String tag){
+        ArrayList<Nodes> nodes = new ArrayList<>();
+        for(Integer i : bst.keys()){
+            Nodes node = bst.get(i);
+            Enumeration<String> e = node.osmNode.keys();
+            while (e.hasMoreElements()) {
+                if(Objects.equals(e.nextElement(), tag)){
+                    nodes.add(node);
+                }
+            }
+        }
+        return nodes;
+    }
+
+    public ArrayList<Ways> searchTagWays(String tag){
+        ArrayList<Ways> ways = new ArrayList<>();
+        for(Ways way : edges){
+            Enumeration<String> e = way.osmWay.keys();
+            while (e.hasMoreElements()) {
+                if(Objects.equals(e.nextElement(), tag)){
+                    ways.add(way);
+                }
+            }
+        }
+        return ways;
+    }
+    public ArrayList<Nodes> searchTagNearCoordinate(Coordinate coordinate){
+        ArrayList<Nodes> nodes = new ArrayList<>();
+        double distance;
+        for(Integer i : bst.keys()){
+            Nodes node = bst.get(i);
+            distance = node.getPoint().calculateDistanceBetweenPoints(node.getPoint().getX(), node.getPoint().getY(), coordinate.getX(), coordinate.getY());
+
+        }
+        return nodes;
     }
 }
