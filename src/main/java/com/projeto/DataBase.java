@@ -111,17 +111,7 @@ public class DataBase implements Initializable {
     private static final String fileSource5 = "data\\dataset1_nodes_bin.bin";
     private static final String fileSource6 = "data\\dataset1_ways_nodepairs_bin.bin";
     private static final String fileSource7 = "data\\dataset1_pois_bin.bin";
-    private static final String fileSource8 = "data\\datasete1_users_bin.bin";
-
-    public Integer usersSize;
-
-    public void setUsersSize(Integer usersSize) {
-        this.usersSize = usersSize;
-    }
-
-    public Integer setUsersSize() {
-        return usersSize;
-    }
+    private static final String fileSource8 = "data\\dataset1_users_bin.bin";
 
     /**
      * The Bst.
@@ -203,6 +193,12 @@ public class DataBase implements Initializable {
         this.edgesSize = edgesSize;
     }
 
+    public Integer usersSize;
+
+    public void setUsersSize(Integer usersSize){this.usersSize = usersSize;}
+
+    public Integer setUsersSize(){return usersSize;}
+
     /**
      * Instantiates a new Data base.
      */
@@ -219,7 +215,6 @@ public class DataBase implements Initializable {
     /**
      * Prints Graph
      */
-
     public void printGraph() {
         StdOut.println(ewg.toString());
     }
@@ -1726,5 +1721,30 @@ public class DataBase implements Initializable {
 
         }
         return nodes;
+    }
+
+    public void maxFlowFrom2Nodes(Nodes node1, Nodes node2){
+        int s = 0, t = bstSize - 1;
+        FlowNetwork G = new FlowNetwork(bstSize, edgesSize);
+
+        FordFulkerson maxflow = new FordFulkerson(G, s, t);
+        StdOut.println("Max flow from " + s + " to " + t);
+        for(int v = 0; v < G.V(); v++){
+            for(FlowEdge e : G.adj(v)){
+                if((v==e.from()) && e.flow()>0){
+                    StdOut.println("   " + e);
+                }
+            }
+        }
+
+        StdOut.print("Min cut: ");
+        for(int v = 0; v < G.V(); v++){
+            if(maxflow.inCut(v)){
+                StdOut.print(v + " ");
+            }
+        }
+        StdOut.println();
+
+        StdOut.println("Max flow value =" + maxflow.value());
     }
 }
