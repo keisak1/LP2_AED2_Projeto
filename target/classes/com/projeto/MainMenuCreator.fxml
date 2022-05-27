@@ -202,6 +202,76 @@
                      </children></AnchorPane>
                     </content>
                 </Tab>
+            <Tab text="Ways">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TabPane layoutY="-1.0" prefHeight="521.0" prefWidth="1049.0" tabClosingPolicy="UNAVAILABLE">
+                           <tabs>
+                              <Tab text="Basic Information">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox layoutY="-1.0" prefHeight="493.0" prefWidth="928.0">
+                                             <children>
+                                                <TableView fx:id="tableViewNodes1" prefHeight="339.0" prefWidth="928.0">
+                                                   <columns>
+                                                      <TableColumn fx:id="wayID" prefWidth="45.0" text="ID" />
+                                                      <TableColumn fx:id="wayNodeV" prefWidth="115.0" text="Node V" />
+                                                      <TableColumn fx:id="wayNodeW" prefWidth="100.0" text="Node W" />
+                                                      <TableColumn fx:id="wayWeight" prefWidth="147.0" text="Weight" />
+                                                      <TableColumn fx:id="wayNameColumn" prefWidth="179.0" text="Name" />
+                                                      <TableColumn fx:id="wayPostCode" prefWidth="156.0" text="Post Code" />
+                                                   </columns>
+                                                </TableView>
+                                                <HBox prefHeight="155.0" prefWidth="861.0">
+                                                   <children>
+                                                      <TextField fx:id="wayIdTextField" prefHeight="6.0" prefWidth="122.0" promptText="ID" translateX="50.0" translateY="50.0" />
+                                                      <TextField fx:id="wayNodeVTextField" prefHeight="6.0" prefWidth="122.0" promptText="Vertex V" translateX="75.0" translateY="50.0" />
+                                                      <TextField fx:id="wayNodeWTextField" prefHeight="6.0" prefWidth="122.0" promptText="Vertex W" translateX="100.0" translateY="50.0" />
+                                                      <Button fx:id="addWayBtn" mnemonicParsing="false" onAction="#addWayBtn" text="Add" translateX="250.0" translateY="50.0" />
+                                                      <Button fx:id="EditWayBtn" mnemonicParsing="false" onAction="#editWayBtn" text="Edit" translateX="275.0" translateY="50.0" />
+                                                      <Button fx:id="removeWayBtn" mnemonicParsing="false" onAction="#removeWayBtn" text="Remove" translateX="300.0" translateY="50.0" />
+                                                      <TextField fx:id="wayWeightTextField" prefHeight="6.0" prefWidth="122.0" promptText="Weight" translateX="-20.0" translateY="50.0" />
+                                                      <TextField fx:id="tagWayTextField" prefHeight="6.0" prefWidth="122.0" promptText="Tag" translateX="-572.0" translateY="100.0" />
+                                                      <TextField fx:id="valueWayTextField" prefHeight="6.0" prefWidth="122.0" promptText="Value" translateX="-547.0" translateY="100.0" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <TextField fx:id="searchFieldWay" prefHeight="6.0" prefWidth="122.0" promptText="WAY ID" translateX="800.0" />
+                                          <Button fx:id="searchWayBtn" mnemonicParsing="false" onAction="#searchWayBtn" text="Search" translateX="745.0" />
+                                          <VBox layoutX="928.0" prefHeight="495.0" prefWidth="121.0">
+                                             <children>
+                                                <TextField fx:id="addressTextField" promptText="Address" />
+                                                <TextField fx:id="PostCodeTextField" promptText="Post Code" />
+                                                <TextField fx:id="wayNameTextField" promptText="Name" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Tags">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView fx:id="tableViewTag1" prefHeight="483.0" prefWidth="918.0">
+                                             <columns>
+                                                <TableColumn fx:id="wayTagId" prefWidth="56.0" text="Way ID" />
+                                                <TableColumn fx:id="wayTagCol" prefWidth="378.0" text="Tag : Value" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                           </tabs>
+                        </TabPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
             <Tab text="Graph">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -215,9 +285,13 @@
                                           <Group fx:id="graphGroup" layoutX="99.0" layoutY="73.0" />
                                           <ButtonBar layoutX="849.0" prefHeight="40.0" prefWidth="200.0">
                                             <buttons>
+                                                <Button fx:id="shortestPathBtn" mnemonicParsing="false" onAction="#shortestPath" text="shortestPath" />
                                               <Button fx:id="graphBtn" mnemonicParsing="false" onAction="#graphBtn" text="graphBtn" />
                                             </buttons>
                                           </ButtonBar>
+                                          <TextField fx:id="fromID" layoutX="671.0" layoutY="8.0" prefHeight="25.0" prefWidth="76.0" promptText="fromID" />
+                                          <TextField fx:id="toID" layoutX="758.0" layoutY="8.0" prefHeight="25.0" prefWidth="81.0" promptText="toID" />
+                                          <DatePicker fx:id="shortDate" layoutX="482.0" layoutY="8.0" promptText="Date" />
                                        </children>
                                     </AnchorPane>
                               </content>
