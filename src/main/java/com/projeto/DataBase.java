@@ -96,6 +96,37 @@ public class DataBase implements Initializable {
     public TableColumn<PoI, String> colVehiclePOI;
     public Group graphGroup;
     public Button graphBtn;
+    public Button shortestPathBtn;
+    public TextField fromID;
+    public TextField toID;
+    public DatePicker shortDate;
+
+    // Ways
+    public TableView<Ways> tableViewNodes1;
+    public TableColumn<Ways, Integer> wayID;
+    public TableColumn<Ways, Integer> wayNodeV;
+    public TableColumn<Ways, Integer> wayNodeW;
+    public TableColumn<Ways, Double> wayWeight;
+    public TextField wayIdTextField;
+    public TextField wayNodeVTextField;
+    public TextField wayNodeWTextField;
+    public Button addWayBtn;
+    public Button EditWayBtn;
+    public Button removeWayBtn;
+    public TextField wayWeightTextField;
+    public TextField tagWayTextField;
+    public TextField valueWayTextField;
+    public TextField searchFieldWay;
+    public Button searchWayBtn;
+    public TextField addressTextField;
+    public TextField PostCodeTextField;
+    public TableColumn<Ways, String> wayAddress;
+    public TableColumn<Ways, String> wayPostCode;
+    public TableView<Ways> tableViewTag1;
+    public TableColumn<Ways, Integer> wayTagId;
+    public TableColumn<Ways, String> wayTagCol;
+    public TextField wayNameTextField;
+    public TableColumn<Ways, String> wayNameColumn;
 
 
     ObservableList<PoI> observablePoiList2 = FXCollections.observableArrayList();
@@ -103,6 +134,7 @@ public class DataBase implements Initializable {
     ObservableList<NodeVisited> observableNodeVisitedList = FXCollections.observableArrayList();
     ObservableList<PoI> observablePoiList = FXCollections.observableArrayList();
     ObservableList<Nodes> observableNodeList = FXCollections.observableArrayList();
+    ObservableList<Ways> observableWaysList = FXCollections.observableArrayList();
 
     private static final String fileSource1 = "data\\dataset1_nodes.txt";
     private static final String fileSource2 = "data\\dataset1_ways_nodepairs.txt";
@@ -228,6 +260,7 @@ public class DataBase implements Initializable {
      * Adds edges to the graph
      */
     public void addEdges() {
+        ewg = new EdgeWeightedDigraph(getBstSize() + 1);
         for (Ways ways : edges) {
             DirectedEdge edge = new DirectedEdge(ways.getV(), ways.getW(), ways.getWeight());
             ewg.addEdge(edge);
@@ -803,6 +836,14 @@ public class DataBase implements Initializable {
         colNodeID.setCellValueFactory(new PropertyValueFactory<>("NodeID"));
         colPOIName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         colVehiclePOI.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        wayID.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        wayNodeV.setCellValueFactory(new PropertyValueFactory<>("V"));
+        wayNodeW.setCellValueFactory(new PropertyValueFactory<>("W"));
+        wayWeight.setCellValueFactory(new PropertyValueFactory<>("Weight"));
+        wayPostCode.setCellValueFactory(new PropertyValueFactory<>("Postcode"));
+        wayTagId.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        wayTagCol.setCellValueFactory(new PropertyValueFactory<>("OsmWay"));
+        wayNameColumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
     }
 
     private void loadFromFileNodes(String path) {
@@ -1072,11 +1113,16 @@ public class DataBase implements Initializable {
                 }
             }
         }
+        observableWaysList.addAll(edges);
+
         tableViewNodes.setItems(observableNodeList);
         tableViewTag.setItems(observableNodeList);
         tableViewNodesVisited.setItems(observableNodeVisitedList);
         tableViewPoI.setItems(observablePoiList);
         tableViewPoI2.setItems(observablePoiList2);
+        tableViewNodes1.setItems(observableWaysList);
+        tableViewTag1.setItems(observableWaysList);
+
     }
 
     public void addUserBtn(ActionEvent actionEvent) {
@@ -1347,6 +1393,126 @@ public class DataBase implements Initializable {
             }
             out3.println();
         }
+        Date d = new Date(29, 4, 2022);
+        loadOverpopulatedNodesToFile("data\\overpopulated_nodes_file_txt.txt", 19, 22, d);
+        loadGraphToFile("data\\graph_file_txt.txt", d);
+        loadNodesVisitToFile("data\\nodes_visit_file_txt.txt", d);
+        loadTop5sToFile("data\\top5s_file_txt.txt", d);
+    }
+
+    public void loadOverpopulatedNodesToFile(String path, int from, int to, Date d) {
+        Out out = new Out(path);
+        Iterator<Nodes> itr = set.iterator();
+        out.println("At this date: " + d.toString() + " there were these overpopulated nodes:");
+        while (itr.hasNext()) {
+            Nodes node = (Nodes) itr.next();
+            out.println("-Node id: " + node.getId());
+        }
+        shortestPathNotOverpopulated(from, to);
+        out.println();
+        if (sp.hasPathTo(to)) {
+            out.println(sp.pathTo(to));
+            out.println("Shortest non overpopulated path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
+        } else {
+            out.println("There's no such path or there's no non overpopulated route.");
+        }
+
+        out.println();
+        shortestPath(from, to);
+
+        if (sp.hasPathTo(to)) {
+            out.println(sp.pathTo(to));
+            out.println("Shortest path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
+        } else {
+            out.println("There's no such path.");
+        }
+    }
+
+    public void loadGraphToFile(String path, Date d) {
+        Out out = new Out(path);
+        out.println("Check graph connectivity data:");
+        if (checkConnectivity() == 0) {
+            out.println("The graph is connected.");
+        } else {
+            out.println("The graph isn't connected.");
+        }
+        out.println();
+        out.println("Check subgraph connectivity data:");
+
+        if (checkSubGraphConnectivity() == 0) {
+            out.println("The subgraph is connected.");
+        } else {
+            out.println("The subgrap isn't connected.");
+        }
+    }
+
+    public void loadNodesVisitToFile(String path, Date d) {
+        Out out = new Out(path);
+        ArrayList<PoI> visitedPoI = new ArrayList<>();
+        ArrayList<User> users = new ArrayList<>();
+
+        out.println("At this date: " + d + " these points of interest were visited by a user:");
+        for (User user : users) {
+            visitedPoI = visitedBy(d, user);
+            out.println("-" + user.getName());
+            for (PoI poI : visitedPoI) {
+                out.println("---PoI name: " + poI.getName());
+            }
+        }
+        out.println("At this date: " + d + " these points of interest were not visited by any user:");
+        Set<String> notVisited = new HashSet<>();
+        for (User user : users) {
+            visitedBy(d, user);
+            for (Integer i : bst.keys()) {
+                Nodes node = bst.get(i);
+                for (PoI poI : node.getPoI()) {
+                    if (!visitedBy(d, user).contains(poI)) {
+                        notVisited.add(poI.getName());
+
+                    }
+                }
+            }
+        }
+
+        for (String s : notVisited) {
+            out.println("-PoI: " + s);
+        }
+
+        out.println("At this date: " + d + " these users visited a point of interest:");
+        for (Integer nodeKey : bst.keys()) {
+            for (PoI poi : searchNode(nodeKey).getPoI()) {
+                out.println("-PoI:" + poi.getName());
+                users = whoVisited(d, poi);
+                for (User user : users) {
+                    out.println("-PoI:" + poi.getName());
+                    out.println("---User id: " + user.getId());
+                }
+            }
+        }
+        out.println("At this date: " + d + " these points of interest were not visited:");
+        for (Integer nodeKey : bst.keys()) {
+            for (PoI poi : searchNode(nodeKey).getPoI()) {
+                out.println("-PoI id: " + poi.getId());
+            }
+        }
+    }
+
+    public void loadTop5sToFile(String path, Date d) {
+        Out out = new Out(path);
+        ArrayList<User> top5users;
+        ArrayList<PoI> top5pois;
+
+        out.println("At this date: " + d + " these are the top 5 users that visited most points of interest:");
+        top5users = top5Users(d);
+        for (User user : top5users) {
+            out.println("-User id: " + user.getId());
+        }
+
+        out.println("At this date: " + d + " these are the top 5 points of interest most visited:");
+        top5pois = top5PoIs(d);
+        for (PoI poI : top5pois) {
+            out.println("-PoI id: " + poI.getId());
+        }
     }
 
     public void handleExitAction(ActionEvent actionEvent) {
@@ -1584,6 +1750,7 @@ public class DataBase implements Initializable {
                 throw new IOException("Node already exists");
             }
         }
+
         Integer vertexID = Integer.parseInt(vertexIdTextField.getText());
         Coordinate coordinate = new Coordinate(Double.parseDouble(coordinateXTextField.getText()), Double.parseDouble(coordinateYTextField.getText()));
         String[] text = poiTextField.getText().split(",");
@@ -1655,7 +1822,7 @@ public class DataBase implements Initializable {
         createGraph();
         for (int i = 0; i < vNumber; i++) {
             Random r = new Random();
-            int radius = 10;
+            int radius = 20;
 
             double posX = radius + r.nextDouble() * 800;
             double posY = radius + r.nextDouble() * 300;
@@ -1691,13 +1858,14 @@ public class DataBase implements Initializable {
         System.out.println(ewg);
 
     }
-    public ArrayList<Nodes> searchTagNodes(String tag){
+
+    public ArrayList<Nodes> searchTagNodes(String tag) {
         ArrayList<Nodes> nodes = new ArrayList<>();
-        for(Integer i : bst.keys()){
+        for (Integer i : bst.keys()) {
             Nodes node = bst.get(i);
             Enumeration<String> e = node.osmNode.keys();
             while (e.hasMoreElements()) {
-                if(Objects.equals(e.nextElement(), tag)){
+                if (Objects.equals(e.nextElement(), tag)) {
                     nodes.add(node);
                 }
             }
@@ -1705,26 +1873,161 @@ public class DataBase implements Initializable {
         return nodes;
     }
 
-    public ArrayList<Ways> searchTagWays(String tag){
+    public ArrayList<Ways> searchTagWays(String tag) {
         ArrayList<Ways> ways = new ArrayList<>();
-        for(Ways way : edges){
+        for (Ways way : edges) {
             Enumeration<String> e = way.osmWay.keys();
             while (e.hasMoreElements()) {
-                if(Objects.equals(e.nextElement(), tag)){
+                if (Objects.equals(e.nextElement(), tag)) {
                     ways.add(way);
                 }
             }
         }
         return ways;
     }
-    public ArrayList<Nodes> searchTagNearCoordinate(Coordinate coordinate){
+
+    public ArrayList<Nodes> searchTagNearCoordinate(Coordinate coordinate) {
         ArrayList<Nodes> nodes = new ArrayList<>();
         double distance;
-        for(Integer i : bst.keys()){
+        for (Integer i : bst.keys()) {
             Nodes node = bst.get(i);
             distance = node.getPoint().calculateDistanceBetweenPoints(node.getPoint().getX(), node.getPoint().getY(), coordinate.getX(), coordinate.getY());
 
         }
         return nodes;
+    }
+
+    public void maxFlowFrom2Nodes() {
+        int s = 0, t = bstSize - 1;
+        FlowNetwork G = new FlowNetwork(bstSize, edgesSize);
+
+        FordFulkerson maxflow = new FordFulkerson(G, s, t);
+        StdOut.println("Max flow from " + s + " to " + t);
+        for (int v = 0; v < G.V(); v++) {
+            for (FlowEdge e : G.adj(v)) {
+                if ((v == e.from()) && e.flow() > 0) {
+                    StdOut.println("   " + e);
+                }
+            }
+        }
+
+        StdOut.print("Min cut: ");
+        for (int v = 0; v < G.V(); v++) {
+            if (maxflow.inCut(v)) {
+                StdOut.print(v + " ");
+            }
+        }
+        StdOut.println();
+
+        StdOut.println("Max flow value =" + maxflow.value());
+    }
+
+    public void shortestPath(ActionEvent actionEvent) {
+
+        int day = shortDate.getValue().getDayOfMonth();
+        int month = shortDate.getValue().getMonthValue();
+        int year = shortDate.getValue().getYear();
+        Date d = new Date(day, month, year);
+        overPopulatedNode(d);
+        int from = Integer.parseInt(fromID.getText());
+        int to = Integer.parseInt(toID.getText());
+        shortestPathNotOverpopulated(from, to);
+        if (sp.hasPathTo(to)) {
+            System.out.println(sp.pathTo(to));
+            System.out.println("Shortest non overpopulated path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
+        } else {
+            System.out.println("There's no such path or there's no non overpopulated route.");
+        }
+
+        shortestPath(from, to);
+        if (sp.hasPathTo(to)) {
+            System.out.println(sp.pathTo(to));
+            System.out.println("Shortest path from vertex " + from + " to vertex " + to + " is " + sp.distTo(to));
+        } else {
+            System.out.println("There's no such path.");
+        }
+    }
+
+    /**
+     * R16
+     */
+    public void newTagValue() {
+
+    }
+
+
+    public void addWayBtn(ActionEvent actionEvent) throws IOException {
+        Integer id = Integer.parseInt(wayIdTextField.getText());
+        String name = wayNameTextField.getText();
+        int v = Integer.parseInt(wayNodeVTextField.getText());
+        int w = Integer.parseInt(wayNodeWTextField.getText());
+        double weight = Double.parseDouble(wayWeightTextField.getText());
+        String address = addressTextField.getText();
+        String postcode = PostCodeTextField.getText();
+        String tag = tagWayTextField.getText();
+        String value = valueTextField.getText();
+        for (Ways way : edges) {
+            if (id.equals(way.getId())) {
+                throw new IOException("Node already exists");
+            }
+        }
+        Hashtable<String, String> ht = new Hashtable<>();
+        ht.put(tag, value);
+
+        Ways way = new Ways(v, w, weight, id, ht, name, address, postcode);
+        edges.add(way);
+        tableViewNodes1.getItems().add(way);
+
+    }
+
+    public void editWayBtn(ActionEvent actionEvent) {
+        try {
+            Integer id = Integer.parseInt(wayIdTextField.getText());
+            String name = wayNameTextField.getText();
+            int v = Integer.parseInt(wayNodeVTextField.getText());
+            int w = Integer.parseInt(wayNodeWTextField.getText());
+            double weight = Double.parseDouble(wayWeightTextField.getText());
+            String address = addressTextField.getText();
+            String postcode = PostCodeTextField.getText();
+            String tag = tagWayTextField.getText();
+            String value = valueTextField.getText();
+            Hashtable<String, String> ht = new Hashtable<>();
+            ht.put(tag, value);
+            for (Ways way : edges) {
+                if (Objects.equals(way.getId(), id)) {
+                    way.setOsmWay(ht);
+                    way.setAddress(address);
+                    way.setName(name);
+                    way.setPostcode(postcode);
+                    tableViewNodes1.getItems().clear();
+                    afterReadFileAction();
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Way doesn't exist");
+        }
+    }
+
+    public void removeWayBtn(ActionEvent actionEvent) {
+        Integer id = tableViewNodes1.getSelectionModel().getSelectedItem().getId();
+        edges.removeIf(way -> Objects.equals(way.getId(), id));
+        tableViewNodes1.getItems().clear();
+        afterReadFileAction();
+    }
+
+    public void searchWayBtn(ActionEvent actionEvent) {
+        Integer id = Integer.parseInt(searchFieldWay.getText());
+        try {
+            for (Ways way : edges) {
+                if (Objects.equals(way.getId(), id)) {
+                    Ways ways = edges.get(edges.indexOf(way));
+                    tableViewNodes1.getItems().clear();
+                    tableViewNodes1.getItems().add(ways);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("There's no such Way");
+        }
     }
 }

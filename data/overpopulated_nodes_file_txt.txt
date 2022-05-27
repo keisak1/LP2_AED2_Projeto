@@ -1,4 +1,4 @@
-At this date: 29/4/2022 there were these overpopulated nodes:
+At this date: 29-4-2022 there were these overpopulated nodes:
 -Node id: 10615
 
 There's no such path or there's no non overpopulated route.

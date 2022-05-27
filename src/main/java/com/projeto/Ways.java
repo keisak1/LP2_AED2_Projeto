@@ -42,6 +42,7 @@ public class Ways extends DirectedEdge {
 
     private String postcode;
 
+
     public Integer getId() {
         return id;
     }

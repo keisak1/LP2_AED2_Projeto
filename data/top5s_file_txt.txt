@@ -1,10 +1,10 @@
-At this date: 29/4/2022 these are the top 5 users that visited most points of interest:
+At this date: 29-4-2022 these are the top 5 users that visited most points of interest:
 -User id: 10
 -User id: 11
 -User id: 9
 -User id: 8
 -User id: 12
-At this date: 29/4/2022 these are the top 5 points of interest most visited:
+At this date: 29-4-2022 these are the top 5 points of interest most visited:
 -PoI id: 36
 -PoI id: 34
 -PoI id: 31

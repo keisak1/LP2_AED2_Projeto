@@ -1,4 +1,4 @@
-At this date: 29/4/2022 these points of interest were visited by a user:
+At this date: 29-4-2022 these points of interest were visited by a user:
 -Armindo
 ---PoI name: traffic_light
 ---PoI name: cr7_museum
@@ -58,13 +58,13 @@ At this date: 29/4/2022 these points of interest were visited by a user:
 ---PoI name: traffic_light
 ---PoI name: cr7_museum
 ---PoI name: siuuu_restaurant
-At this date: 29/4/2022 these points of interest were not visited by any user:
+At this date: 29-4-2022 these points of interest were not visited by any user:
 -PoI: bus_station
 -PoI: trivago_hotel
 -PoI: electric_charging_station
 -PoI: fire_hydrants
 -PoI: traffic_light
-At this date: 29/4/2022 these users visited a point of interest:
+At this date: 29-4-2022 these users visited a point of interest:
 -PoI:fire_hydrants
 -PoI:cr7_museum
 -PoI:cr7_museum
@@ -160,7 +160,7 @@ At this date: 29/4/2022 these users visited a point of interest:
 -PoI:traffic_light
 ---User id: 15
 -PoI:electric_charging_station
-At this date: 29/4/2022 these points of interest were not visited:
+At this date: 29-4-2022 these points of interest were not visited:
 -PoI id: 33
 -PoI id: 34
 -PoI id: 36
