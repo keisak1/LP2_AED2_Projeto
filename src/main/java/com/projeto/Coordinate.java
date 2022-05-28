@@ -1,9 +1,11 @@
 package com.projeto;
 
+import java.io.Serializable;
+
 /**
  * The type Coordinate.
  */
-public class Coordinate {
+public class Coordinate implements Serializable {
 
   public Coordinate(double x, double y) {
     this.x = x;

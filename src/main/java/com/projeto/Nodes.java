@@ -1,13 +1,14 @@
 package com.projeto;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
  * The type Nodes.
  */
-public class Nodes {
+public class Nodes implements Serializable {
 
 
     public Hashtable<String, String> osmNode = new Hashtable<>();

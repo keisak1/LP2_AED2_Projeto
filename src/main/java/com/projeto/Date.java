@@ -1,7 +1,9 @@
 package com.projeto;
 
 
-public class Date implements Comparable<Date> {
+import java.io.Serializable;
+
+public class Date implements Comparable<Date>, Serializable {
 
     public Date(Integer day, Integer month, Integer year) {
         this.day = day;

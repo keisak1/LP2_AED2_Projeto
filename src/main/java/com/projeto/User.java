@@ -1,12 +1,13 @@
 package com.projeto;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * The type User.
  */
-public class User {
+public class User implements Serializable {
 
     public User(Integer id, String name, Date birthday, String vehicle, ArrayList<NodeVisited> nodesVisited){
         this.id = id;

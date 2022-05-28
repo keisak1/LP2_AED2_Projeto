@@ -1,14 +1,15 @@
 package com.projeto;
 
-import edu.princeton.cs.algs4.DirectedEdge;
+import com.projeto.algorithms.DirectEdgeSerial;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 
 
 /**
  * The type Ways.
  */
-public class Ways extends DirectedEdge {
+public class Ways extends DirectEdgeSerial implements Serializable {
 
     /**
      * Initializes an edge between vertices {@code v} and {@code w} of

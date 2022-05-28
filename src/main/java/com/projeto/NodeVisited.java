@@ -1,12 +1,13 @@
 package com.projeto;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * The type Node visited.
  */
-public class NodeVisited extends User {
+public class NodeVisited extends User implements Serializable {
 
     public NodeVisited(Integer nodeID, Date dateVisited, ArrayList<PoI> poI) {
         this.nodeID = nodeID;

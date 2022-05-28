@@ -1,9 +1,10 @@
 package com.projeto;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Grafo {
+public class Grafo implements Serializable {
 
     public Grafo(ArrayList<Ways> edges, ArrayList<Nodes> vertices) {
         this.edges = edges;

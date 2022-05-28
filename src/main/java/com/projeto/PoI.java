@@ -1,9 +1,11 @@
 package com.projeto;
 
+import java.io.Serializable;
+
 /**
  * The type Po i.
  */
-public class PoI extends Nodes {
+public class PoI extends Nodes implements Serializable {
 
     public PoI(Integer id, Integer nodeID, String name, String type) {
         this.id = id;

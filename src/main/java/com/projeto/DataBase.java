@@ -1226,105 +1226,58 @@ public class DataBase implements Initializable {
     }
 
     public void handleSaveBinFileAction(ActionEvent actionEvent) {
-        DataOutputStream dos = null;
-        DataOutputStream dos1 = null;
-        DataOutputStream dos2 = null;
-        DataOutputStream dos3 = null;
+        ObjectOutputStream oos = null;
+        ObjectOutputStream oos1 = null;
+        ObjectOutputStream oos2 = null;
+        ObjectOutputStream oos3 = null;
 
         try {
-            dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(fileSource5)));
-            dos1 = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(fileSource6)));
-            dos2 = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(fileSource7)));
-            dos3 = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(fileSource8)));
+            oos = new ObjectOutputStream((new FileOutputStream(fileSource5)));
+            oos1 = new ObjectOutputStream((new FileOutputStream(fileSource6)));
+            oos2 = new ObjectOutputStream(new FileOutputStream(fileSource7));
+            oos3 = new ObjectOutputStream(new FileOutputStream(fileSource8));
 
-            dos.writeInt(bstSize);
-            dos.writeChars("\n");
             for (Integer i : bst.keys()) {
                 Nodes node = bst.get(i);
-                String msg = node.getId() + "," + node.getPoint().getX() + "," + node.getPoint().getY() + "," + node.getVertexID();
-                dos.writeChars(msg);
-                Enumeration<String> e = node.osmNode.keys();
-                while (e.hasMoreElements()) {
-                    String tag = e.nextElement();
-                    String msg1 = "," + tag + ":" + node.osmNode.get(tag);
-                    dos.writeChars(msg1);
-                }
-                dos.writeChars("\n");
+                oos.writeObject(node);
             }
 
-            dos1.writeInt(edgesSize);
-            dos1.writeChars("\n");
-            int nodeID1 = 0, nodeID2 = 0;
+
             for (Ways way : edges) {
-                int vertexIDNode1 = way.getV(), vertexIDNode2 = way.getW();
-                for (Integer j : bst.keys()) {
-                    Nodes node1 = bst.get(j);
-                    if (node1.getVertexID() == vertexIDNode1) {
-                        nodeID1 = node1.getId();
-                    }
-                    if (node1.getVertexID() == vertexIDNode2) {
-                        nodeID2 = node1.getId();
-                    }
-                }
-                String msg2 = way.getId() + "," + nodeID1 + "," + nodeID2 + "," + way.getWeight();
-                dos1.writeChars(msg2);
-                Enumeration<String> en = way.osmWay.keys();
-                while (en.hasMoreElements()) {
-                    String tag1 = en.nextElement();
-                    if (tag1 != null && way.osmWay.get(tag1) != null) {
-                        String msg3 = "," + tag1 + ":" + way.osmWay.get(tag1);
-                        dos1.writeChars(msg3);
-                    }
-                }
-                dos1.writeChars("\n");
+                oos1.writeObject(way);
             }
 
-            int size = 0;
-            for (Integer m : bst.keys()) {
-                Nodes node2 = bst.get(m);
-                size += node2.getPoI().size();
-            }
-            dos2.writeInt(size);
+
             for (Integer n : bst.keys()) {
                 Nodes node3 = bst.get(n);
                 for (PoI poI : node3.getPoI()) {
-                    String msg4 = poI.getId() + "," + node3.getId() + "," + poI.getName() + "," + poI.getType();
-                    dos2.writeChars(msg4);
-                    dos2.writeChars("\n");
+                    oos2.writeObject(poI);
                 }
             }
 
-            dos3.writeInt(users.size());
             for (User user : users) {
-                String msg5 = user.getId() + "," + user.getName() + "," + user.getBirthday() + "," + user.getVehicle();
-                dos3.writeChars(msg5);
-                for (NodeVisited nodeVisited : user.getNodesVisited()) {
-                    for (PoI poi : nodeVisited.getPoI()) {
-                        String msg6 = "Visited: " + nodeVisited.getNodeID() + ":" + poi.getId() + ":" + nodeVisited.getDateVisited().toString();
-                        dos3.writeChars(msg6);
-                    }
-                }
-                dos3.writeChars("\n");
+                oos3.writeObject(user);
             }
         } catch (Exception e) {
             StdOut.println(e);
         } finally {
             try {
-                if (dos != null) {
-                    dos.close();
+                if (oos != null) {
+                    oos.close();
                 }
-                if (dos1 != null) {
-                    dos1.close();
+                if (oos1 != null) {
+                    oos1.close();
                 }
-                if (dos2 != null) {
-                    dos2.close();
+                if (oos2 != null) {
+                    oos2.close();
                 }
-                if (dos3 != null) {
-                    dos3.close();
+                if (oos3 != null) {
+                    oos3.close();
                 }
             } catch (IOException ioex) {
                 StdOut.println(ioex);
             }
+
         }
     }
 
@@ -1519,189 +1472,98 @@ public class DataBase implements Initializable {
     }
 
     public void handleReadBinFileAction(ActionEvent actionEvent) {
-        DataInputStream dis = null;
-        DataInputStream dis1 = null;
-        DataInputStream dis2 = null;
-        DataInputStream dis3 = null;
+        ObjectInputStream ois = null;
+        ObjectInputStream ois1 = null;
+        ObjectInputStream ois2 = null;
+        ObjectInputStream ois3 = null;
 
         try {
-            dis = new DataInputStream(new BufferedInputStream(new FileInputStream(fileSource5)));
-            dis1 = new DataInputStream(new BufferedInputStream(new FileInputStream(fileSource6)));
-            dis2 = new DataInputStream(new BufferedInputStream(new FileInputStream(fileSource7)));
-            dis3 = new DataInputStream(new BufferedInputStream(new FileInputStream(fileSource8)));
-            byte[] buffer = new byte[1000];
-            byte[] buffer1 = new byte[1000];
-            byte[] buffer2 = new byte[1000];
-            byte[] buffer3 = new byte[1000];
+            ois = new ObjectInputStream(new FileInputStream(fileSource5));
 
-
-            int nRead = 0, size = 0, id, vertexID;
-            String tag = null;
-            String value = null;
-            float coordenateX;
-            float coordenateY;
-            bstSize = dis.readInt();
-            while ((nRead = dis.read(buffer)) != -1) {
-                String line = new String(buffer);
-                String[] text = line.split(",");
-                String test = text[0].replace("\n", "");
-                id = Integer.parseInt(test);
-                coordenateX = Float.parseFloat(text[1]);
-                coordenateY = Float.parseFloat(text[2]);
-                vertexID = Integer.parseInt(text[3]);
-                int tagNumb = text.length - 4;
-                int i = 0, u = 4;
-                while (tagNumb != 0) {
-                    tag = text[u];
-                    value = text[u + 1];
-                    tagNumb -= 2;
-                    i++;
-                    u += 2;
-                }
-                Hashtable<String, String> osm = new Hashtable<>();
-                osm.put(tag, value);
-                Coordinate coordinate = new Coordinate(coordenateX, coordenateY);
-                ArrayList<Ways> waysArrayList = new ArrayList<>();
-                ArrayList<PoI> PoIArrayList = new ArrayList<>();
-                Nodes node = new Nodes(osm, id, vertexID, coordinate, PoIArrayList, waysArrayList);
-                bst.put(id, node);
-                setBstSize(size++);
+            while (true) {
+                Nodes node = (Nodes) ois.readObject();
+                bst.put(node.getId(), node);
             }
 
-            edgesSize = dis1.readInt();
-            int nRead1 = 0, size1 = 0;
-            while ((nRead1 = dis1.read(buffer1)) != -1) {
-                String address = null, address2 = null, address3 = null;
-                String line1 = new String(buffer1);
-                String[] text1 = line1.split(",");
-                Integer id1 = Integer.parseInt(text1[0]);
-                int nodeID1 = Integer.parseInt(text1[1]);
-                int nodeID2 = Integer.parseInt(text1[2]);
-                float weight = Float.parseFloat(text1[3]);
-                String value1 = "";
-                String tag1 = "";
-                int tagNumb = text1.length - 4;
-                int i = 0, u = 4;
-                while (tagNumb != 0) {
-                    if (text1[u].equals("name")) {
-                        String name = text1[u + 1];
-                        u += 2;
-                        tagNumb -= 2;
-                    }
-                    switch (text1[u]) {
-                        case "addr:city" -> {
-                            address = text1[u + 1];
-                            u += 2;
-                            tagNumb -= 2;
-                            continue;
-                        }
-                        case "addr:street" -> {
-                            address2 = text1[u + 1];
-                            u += 2;
-                            tagNumb -= 2;
-                            continue;
-                        }
-                        case "addr:postcode" -> {
-                            address3 = text1[u + 1];
-                            u += 2;
-                            tagNumb -= 2;
-                            continue;
-                        }
-                    }
-                    tag1 = text1[u];
-                    value1 = text1[u + 1];
-                    tagNumb -= 2;
-                    i++;
-                    u += 2;
-                }
-                Hashtable<String, String> osmWay = new Hashtable<>();
-                osmWay.put(tag1, value1);
-                Nodes node = bst.get(nodeID1);
-                Nodes node2 = bst.get(nodeID2);
-                Ways way = new Ways(node.getVertexID(), node2.getVertexID(), weight, id1, osmWay, address2, address, address3);
-                edges.add(way);
-                node2.setWays(way);
-                node.setWays(way);
-                setEdgesSize(size1++);
-            }
-
-
-            for (Integer i : bst.keys()) {
-                Nodes nodes = bst.get(i);
-                nodes.setPoISize(dis2.readInt());
-            }
-            int nRead2 = 0, poiID, nodeID3;
-            String name, Vehicle;
-            while ((nRead2 = dis2.read(buffer2)) != -1) {
-                String line2 = new String(buffer2);
-                String[] text2 = line2.split(",");
-                poiID = Integer.parseInt(text2[0]);
-                nodeID3 = Integer.parseInt(text2[1]);
-                name = text2[2];
-                Vehicle = text2[3];
-                PoI poi = new PoI(poiID, nodeID3, name, Vehicle);
-                Nodes node = bst.get(nodeID3);
-                node.getPoI().add(poi);
-                bst.put(nodeID3, node);
-            }
-
-
-            usersSize = dis3.readInt();
-            int nRead3 = 0, nodeID4, tagNumb, u, poiID1, userID;
-            String name1, vehicle;
-            String[] bd, nodesVisited, dateNodeVisited;
-            while ((nRead3 = dis3.read(buffer3)) != -1) {
-                ArrayList<PoI> poI = new ArrayList<>();
-                ArrayList<NodeVisited> visitedNodes = new ArrayList<>();
-                String line3 = new String(buffer3);
-                String[] text3 = line3.split(",");
-                userID = Integer.parseInt(text3[0]);
-                name1 = text3[1];
-                bd = text3[2].split("-");
-                vehicle = text3[3];
-                tagNumb = text3.length - 4;
-                u = 4;
-                while (tagNumb >= 0) {
-                    nodesVisited = text3[u].split(":");
-                    nodeID4 = Integer.parseInt(nodesVisited[1]);
-                    poiID1 = Integer.parseInt(nodesVisited[2]);
-                    dateNodeVisited = nodesVisited[3].split("-");
-                    Date nodeVisitedDate = new Date(Integer.parseInt(dateNodeVisited[0]), Integer.parseInt(dateNodeVisited[1]), Integer.parseInt(dateNodeVisited[2]));
-                    Nodes node = bst.get(nodeID4);
-                    for (PoI poi1 : node.getPoI()) {
-                        if (node.getPoI().contains(node.getPoI().get(node.getPoI().indexOf(poi1)))) {
-                            poI.add(poi1);
-                        }
-                    }
-                    NodeVisited nodeVisited = new NodeVisited(nodeID4, nodeVisitedDate, poI);
-                    visitedNodes.add(nodeVisited);
-                    u += 2;
-                    tagNumb -= 2;
-                }
-                Date bday = new Date(Integer.parseInt(bd[0]), Integer.parseInt(bd[1]), Integer.parseInt(bd[2]));
-                User user = new User(userID, name1, bday, vehicle, visitedNodes);
-                addUser(user);
-            }
         } catch (Exception e) {
             StdOut.println(e);
         } finally {
             try {
-                if (dis != null) {
-                    dis.close();
-                }
-                if (dis1 != null) {
-                    dis1.close();
-                }
-                if (dis2 != null) {
-                    dis2.close();
-                }
-                if (dis3 != null) {
-                    dis3.close();
+                if (ois != null) {
+                    ois.close();
                 }
             } catch (IOException ioex) {
                 StdOut.println(ioex);
             }
         }
+
+        try {
+            ois1 = new ObjectInputStream(new FileInputStream(fileSource6));
+
+            while (true) {
+                Ways way = (Ways) ois1.readObject();
+                edges.add(way);
+            }
+
+        } catch (Exception e) {
+            StdOut.println(e);
+        } finally {
+            try {
+                if (ois1 != null) {
+                    ois1.close();
+                }
+            } catch (IOException ioex) {
+                StdOut.println(ioex);
+            }
+        }
+
+        /*
+        try {
+            ois2 = new ObjectInputStream(new FileInputStream(fileSource7));
+
+            while (true) {
+                PoI poI = (PoI) ois2.readObject();
+                for (Integer i : bst.keys()) {
+                    Nodes node1 = bst.get(i);
+                    if (Objects.equals(node1.getId(), poI.getNodeID())) {
+                        node1.setPoI(poI);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            StdOut.println(e);
+        } finally {
+            try {
+                if (ois2 != null) {
+                    ois2.close();
+                }
+            } catch (IOException ioex) {
+                StdOut.println(ioex);
+            }
+        }
+        */
+        try {
+            ois3 = new ObjectInputStream(new FileInputStream(fileSource8));
+
+            while (true) {
+                User user = (User) ois3.readObject();
+                users.add(user);
+            }
+
+        } catch (Exception e) {
+            StdOut.println(e);
+        } finally {
+            try {
+                if (ois3 != null) {
+                    ois3.close();
+                }
+            } catch (IOException ioex) {
+                StdOut.println(ioex);
+            }
+        }
+
+        afterReadFileAction();
     }
 
     public void searchUserBtn(ActionEvent actionEvent) {
