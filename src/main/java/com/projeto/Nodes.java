@@ -33,28 +33,11 @@ public class Nodes {
         this.osmNode = osmNode;
     }
 
-
-    private Integer poISize;
-
-    public void setPoISize(Integer poISize) {
-        this.poISize = poISize;
-    }
-
-    public Integer getPoISize() {
-        return poISize;
-    }
-
     private Integer id;
 
     private Integer vertexID;
 
-    public Integer getVertexID() {
-        return vertexID;
-    }
-
-    public void setVertexID(Integer vertexID) {
-        this.vertexID = vertexID;
-    }
+    private Integer poISize;
 
     private Coordinate point;
 
@@ -68,6 +51,18 @@ public class Nodes {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getVertexID() {
+        return vertexID;
+    }
+
+    public void setPoISize(Integer poISize){this.poISize = poISize;}
+
+    public Integer getPoISize(){return poISize;}
+
+    public void setVertexID(Integer vertexID) {
+        this.vertexID = vertexID;
     }
 
     public void setWays(ArrayList<Ways> ways) {

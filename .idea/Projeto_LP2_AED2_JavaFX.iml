@@ -83,5 +83,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="Maven: com.github.kevin-wayne:algs4:master-fc511547db-1" level="project" />
+    <orderEntry type="library" exported="" name="javafx-sdk-18.0" level="project" />
   </component>
 </module>
