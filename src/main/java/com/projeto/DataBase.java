@@ -33,116 +33,404 @@ import static java.lang.System.out;
 public class DataBase implements Initializable {
 
 
+    /**
+     * The Textfield name.
+     */
     public TextField textfieldName;
+    /**
+     * The Birthday.
+     */
     public DatePicker Birthday;
+    /**
+     * The Textfield vehicle.
+     */
     public TextField textfieldVehicle;
+    /**
+     * The Add btn.
+     */
     public Button addBtn;
+    /**
+     * The Edit btn.
+     */
     public Button editBtn;
+    /**
+     * The Remove btn.
+     */
     public Button removeBtn;
 
-    //Basic Information tab
+    /**
+     * The Table view.
+     */
+//Basic Information tab
     public TableView<User> tableView;
+    /**
+     * The Col id.
+     */
     public TableColumn<User, Integer> colID;
+    /**
+     * The Col name.
+     */
     public TableColumn<User, String> colName;
+    /**
+     * The Col birthday.
+     */
     public TableColumn<User, Date> colBirthday;
+    /**
+     * The Col vehicle.
+     */
     public TableColumn<User, String> colVehicle;
+    /**
+     * The Search field name.
+     */
     public TextField searchFieldName;
+    /**
+     * The Search btn.
+     */
     public Button searchBtn;
 
-    //DateVisited tab
+    /**
+     * The Table view nodes visited.
+     */
+//DateVisited tab
     public TableView<NodeVisited> tableViewNodesVisited;
+    /**
+     * The User id.
+     */
     public TableColumn<NodeVisited, Integer> userID;
+    /**
+     * The Node id.
+     */
     public TableColumn<Nodes, Integer> nodeID;
+    /**
+     * The Date visited.
+     */
     public TableColumn<NodeVisited, Date> dateVisited;
 
-    //PoI tab
+    /**
+     * The Poi node id.
+     */
+//PoI tab
     public TableColumn<Nodes, Integer> poiNodeID;
+    /**
+     * The Poi id.
+     */
     public TableColumn<PoI, Integer> poiID;
+    /**
+     * The Poi name.
+     */
     public TableColumn<PoI, String> poiName;
+    /**
+     * The Poi vehicle.
+     */
     public TableColumn<PoI, String> poiVehicle;
+    /**
+     * The Table view po i.
+     */
     public TableView<PoI> tableViewPoI;
+    /**
+     * The Node visited field.
+     */
     public TextField NodeVisitedField;
+    /**
+     * The Date visited field.
+     */
     public DatePicker DateVisitedField;
 
-    //Nodes tab
+    /**
+     * The Table view nodes.
+     */
+//Nodes tab
     public TableView<Nodes> tableViewNodes;
+    /**
+     * The Id.
+     */
     public TableColumn<Nodes, Integer> ID;
+    /**
+     * The Vertex id.
+     */
     public TableColumn<Nodes, Integer> vertexID;
+    /**
+     * The Coordinates.
+     */
     public TableColumn<Nodes, Coordinate> coordinates;
+    /**
+     * The Poi.
+     */
     public TableColumn<Nodes, PoI> poi;
+    /**
+     * The Ways.
+     */
     public TableColumn<Nodes, Ways> ways;
+    /**
+     * The Nodeidtextfield.
+     */
     public TextField nodeidtextfield;
+    /**
+     * The Vertex id text field.
+     */
     public TextField vertexIdTextField;
+    /**
+     * The Coordinate x text field.
+     */
     public TextField coordinateXTextField;
+    /**
+     * The Add node btn.
+     */
     public Button addNodeBtn;
+    /**
+     * The Edit node btn.
+     */
     public Button editNodeBtn;
+    /**
+     * The Remove node btn.
+     */
     public Button removeNodeBtn;
+    /**
+     * The Coordinate y text field.
+     */
     public TextField coordinateYTextField;
+    /**
+     * The Poi text field.
+     */
     public TextField poiTextField;
+    /**
+     * The Ways text field.
+     */
     public TextField waysTextField;
+    /**
+     * The Search field node.
+     */
     public TextField searchFieldNode;
+    /**
+     * The Search node btn.
+     */
     public Button searchNodeBtn;
+    /**
+     * The Value text field.
+     */
     public TextField valueTextField;
+    /**
+     * The Tag text field.
+     */
     public TextField tagTextField;
+    /**
+     * The Table view tag.
+     */
     public TableView<Nodes> tableViewTag;
+    /**
+     * The Tag node id.
+     */
     public TableColumn<Nodes, Integer> tagNodeID;
+    /**
+     * The Tag col.
+     */
     public TableColumn<Nodes, String> tagCol;
+    /**
+     * The Value col.
+     */
     public TableColumn<Nodes, String> valueCol;
-    // Node - PoI tab
+    /**
+     * The Table view po i 2.
+     */
+// Node - PoI tab
     public TableView<PoI> tableViewPoI2;
+    /**
+     * The Col poi.
+     */
     public TableColumn<PoI, Integer> colPOI;
+    /**
+     * The Col node id.
+     */
     public TableColumn<PoI, Integer> colNodeID;
+    /**
+     * The Col poi name.
+     */
     public TableColumn<PoI, String> colPOIName;
+    /**
+     * The Col vehicle poi.
+     */
     public TableColumn<PoI, String> colVehiclePOI;
+    /**
+     * The Graph group.
+     */
     public Group graphGroup;
+    /**
+     * The Graph btn.
+     */
     public Button graphBtn;
+    /**
+     * The Shortest path btn.
+     */
     public Button shortestPathBtn;
+    /**
+     * The From id.
+     */
     public TextField fromID;
+    /**
+     * The To id.
+     */
     public TextField toID;
+    /**
+     * The Short date.
+     */
     public DatePicker shortDate;
 
-    // Ways
+    /**
+     * The Table view nodes 1.
+     */
+// Ways
     public TableView<Ways> tableViewNodes1;
+    /**
+     * The Way id.
+     */
     public TableColumn<Ways, Integer> wayID;
+    /**
+     * The Way node v.
+     */
     public TableColumn<Ways, Integer> wayNodeV;
+    /**
+     * The Way node w.
+     */
     public TableColumn<Ways, Integer> wayNodeW;
+    /**
+     * The Way weight.
+     */
     public TableColumn<Ways, Double> wayWeight;
+    /**
+     * The Way id text field.
+     */
     public TextField wayIdTextField;
+    /**
+     * The Way node v text field.
+     */
     public TextField wayNodeVTextField;
+    /**
+     * The Way node w text field.
+     */
     public TextField wayNodeWTextField;
+    /**
+     * The Add way btn.
+     */
     public Button addWayBtn;
+    /**
+     * The Edit way btn.
+     */
     public Button EditWayBtn;
+    /**
+     * The Remove way btn.
+     */
     public Button removeWayBtn;
+    /**
+     * The Way weight text field.
+     */
     public TextField wayWeightTextField;
+    /**
+     * The Tag way text field.
+     */
     public TextField tagWayTextField;
+    /**
+     * The Value way text field.
+     */
     public TextField valueWayTextField;
+    /**
+     * The Search field way.
+     */
     public TextField searchFieldWay;
+    /**
+     * The Search way btn.
+     */
     public Button searchWayBtn;
+    /**
+     * The Address text field.
+     */
     public TextField addressTextField;
+    /**
+     * The Post code text field.
+     */
     public TextField PostCodeTextField;
+    /**
+     * The Way address.
+     */
     public TableColumn<Ways, String> wayAddress;
+    /**
+     * The Way post code.
+     */
     public TableColumn<Ways, String> wayPostCode;
+    /**
+     * The Table view tag 1.
+     */
     public TableView<Ways> tableViewTag1;
+    /**
+     * The Way tag id.
+     */
     public TableColumn<Ways, Integer> wayTagId;
+    /**
+     * The Way tag col.
+     */
     public TableColumn<Ways, String> wayTagCol;
+    /**
+     * The Way name text field.
+     */
     public TextField wayNameTextField;
+    /**
+     * The Way name column.
+     */
     public TableColumn<Ways, String> wayNameColumn;
 
-    // PoI
+    /**
+     * The Poi id text field.
+     */
+// PoI
     public TextField poiIDTextField;
+    /**
+     * The Node idpoi text field.
+     */
     public TextField nodeIDPOITextField;
+    /**
+     * The Po i name text field.
+     */
     public TextField PoINameTextField;
+    /**
+     * The Add po i btn.
+     */
     public Button addPoIBtn;
+    /**
+     * The Edit po i btn.
+     */
     public Button editPoIBtn;
+    /**
+     * The Remove po i btn.
+     */
     public Button removePoIBtn;
+    /**
+     * The Poi vehicle text field.
+     */
     public TextField poiVehicleTextField;
 
 
+    /**
+     * The Observable poi list 2.
+     */
     ObservableList<PoI> observablePoiList2 = FXCollections.observableArrayList();
+    /**
+     * The Observable user list.
+     */
     ObservableList<User> observableUserList = FXCollections.observableArrayList();
+    /**
+     * The Observable node visited list.
+     */
     ObservableList<NodeVisited> observableNodeVisitedList = FXCollections.observableArrayList();
+    /**
+     * The Observable poi list.
+     */
     ObservableList<PoI> observablePoiList = FXCollections.observableArrayList();
+    /**
+     * The Observable node list.
+     */
     ObservableList<Nodes> observableNodeList = FXCollections.observableArrayList();
+    /**
+     * The Observable ways list.
+     */
     ObservableList<Ways> observableWaysList = FXCollections.observableArrayList();
 
     private static final String fileSource1 = "data\\dataset1_nodes.txt";
@@ -154,12 +442,25 @@ public class DataBase implements Initializable {
     private static final String fileSource7 = "data\\dataset1_pois_bin.bin";
     private static final String fileSource8 = "data\\datasete1_users_bin.bin";
 
+    /**
+     * The Users size.
+     */
     public Integer usersSize;
 
+    /**
+     * Sets users size.
+     *
+     * @param usersSize the users size
+     */
     public void setUsersSize(Integer usersSize) {
         this.usersSize = usersSize;
     }
 
+    /**
+     * Sets users size.
+     *
+     * @return the users size
+     */
     public Integer setUsersSize() {
         return usersSize;
     }
@@ -172,10 +473,10 @@ public class DataBase implements Initializable {
      * The Ht.
      */
     public static Hashtable<String, Grafo> ht = new Hashtable<>();
+
     /**
      * The Users.
      */
-
     public ArrayList<User> users = new ArrayList<>();
     /**
      * The Edges.
@@ -191,6 +492,9 @@ public class DataBase implements Initializable {
      */
     public EdgeWeightedDigraph ewg;
 
+    /**
+     * The Sp.
+     */
     public DijkstraSP sp;
 
     /**
@@ -260,7 +564,6 @@ public class DataBase implements Initializable {
     /**
      * Prints Graph
      */
-
     public void printGraph() {
         StdOut.println(ewg.toString());
     }
@@ -302,6 +605,8 @@ public class DataBase implements Initializable {
 
     /**
      * Checks if there is connectivity in the graph
+     *
+     * @return the int
      */
     public int checkConnectivity() {
 
@@ -333,6 +638,8 @@ public class DataBase implements Initializable {
 
     /**
      * Checks if there is connectivity in the sub graph
+     *
+     * @return the int
      */
     public int checkSubGraphConnectivity() {
         out.println("Subgraph connectivity data:");
@@ -1089,7 +1396,7 @@ public class DataBase implements Initializable {
     /**
      * Action to be done after a text file is read
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void handleReadTextFileAction(ActionEvent actionEvent) {
         clearTableItems();
@@ -1151,9 +1458,8 @@ public class DataBase implements Initializable {
     /**
      * Adds a user to the ST and GUI
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
-
     public void addUserBtn(ActionEvent actionEvent) {
         try {
             String name = textfieldName.getText();
@@ -1198,7 +1504,7 @@ public class DataBase implements Initializable {
     /**
      * Edits user on the ST and GUI
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void editUserBtn(ActionEvent actionEvent) {
         try {
@@ -1254,7 +1560,7 @@ public class DataBase implements Initializable {
     /**
      * Removes user from the ST and GUI
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void removeUserBtn(ActionEvent actionEvent) {
         Integer id = tableView.getSelectionModel().getSelectedItem().getId();
@@ -1267,7 +1573,7 @@ public class DataBase implements Initializable {
     /**
      * Saves to binary file
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void handleSaveBinFileAction(ActionEvent actionEvent) {
         ObjectOutputStream oos = null;
@@ -1328,7 +1634,7 @@ public class DataBase implements Initializable {
     /**
      * Saves to text file
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void handleSaveTextFileAction(ActionEvent actionEvent) {
         Out out = new Out(fileSource1);
@@ -1522,8 +1828,8 @@ public class DataBase implements Initializable {
     /**
      * Writes top 5 PoIs to a file
      *
-     * @param path
-     * @param d
+     * @param path the path
+     * @param d    the d
      */
     public void loadTop5sToFile(String path, Date d) {
         Out out = new Out(path);
@@ -1543,13 +1849,18 @@ public class DataBase implements Initializable {
         }
     }
 
+    /**
+     * Handle exit action.
+     *
+     * @param actionEvent the action event
+     */
     public void handleExitAction(ActionEvent actionEvent) {
     }
 
     /**
      * Reads from binary files
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void handleReadBinFileAction(ActionEvent actionEvent) {
         ObjectInputStream ois = null;
@@ -1624,7 +1935,7 @@ public class DataBase implements Initializable {
     /**
      * Searches user and displays it
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void searchUserBtn(ActionEvent actionEvent) {
         String name = searchFieldName.getText();
@@ -1644,7 +1955,7 @@ public class DataBase implements Initializable {
     /**
      * Searches Node and displays it
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void searchNodeBtn(ActionEvent actionEvent) {
         Integer id = Integer.parseInt(searchFieldNode.getText());
@@ -1663,6 +1974,8 @@ public class DataBase implements Initializable {
 
     /**
      * Removes node from the ST and GUI
+     *
+     * @param actionEvent the action event
      */
     public void removeNodeBtn(ActionEvent actionEvent) {
         Integer id = tableViewNodes.getSelectionModel().getSelectedItem().getId();
@@ -1675,8 +1988,8 @@ public class DataBase implements Initializable {
     /**
      * Adds a node to the ST and GUI
      *
-     * @param actionEvent
-     * @throws IOException
+     * @param actionEvent the action event
+     * @throws IOException the io exception
      */
     public void addNodeBtn(ActionEvent actionEvent) throws IOException {
         Integer id = Integer.parseInt(nodeidtextfield.getText());
@@ -1721,7 +2034,7 @@ public class DataBase implements Initializable {
     /**
      * Edits node information
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void editNodeBtn(ActionEvent actionEvent) {
         try {
@@ -1790,7 +2103,7 @@ public class DataBase implements Initializable {
     /**
      * creates a Graph
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void graphBtn(ActionEvent actionEvent) {
         createGraphGroup(getBstSize() + 1);
@@ -1813,8 +2126,8 @@ public class DataBase implements Initializable {
     /**
      * Searches a Node that contains certain tag
      *
-     * @param tag
-     * @return
+     * @param tag the tag
+     * @return array list
      */
     public ArrayList<Nodes> searchTagNodes(String tag) {
         ArrayList<Nodes> nodes = new ArrayList<>();
@@ -1833,8 +2146,8 @@ public class DataBase implements Initializable {
     /**
      * Searches a Way that contains certain tag
      *
-     * @param tag
-     * @return
+     * @param tag the tag
+     * @return array list
      */
     public ArrayList<Ways> searchTagWays(String tag) {
         ArrayList<Ways> ways = new ArrayList<>();
@@ -1852,8 +2165,8 @@ public class DataBase implements Initializable {
     /**
      * Searches a tag near a certain coordinate
      *
-     * @param coordinate
-     * @return
+     * @param coordinate the coordinate
+     * @return hashtable
      */
     public Hashtable<String, String> searchTagNearCoordinate(Coordinate coordinate) {
         ArrayList<Nodes> nodes = new ArrayList<>();
@@ -1905,7 +2218,7 @@ public class DataBase implements Initializable {
     /**
      * Calculates the shortest path on click
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void shortestPath(ActionEvent actionEvent) {
 
@@ -1951,8 +2264,8 @@ public class DataBase implements Initializable {
     /**
      * Adds a way to the ST and GUI
      *
-     * @param actionEvent
-     * @throws IOException
+     * @param actionEvent the action event
+     * @throws IOException the io exception
      */
     public void addWayBtn(ActionEvent actionEvent) throws IOException {
         Integer id = Integer.parseInt(wayIdTextField.getText());
@@ -1981,7 +2294,7 @@ public class DataBase implements Initializable {
     /**
      * Edits a way in the ST and GUI
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void editWayBtn(ActionEvent actionEvent) {
         try {
@@ -2015,7 +2328,7 @@ public class DataBase implements Initializable {
     /**
      * Removes a way from the ST and GUI
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void removeWayBtn(ActionEvent actionEvent) {
         Integer id = tableViewNodes1.getSelectionModel().getSelectedItem().getId();
@@ -2027,7 +2340,7 @@ public class DataBase implements Initializable {
     /**
      * Searches for a Way's ID and displays it
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void searchWayBtn(ActionEvent actionEvent) {
         Integer id = Integer.parseInt(searchFieldWay.getText());
@@ -2047,8 +2360,8 @@ public class DataBase implements Initializable {
     /**
      * Adds a PoI to the Node ArrayList
      *
-     * @param actionEvent
-     * @throws Exception
+     * @param actionEvent the action event
+     * @throws Exception the exception
      */
     public void addPoiBtn(ActionEvent actionEvent) throws Exception {
         Integer id = Integer.parseInt(poiIDTextField.getText());
@@ -2078,8 +2391,8 @@ public class DataBase implements Initializable {
     /**
      * Edits a PoI in the Node ArrayList
      *
-     * @param actionEvent
-     * @throws Exception
+     * @param actionEvent the action event
+     * @throws Exception the exception
      */
     public void editPoIBtn(ActionEvent actionEvent) throws Exception {
         Integer id = Integer.parseInt(poiIDTextField.getText());
@@ -2110,7 +2423,7 @@ public class DataBase implements Initializable {
     /**
      * Removes PoI in the node ArrayList
      *
-     * @param actionEvent
+     * @param actionEvent the action event
      */
     public void removePoIBtn(ActionEvent actionEvent) {
         Integer id = tableViewPoI2.getSelectionModel().getSelectedItem().getId();
