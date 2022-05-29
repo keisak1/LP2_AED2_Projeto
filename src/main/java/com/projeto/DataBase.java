@@ -1855,15 +1855,23 @@ public class DataBase implements Initializable {
      * @param coordinate
      * @return
      */
-    public ArrayList<Nodes> searchTagNearCoordinate(Coordinate coordinate) {
+    public Hashtable<String, String> searchTagNearCoordinate(Coordinate coordinate) {
         ArrayList<Nodes> nodes = new ArrayList<>();
-        double distance;
+        double small;
+        double distance = 0;
         for (Integer i : bst.keys()) {
             Nodes node = bst.get(i);
-            distance = node.getPoint().calculateDistanceBetweenPoints(node.getPoint().getX(), node.getPoint().getY(), coordinate.getX(), coordinate.getY());
-
+            small = node.getPoint().calculateDistanceBetweenPoints(node.getPoint().getX(), node.getPoint().getY(), coordinate.getX(), coordinate.getY());
+            Nodes node1 = bst.get(i + 1);
+            distance = node1.getPoint().calculateDistanceBetweenPoints(node1.getPoint().getX(), node1.getPoint().getY(), coordinate.getX(), coordinate.getY());
+            if (distance < small) {
+                small = distance;
+                nodes.set(0,node1);
+            }else{
+                nodes.set(0,node);
+            }
         }
-        return nodes;
+        return nodes.get(0).getOsmNode();
     }
 
     /**
