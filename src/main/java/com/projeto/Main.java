@@ -31,6 +31,7 @@ public class Main {
         dataBase.searchTagNearCoordinate(c);
         System.out.println(dataBase.searchTagWays("highway"));
         System.out.println(dataBase.searchTagNodes("crossing"));
+        dataBase.newTagValue();
     }
 
     /**

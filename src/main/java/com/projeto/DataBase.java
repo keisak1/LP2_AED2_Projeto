@@ -128,6 +128,15 @@ public class DataBase implements Initializable {
     public TextField wayNameTextField;
     public TableColumn<Ways, String> wayNameColumn;
 
+    // PoI
+    public TextField poiIDTextField;
+    public TextField nodeIDPOITextField;
+    public TextField PoINameTextField;
+    public Button addPoIBtn;
+    public Button editPoIBtn;
+    public Button removePoIBtn;
+    public TextField poiVehicleTextField;
+
 
     ObservableList<PoI> observablePoiList2 = FXCollections.observableArrayList();
     ObservableList<User> observableUserList = FXCollections.observableArrayList();
@@ -846,6 +855,11 @@ public class DataBase implements Initializable {
         wayNameColumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
     }
 
+    /**
+     * Writes from file nodes to data structures
+     *
+     * @param path
+     */
     private void loadFromFileNodes(String path) {
         int size = 0;
         In in = new In(path);
@@ -1072,6 +1086,11 @@ public class DataBase implements Initializable {
 
     }
 
+    /**
+     * Action to be done after a text file is read
+     *
+     * @param actionEvent
+     */
     public void handleReadTextFileAction(ActionEvent actionEvent) {
         clearTableItems();
 
@@ -1088,6 +1107,9 @@ public class DataBase implements Initializable {
         afterReadFileAction();
     }
 
+    /**
+     * Action to be done after a file is read
+     */
     private void afterReadFileAction() {
 
         observableUserList.removeAll();
@@ -1124,6 +1146,13 @@ public class DataBase implements Initializable {
         tableViewTag1.setItems(observableWaysList);
 
     }
+
+
+    /**
+     * Adds a user to the ST and GUI
+     *
+     * @param actionEvent
+     */
 
     public void addUserBtn(ActionEvent actionEvent) {
         try {
@@ -1166,6 +1195,11 @@ public class DataBase implements Initializable {
         }
     }
 
+    /**
+     * Edits user on the ST and GUI
+     *
+     * @param actionEvent
+     */
     public void editUserBtn(ActionEvent actionEvent) {
         try {
             String name = textfieldName.getText();
@@ -1217,6 +1251,11 @@ public class DataBase implements Initializable {
         }
     }
 
+    /**
+     * Removes user from the ST and GUI
+     *
+     * @param actionEvent
+     */
     public void removeUserBtn(ActionEvent actionEvent) {
         Integer id = tableView.getSelectionModel().getSelectedItem().getId();
 
@@ -1225,6 +1264,11 @@ public class DataBase implements Initializable {
         afterReadFileAction();
     }
 
+    /**
+     * Saves to binary file
+     *
+     * @param actionEvent
+     */
     public void handleSaveBinFileAction(ActionEvent actionEvent) {
         ObjectOutputStream oos = null;
         ObjectOutputStream oos1 = null;
@@ -1281,6 +1325,11 @@ public class DataBase implements Initializable {
         }
     }
 
+    /**
+     * Saves to text file
+     *
+     * @param actionEvent
+     */
     public void handleSaveTextFileAction(ActionEvent actionEvent) {
         Out out = new Out(fileSource1);
         Out out1 = new Out(fileSource2);
@@ -1353,6 +1402,14 @@ public class DataBase implements Initializable {
         loadTop5sToFile("data\\top5s_file_txt.txt", d);
     }
 
+    /**
+     * Writes Nodes that are overpopulated to a file
+     *
+     * @param path - The Path
+     * @param from - From vertex
+     * @param to   - To vertex
+     * @param d    - The Date
+     */
     public void loadOverpopulatedNodesToFile(String path, int from, int to, Date d) {
         Out out = new Out(path);
         Iterator<Nodes> itr = set.iterator();
@@ -1381,6 +1438,12 @@ public class DataBase implements Initializable {
         }
     }
 
+    /**
+     * Writes Graph to the file
+     *
+     * @param path - The Path
+     * @param d    - The date
+     */
     public void loadGraphToFile(String path, Date d) {
         Out out = new Out(path);
         out.println("Check graph connectivity data:");
@@ -1399,6 +1462,12 @@ public class DataBase implements Initializable {
         }
     }
 
+    /**
+     * Writes nodes visited to a file
+     *
+     * @param path - The Path
+     * @param d    - The Date
+     */
     public void loadNodesVisitToFile(String path, Date d) {
         Out out = new Out(path);
         ArrayList<PoI> visitedPoI = new ArrayList<>();
@@ -1450,6 +1519,12 @@ public class DataBase implements Initializable {
         }
     }
 
+    /**
+     * Writes top 5 PoIs to a file
+     *
+     * @param path
+     * @param d
+     */
     public void loadTop5sToFile(String path, Date d) {
         Out out = new Out(path);
         ArrayList<User> top5users;
@@ -1471,6 +1546,11 @@ public class DataBase implements Initializable {
     public void handleExitAction(ActionEvent actionEvent) {
     }
 
+    /**
+     * Reads from binary files
+     *
+     * @param actionEvent
+     */
     public void handleReadBinFileAction(ActionEvent actionEvent) {
         ObjectInputStream ois = null;
         ObjectInputStream ois1 = null;
@@ -1517,32 +1597,7 @@ public class DataBase implements Initializable {
             }
         }
 
-        /*
-        try {
-            ois2 = new ObjectInputStream(new FileInputStream(fileSource7));
 
-            while (true) {
-                PoI poI = (PoI) ois2.readObject();
-                for (Integer i : bst.keys()) {
-                    Nodes node1 = bst.get(i);
-                    if (Objects.equals(node1.getId(), poI.getNodeID())) {
-                        node1.setPoI(poI);
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            StdOut.println(e);
-        } finally {
-            try {
-                if (ois2 != null) {
-                    ois2.close();
-                }
-            } catch (IOException ioex) {
-                StdOut.println(ioex);
-            }
-        }
-        */
         try {
             ois3 = new ObjectInputStream(new FileInputStream(fileSource8));
 
@@ -1566,6 +1621,11 @@ public class DataBase implements Initializable {
         afterReadFileAction();
     }
 
+    /**
+     * Searches user and displays it
+     *
+     * @param actionEvent
+     */
     public void searchUserBtn(ActionEvent actionEvent) {
         String name = searchFieldName.getText();
         try {
@@ -1581,6 +1641,11 @@ public class DataBase implements Initializable {
         }
     }
 
+    /**
+     * Searches Node and displays it
+     *
+     * @param actionEvent
+     */
     public void searchNodeBtn(ActionEvent actionEvent) {
         Integer id = Integer.parseInt(searchFieldNode.getText());
         try {
@@ -1596,6 +1661,9 @@ public class DataBase implements Initializable {
         }
     }
 
+    /**
+     * Removes node from the ST and GUI
+     */
     public void removeNodeBtn(ActionEvent actionEvent) {
         Integer id = tableViewNodes.getSelectionModel().getSelectedItem().getId();
         bst.delete(id);
@@ -1604,6 +1672,12 @@ public class DataBase implements Initializable {
 
     }
 
+    /**
+     * Adds a node to the ST and GUI
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void addNodeBtn(ActionEvent actionEvent) throws IOException {
         Integer id = Integer.parseInt(nodeidtextfield.getText());
 
@@ -1644,6 +1718,11 @@ public class DataBase implements Initializable {
         tableViewNodes.getItems().add(node);
     }
 
+    /**
+     * Edits node information
+     *
+     * @param actionEvent
+     */
     public void editNodeBtn(ActionEvent actionEvent) {
         try {
             Nodes node = bst.get(Integer.parseInt(nodeidtextfield.getText()));
@@ -1680,6 +1759,11 @@ public class DataBase implements Initializable {
         }
     }
 
+    /**
+     * Auxiliar to create a graph
+     *
+     * @param vNumber
+     */
     private void createGraphGroup(int vNumber) {
         createGraph();
         for (int i = 0; i < vNumber; i++) {
@@ -1703,6 +1787,11 @@ public class DataBase implements Initializable {
         }
     }
 
+    /**
+     * creates a Graph
+     *
+     * @param actionEvent
+     */
     public void graphBtn(ActionEvent actionEvent) {
         createGraphGroup(getBstSize() + 1);
 
@@ -1721,6 +1810,12 @@ public class DataBase implements Initializable {
 
     }
 
+    /**
+     * Searches a Node that contains certain tag
+     *
+     * @param tag
+     * @return
+     */
     public ArrayList<Nodes> searchTagNodes(String tag) {
         ArrayList<Nodes> nodes = new ArrayList<>();
         for (Integer i : bst.keys()) {
@@ -1735,6 +1830,12 @@ public class DataBase implements Initializable {
         return nodes;
     }
 
+    /**
+     * Searches a Way that contains certain tag
+     *
+     * @param tag
+     * @return
+     */
     public ArrayList<Ways> searchTagWays(String tag) {
         ArrayList<Ways> ways = new ArrayList<>();
         for (Ways way : edges) {
@@ -1748,6 +1849,12 @@ public class DataBase implements Initializable {
         return ways;
     }
 
+    /**
+     * Searches a tag near a certain coordinate
+     *
+     * @param coordinate
+     * @return
+     */
     public ArrayList<Nodes> searchTagNearCoordinate(Coordinate coordinate) {
         ArrayList<Nodes> nodes = new ArrayList<>();
         double distance;
@@ -1759,6 +1866,9 @@ public class DataBase implements Initializable {
         return nodes;
     }
 
+    /**
+     * Max flow from 2 Nodes
+     */
     public void maxFlowFrom2Nodes() {
         int s = 0, t = bstSize - 1;
         FlowNetwork G = new FlowNetwork(bstSize, edgesSize);
@@ -1784,6 +1894,11 @@ public class DataBase implements Initializable {
         StdOut.println("Max flow value =" + maxflow.value());
     }
 
+    /**
+     * Calculates the shortest path on click
+     *
+     * @param actionEvent
+     */
     public void shortestPath(ActionEvent actionEvent) {
 
         int day = shortDate.getValue().getDayOfMonth();
@@ -1814,10 +1929,23 @@ public class DataBase implements Initializable {
      * R16
      */
     public void newTagValue() {
-
+        String tag = "public_transport";
+        for (Integer i : bst.keys()) {
+            Nodes node = bst.get(i);
+            if (Objects.equals(node.getOsmNode().get(tag), "stop_position")) {
+                node.getOsmNode().remove(tag);
+                node.getOsmNode().put(tag, "moving_position");
+            }
+        }
     }
 
 
+    /**
+     * Adds a way to the ST and GUI
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void addWayBtn(ActionEvent actionEvent) throws IOException {
         Integer id = Integer.parseInt(wayIdTextField.getText());
         String name = wayNameTextField.getText();
@@ -1842,6 +1970,11 @@ public class DataBase implements Initializable {
 
     }
 
+    /**
+     * Edits a way in the ST and GUI
+     *
+     * @param actionEvent
+     */
     public void editWayBtn(ActionEvent actionEvent) {
         try {
             Integer id = Integer.parseInt(wayIdTextField.getText());
@@ -1871,6 +2004,11 @@ public class DataBase implements Initializable {
         }
     }
 
+    /**
+     * Removes a way from the ST and GUI
+     *
+     * @param actionEvent
+     */
     public void removeWayBtn(ActionEvent actionEvent) {
         Integer id = tableViewNodes1.getSelectionModel().getSelectedItem().getId();
         edges.removeIf(way -> Objects.equals(way.getId(), id));
@@ -1878,6 +2016,11 @@ public class DataBase implements Initializable {
         afterReadFileAction();
     }
 
+    /**
+     * Searches for a Way's ID and displays it
+     *
+     * @param actionEvent
+     */
     public void searchWayBtn(ActionEvent actionEvent) {
         Integer id = Integer.parseInt(searchFieldWay.getText());
         try {
@@ -1891,5 +2034,83 @@ public class DataBase implements Initializable {
         } catch (Exception e) {
             System.out.println("There's no such Way");
         }
+    }
+
+    /**
+     * Adds a PoI to the Node ArrayList
+     *
+     * @param actionEvent
+     * @throws Exception
+     */
+    public void addPoiBtn(ActionEvent actionEvent) throws Exception {
+        Integer id = Integer.parseInt(poiIDTextField.getText());
+        Integer nodeID = Integer.parseInt(nodeIDPOITextField.getText());
+        String poiName = PoINameTextField.getText();
+        String Vehicle = poiVehicleTextField.getText();
+
+        PoI poi = new PoI(id, nodeID, poiName, Vehicle);
+
+        try {
+            for (Integer i : bst.keys()) {
+                Nodes node = bst.get(i);
+                if (node.getId().equals(nodeID)) {
+                    node.setPoI(poi);
+                    tableViewPoI2.getItems().clear();
+                    afterReadFileAction();
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("There's no such Node ID");
+        }
+
+
+    }
+
+    /**
+     * Edits a PoI in the Node ArrayList
+     *
+     * @param actionEvent
+     * @throws Exception
+     */
+    public void editPoIBtn(ActionEvent actionEvent) throws Exception {
+        Integer id = Integer.parseInt(poiIDTextField.getText());
+        Integer nodeID = Integer.parseInt(nodeIDPOITextField.getText());
+        String poiName = PoINameTextField.getText();
+        String Vehicle = poiVehicleTextField.getText();
+        try {
+            for (Integer i : bst.keys()) {
+                Nodes node = bst.get(i);
+                if (node.getId().equals(nodeID)) {
+                    for (PoI poI : node.getPoI()) {
+                        if (poI.getId().equals(id)) {
+                            poI.setName(poiName);
+                            poI.setType(Vehicle);
+                            tableViewPoI2.getItems().clear();
+                            afterReadFileAction();
+                        }
+                    }
+
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("There's no such Node ID");
+        }
+    }
+
+    /**
+     * Removes PoI in the node ArrayList
+     *
+     * @param actionEvent
+     */
+    public void removePoIBtn(ActionEvent actionEvent) {
+        Integer id = tableViewPoI2.getSelectionModel().getSelectedItem().getId();
+        for (Integer i : bst.keys()) {
+            Nodes node = bst.get(i);
+            node.getPoI().removeIf(poi -> Objects.equals(poi.getId(), id));
+        }
+        tableViewPoI2.getItems().clear();
+        afterReadFileAction();
     }
 }

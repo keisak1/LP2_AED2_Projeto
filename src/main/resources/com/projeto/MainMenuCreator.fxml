@@ -185,7 +185,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView fx:id="tableViewPoI2" prefHeight="483.0" prefWidth="918.0">
+                                          <TableView fx:id="tableViewPoI2" prefHeight="343.0" prefWidth="918.0">
                                              <columns>
                                                 <TableColumn fx:id="colPOI" prefWidth="56.0" text="PoI ID" />
                                                 <TableColumn fx:id="colNodeID" prefWidth="77.0" text="Node ID" />
@@ -193,6 +193,17 @@
                                                 <TableColumn fx:id="colVehiclePOI" prefWidth="110.0" text="Vehicle" />
                                              </columns>
                                           </TableView>
+                                          <HBox layoutY="343.0" prefHeight="155.0" prefWidth="918.0">
+                                             <children>
+                                                <TextField fx:id="poiIDTextField" prefHeight="6.0" prefWidth="122.0" promptText="ID" translateX="50.0" translateY="50.0" />
+                                                <TextField fx:id="nodeIDPOITextField" prefHeight="6.0" prefWidth="122.0" promptText="Node ID" translateX="75.0" translateY="50.0" />
+                                                <TextField fx:id="PoINameTextField" prefHeight="6.0" prefWidth="122.0" promptText="Name" translateX="100.0" translateY="50.0" />
+                                                <Button fx:id="addPoIBtn" mnemonicParsing="false" onAction="#addPoiBtn" text="Add" translateX="250.0" translateY="50.0" />
+                                                <Button fx:id="editPoIBtn" mnemonicParsing="false" onAction="#editPoIBtn" text="Edit" translateX="275.0" translateY="50.0" />
+                                                <Button fx:id="removePoIBtn" mnemonicParsing="false" onAction="#removePoIBtn" text="Remove" translateX="300.0" translateY="50.0" />
+                                                <TextField fx:id="poiVehicleTextField" prefHeight="6.0" prefWidth="122.0" promptText="Vehicle" translateX="-20.0" translateY="50.0" />
+                                             </children>
+                                          </HBox>
                                        </children>
                                     </AnchorPane>
                                  </content>
